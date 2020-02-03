@@ -51,7 +51,7 @@
       <div class="row">
         <div class="col-md-12 text-center">
           <h3>@lang('fleet.monthlyReport')&nbsp;<small>{{date('F', mktime(0, 0, 0, $month_select, 10))}}-{{$year_select}}</small></h3>
-          @if($vehicle_select != null)<h4>{{$vehicle->make}}-{{$vehicle->model}}-{{$vehicle->license_plate}}</h4>@endif
+          @if($vehicle_select != null)<h4>{{$vehicle->maker->make}}-{{$vehicle->vehiclemodel->model}}-{{$vehicle->license_plate}}</h4>@endif
         </div>
       </div>
       <div class="row">

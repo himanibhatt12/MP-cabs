@@ -51,7 +51,7 @@
 
     <div class="row">
       <div class="col-md-12 text-center">
-        <h3>@lang('fleet.vehicle_inspection')&nbsp;<small>{{$review->vehicle->make}}-{{$review->vehicle->model}}-{{$review->vehicle->types['displayname']}}</small></h3>
+        <h3>@lang('fleet.vehicle_inspection')&nbsp;<small>{{$review->vehicle->maker->make}}-{{$review->vehicle->vehiclemodel->model}}-{{$review->vehicle->types['displayname']}}</small></h3>
       </div>
     </div>
 
@@ -60,7 +60,7 @@
         <table class="table" id="data_table">
           <tr>
             <td><b>@lang('fleet.vehicle'): </b>
-            {{$review->vehicle->make}} - {{$review->vehicle->model}} - {{$review->vehicle->types['displayname']}}</td>
+            {{$review->vehicle->maker->make}} - {{$review->vehicle->vehiclemodel->model}} - {{$review->vehicle->types['displayname']}}</td>
           </tr>
           <tr>
             <td><b>@lang('fleet.review_by'): </b>

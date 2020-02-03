@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleGroupRequest;
 use App\Model\VehicleGroupModel;
+use Auth;
 use Illuminate\Http\Request;
 
 class VehicleGroupController extends Controller {

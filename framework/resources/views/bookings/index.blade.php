@@ -53,7 +53,7 @@
                 <td style="width: 10% !important">{{$row->customer->name}}</td>
                 <td style="width: 10% !important">
                   @if($row->vehicle_id)
-                  {{$row->vehicle->make}} - {{$row->vehicle->model}} - {{$row->vehicle->license_plate}}
+                  {{$row->vehicle->maker->make}} - {{$row->vehicle->vehiclemodel->model}} - {{$row->vehicle->license_plate}}
                   @endif
                 </td>
                 <td style="width:10% !important">{!! str_replace(",", ",<br>", $row->pickup_addr) !!}</td>

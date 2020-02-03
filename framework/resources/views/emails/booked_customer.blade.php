@@ -7,7 +7,7 @@ Dear {{$booking->customer->name}},
 
 @component('mail::table')
 <table>
-	<tr><td>Vehicle: </td><td>{{$booking->vehicle->make}} {{$booking->vehicle->model}}</td></tr>
+	<tr><td>Vehicle: </td><td>{{$booking->vehicle->maker->make}} {{$booking->vehicle->vehiclemodel->model}}</td></tr>
 	<tr><td>Vehicle Licence Plate: </td><td>{{$booking->vehicle->license_plate}}</td></tr>
 	<tr><td>Journey Date: </td><td>{{date('d-m-Y',strtotime($booking->pickup))}}</td></tr>
 	<tr><td>Pickup Time: </td><td>{{date('g:i A',strtotime($booking->pickup))}}</td></tr>

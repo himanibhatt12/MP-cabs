@@ -472,7 +472,7 @@
             </ul>
           </li> @endif
 
-            @if((Request::is('admin/driver-logs')) || (Request::is('admin/vehicle-types*')) || (Request::is('admin/vehicles*')) || (Request::is('admin/vehicle_group*')) || (Request::is('admin/vehicle-reviews*')) || (Request::is('admin/view-vehicle-review*')) || (Request::is('admin/vehicle-review*')))
+            @if((Request::is('admin/driver-logs')) || (Request::is('admin/vehicle-types*')) || (Request::is('admin/vehicles*')) || (Request::is('admin/vehicle_group*')) || (Request::is('admin/vehicle-reviews*')) || (Request::is('admin/view-vehicle-review*')) || (Request::is('admin/vehicle-review*')) || (Request::is('admin/vehicle-make*')) || (Request::is('admin/vehicle-model*')) || (Request::is('admin/vehicle-color*')))
             @php($class="menu-open")
             @php($active="active")
 
@@ -493,6 +493,24 @@
                 <a href="{{ route('vehicles.index')}}" class="nav-link @if(Request::is('admin/vehicles*')) active @endif">
                   <i class="fa fa-truck nav-icon"></i>
                   <p>@lang('menu.manageVehicles')</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('vehicle-make.index')}}" class="nav-link @if(Request::is('admin/vehicle-make*')) active @endif">
+                  <i class="fa fa-car nav-icon"></i>
+                  <p>@lang('fleet.make')</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('vehicle-model.index')}}" class="nav-link @if(Request::is('admin/vehicle-model*')) active @endif">
+                  <i class="fa fa-car nav-icon"></i>
+                  <p>@lang('fleet.vehicle_models')</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('vehicle-color.index')}}" class="nav-link @if(Request::is('admin/vehicle-color*')) active @endif">
+                  <i class="fa fa-car nav-icon"></i>
+                  <p>@lang('fleet.vehicle_colors')</p>
                 </a>
               </li>
               <li class="nav-item">

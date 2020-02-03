@@ -6,7 +6,7 @@
 	<tr>
 		<th>@lang('fleet.vehicle')</th>
 		@if($booking->vehicle_id != null)
-		<td>{{ $booking->vehicle->make}} - {{ $booking->vehicle->model}} - {{ $booking->vehicle->license_plate}}</td>
+		<td>{{ $booking->vehicle->maker->make}} - {{ $booking->vehicle->vehiclemodel->model}} - {{ $booking->vehicle->license_plate}}</td>
 		@endif
 	</tr>
 	<tr>

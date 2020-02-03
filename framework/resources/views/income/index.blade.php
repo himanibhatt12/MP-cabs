@@ -29,7 +29,7 @@
                 <select id="vehicle_id" name="vehicle_id" class="form-control vehicles" required style="width: 100%">
                   <option value="">@lang('fleet.selectVehicle')</option>
                   @foreach($vehicels as $vehicle)
-                  <option value="{{ $vehicle->id }}" data-mileage="{{ $vehicle->mileage}}">{{$vehicle->make}}-{{$vehicle->model}}-{{$vehicle->license_plate}}</option>
+                  <option value="{{ $vehicle->id }}" data-mileage="{{ $vehicle->mileage}}">{{$vehicle->maker->make}}-{{$vehicle->vehiclemodel->model}}-{{$vehicle->license_plate}}</option>
                   @endforeach
                 </select>
               </div>
@@ -206,12 +206,12 @@
               </td>
               <td>
               @if($row->vehicle_id != null)
-              {{$row->vehicle->make}}
+              {{$row->vehicle->maker->make}}
               @endif
               </td>
               <td>
               @if($row->vehicle_id != null)
-              {{$row->vehicle->model}}
+              {{$row->vehicle->vehiclemodel->model}}
               @endif
               </td>
               <td>

@@ -70,7 +70,7 @@
             @foreach($fuel as $f)
             <tr>
               <td>{{$f->date}}</td>
-              <td>{{$f->vehicle_data->make}}-{{$f->vehicle_data->model}}-{{$f->vehicle_data->license_plate}}</td>
+              <td>{{$f->vehicle_data->maker->make}}-{{$f->vehicle_data->vehiclemodel->model}}-{{$f->vehicle_data->license_plate}}</td>
               <td>
                 <b> @lang('fleet.start'): </b>{{$f->start_meter}} {{Hyvikk::get('dis_format')}}
                 <br>

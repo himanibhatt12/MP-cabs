@@ -1,7 +1,7 @@
 <table class="table table-striped">
 	<tr>
 		<th>@lang('fleet.vehicle')</th>
-		<td> {{$service->vehicle->make}}-{{$service->vehicle->model}}-{{$service->vehicle->license_plate}}</td>
+		<td> {{$service->vehicle->maker->make}}-{{$service->vehicle->vehiclemodel->model}}-{{$service->vehicle->license_plate}}</td>
 	</tr>
 	<tr>
 		<th>@lang('fleet.service_item')</th>

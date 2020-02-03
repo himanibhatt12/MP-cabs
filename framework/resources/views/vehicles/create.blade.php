@@ -73,8 +73,6 @@ input:checked + .slider:before {
 @section("breadcrumb")
 <li class="breadcrumb-item"><a href="{{ route("vehicles.index")}}">@lang('fleet.vehicles')</a></li>
 <li class="breadcrumb-item active">@lang('fleet.addVehicle')</li>
-
-
 @endsection
 @section('content')
 <div class="row">
@@ -106,20 +104,25 @@ input:checked + .slider:before {
           <div class="row card-body">
             <div class="col-md-6">
               <div class="form-group">
-                {!! Form::label('make', __('fleet.make'), ['class' => 'col-xs-5 control-label']) !!}
+                {!! Form::label('make_id', __('fleet.SelectVehicleMake'), ['class' => 'col-xs-5 control-label']) !!}
+
                 <div class="col-xs-6">
-                {!! Form::text('make', null,['class' => 'form-control','required']) !!}
+                 <select name="make_id" class="form-control" required id="make_id">
+                   <option></option>
+                   @foreach($makes as $make)
+                    <option value="{{$make->id}}">{{$make->make}}</option>
+                   @endforeach
+                 </select>
                 </div>
               </div>
-
               <div class="form-group">
-                {!! Form::label('model', __('fleet.model'), ['class' => 'col-xs-5 control-label']) !!}
-
+                {!! Form::label('model_id', __('fleet.SelectVehicleModel'), ['class' => 'col-xs-5 control-label']) !!}
                 <div class="col-xs-6">
-                {!! Form::text('model', null,['class' => 'form-control','required']) !!}
+                 <select name="model_id" class="form-control" required id="model_id">
+                  <option></option>                   
+                 </select>
                 </div>
               </div>
-
               <div class="form-group">
                 {!! Form::label('type_id', __('fleet.type'), ['class' => 'col-xs-5 control-label']) !!}
 
@@ -200,9 +203,15 @@ input:checked + .slider:before {
               </div>
 
               <div class="form-group">
-                {!! Form::label('color', __('fleet.color'), ['class' => 'col-xs-5 control-label']) !!}
+                {!! Form::label('color_id', __('fleet.SelectVehicleColor'), ['class' => 'col-xs-5 control-label']) !!}
+
                 <div class="col-xs-6">
-                 {!! Form::text('color', null,['class' => 'form-control','required']) !!}
+                 <select name="color_id" class="form-control" required id="color_id">
+                   <option></option>
+                   @foreach($colors as $color)
+                    <option value="{{$color->id}}">{{$color->color}}</option>
+                   @endforeach
+                 </select>
                 </div>
               </div>
 
@@ -299,6 +308,27 @@ input:checked + .slider:before {
     $(document).ready(function() {
       $('#group_id').select2({placeholder: "@lang('fleet.selectGroup')"});
       $('#type_id').select2({placeholder:"@lang('fleet.type')"});
+      $('#make_id').select2({placeholder:"@lang('fleet.SelectVehicleMake')"});
+      $('#model_id').select2({placeholder:"@lang('fleet.SelectVehicleModel')"});
+      $('#color_id').select2({placeholder:"@lang('fleet.SelectVehicleColor')"});
+      $('#make_id').on('change',function(){
+        // alert($(this).val());
+        $.ajax({
+          type: "GET",
+          url: "{{url('admin/get-models')}}/"+$(this).val(),
+          success: function(data){
+            var models =  $.parseJSON(data);
+              $('#model_id').empty();
+              $.each( models, function( key, value ) {
+                $('#model_id').append($('<option>', {
+                  value: value.id,
+                  text: value.text
+                }));
+              });    
+          },
+          dataType: "html"
+        });
+      });
       $('#start_date').datepicker({
           autoclose: true,
           format: 'yyyy-mm-dd'

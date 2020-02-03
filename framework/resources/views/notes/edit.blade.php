@@ -36,7 +36,7 @@
               <select id="vehicle_id" name="vehicle_id" class="form-control" required>
                 <option value="">-</option>
                 @foreach($vehicles as $vehicle)
-                <option value="{{$vehicle->id}}" @if($vehicle->id==$data->vehicle_id) selected @endif> {{$vehicle->make}} - {{$vehicle->model}} - {{$vehicle->color}} - {{$vehicle->license_plate}}</option>
+                <option value="{{$vehicle->id}}" @if($vehicle->id==$data->vehicle_id) selected @endif> {{$vehicle->maker->make}} - {{$vehicle->vehiclemodel->model}} - {{$vehicle->vehiclecolor->color}} - {{$vehicle->license_plate}}</option>
                 @endforeach
               </select>
             </div>

@@ -50,7 +50,7 @@
                   <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="checkbox" id="chk{{ $row->id }}" onclick='checkcheckbox();'>
                 </td>
                 <td style="width: 10% !important">{{$row->customer['name']}}</td>
-                <td style="width: 10% !important">{{$row->vehicle['make']}} - {{$row->vehicle['model']}} - {{$row->vehicle['license_plate']}}</td>
+                <td style="width: 10% !important">{{$row->vehicle->maker->make}} - {{$row->vehicle->vehiclemodel->model}} - {{$row->vehicle['license_plate']}}</td>
                 <td style="width:10% !important">{!! str_replace(",", ",<br>", $row->pickup_addr) !!}</td>
                 <td style="width:10% !important">{!! str_replace(",", ",<br>", $row->dest_addr) !!}</td>
                 <td style="width: 10% !important">

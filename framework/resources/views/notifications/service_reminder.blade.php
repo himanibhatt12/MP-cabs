@@ -58,7 +58,7 @@
               @endif
               </td>
               <td>
-              {{$data->vehicle->year}} {{$data->vehicle->make}} {{$data->vehicle->model}}
+              {{$data->vehicle->year}} {{$data->vehicle->maker->make}} {{$data->vehicle->vehiclemodel->model}}
               <br>
               @lang('fleet.vin'):{{$data->vehicle->vin}}
               <br>

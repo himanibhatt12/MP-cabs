@@ -28,7 +28,7 @@
           <select id="vehicle_id" name="vehicle_id" class="form-control vehicles" style="width: 250px">
             <option value="">@lang('fleet.selectVehicle')</option>
             @foreach($vehicles as $vehicle)
-            <option value="{{ $vehicle->id }}" @if($vehicle->id == $vehicle_select) selected @endif>{{$vehicle->make}}-{{$vehicle->model}}-{{$vehicle->license_plate}}</option>
+            <option value="{{ $vehicle->id }}" @if($vehicle->id == $vehicle_select) selected @endif>{{$vehicle->maker->make}}-{{$vehicle->vehiclemodel->model}}-{{$vehicle->license_plate}}</option>
             @endforeach
         </select>
         </div>

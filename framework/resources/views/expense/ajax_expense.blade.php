@@ -23,8 +23,8 @@
       <td>
         <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="checkbox" id="chk{{ $row->id }}" onclick='checkcheckbox();'>
       </td>
-      <td>{{$row->vehicle->make}}</td>
-      <td>{{$row->vehicle->model}}</td>
+      <td>{{$row->vehicle->maker->make}}</td>
+      <td>{{$row->vehicle->vehiclemodel->model}}</td>
       <td>{{$row->vehicle->license_plate}}</td>
       <td>
         @if($row->type == "s")

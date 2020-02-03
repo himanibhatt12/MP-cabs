@@ -20,13 +20,13 @@
 			<table class="table table-striped">
 				<tr>
 					<th>@lang('fleet.vehicle')</th>
-					<td>{{$vehicle->make}}</td>
+					<td>{{$vehicle->maker->make}}</td>
 				</tr>
 
 				<tr>
 					<th>@lang('fleet.model')</th>
 					<td>
-						{{$vehicle->model}}
+						{{$vehicle->vehiclemodel->model}}
 					</td>
 				</tr>
 
@@ -84,7 +84,7 @@
 				<tr>
 					<th>@lang('fleet.color')</th>
 					<td>
-						{{$vehicle->color}}
+						{{$vehicle->vehiclecolor->color}}
 					</td>
 				</tr>
 
@@ -132,7 +132,7 @@
 				<tr>
 					<th>@lang('fleet.vehicle')</th>
 					<td>
-					{{$vehicle->make}}-{{$vehicle->model}}-{{$vehicle->types['displayname']}}
+					{{$vehicle->maker->make}}-{{$vehicle->vehiclemodel->model}}-{{$vehicle->types['displayname']}}
 					</td>
 				</tr>
 

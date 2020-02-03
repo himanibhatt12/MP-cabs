@@ -17,8 +17,7 @@
   <div class="col-md-12">
     <div class="card card-info">
       <div class="card-header">
-        <h3 class="card-title">@lang('menu.calendar')&nbsp;
-          <a href="{{url("admin/export-events")}}" class="btn btn-success">@lang('fleet.export_events')</a></h3>
+        <h3 class="card-title">@lang('menu.calendar')</h3>
       </div>
       <div class="card-body">
         <div id='calendar'></div>

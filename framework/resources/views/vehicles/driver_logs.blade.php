@@ -25,7 +25,7 @@
           @foreach($logs as $row)
             <tr>
               <td>{{$row->id}}</td>
-              <td>{{$row->vehicle->make}} - {{$row->vehicle->model}} - {{$row->vehicle->license_plate}}</td>
+              <td>{{$row->vehicle->maker->make}} - {{$row->vehicle->vehiclemodel->model}} - {{$row->vehicle->license_plate}}</td>
               <td>{{$row->driver->name}}</td>
               <td>{{date('d-m-Y g:i A',strtotime($row->date))}}</td>
             </tr>

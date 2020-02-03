@@ -37,7 +37,7 @@
             <select id="vehicle_id" name="vehicle_id" class="form-control vehicles" style="width: 100%" required>
               <option value="" >@lang('fleet.selectVehicle')</option>
               @foreach($vehicels as $vehicle)
-              <option value="{{ $vehicle->id }}">{{$vehicle->make}}-{{$vehicle->model}}-{{$vehicle->license_plate}}</option>
+              <option value="{{ $vehicle->id }}">{{$vehicle->maker->make}}-{{$vehicle->vehiclemodel->model}}-{{$vehicle->license_plate}}</option>
               @endforeach
             </select>
           </div>
@@ -152,8 +152,8 @@
               <td>
                 <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="checkbox" id="chk{{ $row->id }}" onclick='checkcheckbox();'>
               </td>
-              <td>{{$row->vehicle->make}}</td>
-              <td>{{$row->vehicle->model}}</td>
+              <td>{{$row->vehicle->maker->make}}</td>
+              <td>{{$row->vehicle->vehiclemodel->model}}</td>
               <td>{{$row->vehicle->license_plate}}</td>
               <td>
               @if($row->type == "s")

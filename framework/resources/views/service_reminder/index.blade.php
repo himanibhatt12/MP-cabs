@@ -56,7 +56,7 @@
               <td>
                 @lang('fleet.unit') #: {{$reminder->vehicle['id']}}
                 <br>
-                {{$reminder->vehicle->year}} {{$reminder->vehicle->make}} {{$reminder->vehicle->model}}
+                {{$reminder->vehicle->year}} {{$reminder->vehicle->maker->make}} {{$reminder->vehicle->vehiclemodel->model}}
                 <br>
                 @lang('fleet.vin'):{{$reminder->vehicle->vin}}
                 <br>

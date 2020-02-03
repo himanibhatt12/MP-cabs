@@ -81,7 +81,7 @@
               <td>{{$row->email}}</td>
               <td>{{($row->getMeta('is_active')) ? "YES" : "NO"}}</td>
               <td>{{$row->getMeta('phone')}}</td>
-              <td>@if($row->vehicle_id != null) {{$row->driver_vehicle->vehicle->make}}-{{$row->driver_vehicle->vehicle->model}}-{{$row->driver_vehicle->vehicle->license_plate}} @endif</td>
+              <td>@if($row->vehicle_id != null) {{$row->driver_vehicle->vehicle->maker->make}}-{{$row->driver_vehicle->vehicle->vehiclemodel->model}}-{{$row->driver_vehicle->vehicle->license_plate}} @endif</td>
               <td>{{$row->getMeta('start_date')}}</td>
               <td>
               <div class="btn-group">

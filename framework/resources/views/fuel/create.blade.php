@@ -96,7 +96,7 @@ input:checked + .slider:before {
               <select id="vehicle_id" name="vehicle_id" class="form-control" required>
                 <option value="">-</option>
                 @foreach($vehicles as $vehicle)
-                <option value="{{$vehicle->id}}">{{$vehicle->make}} - {{$vehicle->model}} - {{$vehicle->license_plate}}</option>
+                <option value="{{$vehicle->id}}">{{$vehicle->maker->make}} - {{$vehicle->vehiclemodel->model}} - {{$vehicle->license_plate}}</option>
                 @endforeach
               </select>
             </div>

@@ -106,7 +106,7 @@
                @if($booking->vehicle_id != null)
               <tr>
                 <th style="width:50%">@lang('fleet.vehicle'):</th>
-                <td> {{$booking->vehicle['make']}} - {{$booking->vehicle['model']}} - {{$booking->vehicle['license_plate']}}</td>
+                <td> {{$booking->vehicle->maker['make']}} - {{$booking->vehicle->vehiclemodel['model']}} - {{$booking->vehicle['license_plate']}}</td>
               </tr>
               @endif
               @if($booking->driver_id != null)

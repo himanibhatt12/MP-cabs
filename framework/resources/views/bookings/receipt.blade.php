@@ -74,7 +74,7 @@
           <tr>
             <th style="width:50%">@lang('fleet.vehicle'):</th>
             <td>
-            {{$booking->vehicle['make']}} - {{$booking->vehicle['model']}} - {{$booking->vehicle['license_plate']}}
+            {{$booking->vehicle->maker['make']}} - {{$booking->vehicle->vehiclemodel['model']}} - {{$booking->vehicle['license_plate']}}
             </td>
           </tr>
           @endif

@@ -71,12 +71,12 @@
             <tr>
               <td>
               @if($row->vehicle_id != null)
-              {{$row->vehicle->make}}
+              {{$row->vehicle->maker->make}}
               @endif
               </td>
               <td>
               @if($row->vehicle_id != null)
-              {{$row->vehicle->model}}
+              {{$row->vehicle->vehiclemodel->model}}
               @endif
               </td>
               <td>

@@ -66,8 +66,8 @@
               @endif
               </td>
               <td>
-                {{$data->make}} -
-                {{$data->model}}
+                {{$data->maker->make}} -
+                {{$data->vehiclemodel->model}}
               </td>
               <td>{{ $msg }} {{ date('d-m-Y',strtotime($notification->data['msg'])) }}
               </td>

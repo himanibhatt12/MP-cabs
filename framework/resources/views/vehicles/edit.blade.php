@@ -106,17 +106,26 @@
             {!! Form::hidden('id',$vehicle->id) !!}
             <div class="row card-body">
               <div class="col-md-6">
-                <div class="form-group" >
-                  {!! Form::label('make', __('fleet.make'), ['class' => 'col-xs-5 control-label']) !!}
+                <div class="form-group">
+                  {!! Form::label('make_id', __('fleet.SelectVehicleMake'), ['class' => 'col-xs-5 control-label']) !!}
+  
                   <div class="col-xs-6">
-                  {!! Form::text('make', $vehicle->make,['class' => 'form-control','required']) !!}
+                   <select name="make_id" class="form-control" required id="make_id">
+                     <option></option>
+                     @foreach($makes as $make)
+                      <option value="{{$make->id}}" @if($make->id == $vehicle->make_id) selected @endif>{{$make->make}}</option>
+                     @endforeach
+                   </select>
                   </div>
                 </div>
-
                 <div class="form-group">
-                  {!! Form::label('model', __('fleet.model'), ['class' => 'col-xs-5 control-label']) !!}
+                  {!! Form::label('model_id', __('fleet.SelectVehicleModel'), ['class' => 'col-xs-5 control-label']) !!}
                   <div class="col-xs-6">
-                  {!! Form::text('model', $vehicle->model,['class' => 'form-control','required']) !!}
+                   <select name="model_id" class="form-control" required id="model_id">
+                    @foreach($models as $model)
+                      <option value="$model->id" @if($model->id == $vehicle->model_id) selected @endif>{{ $model->model }}</option>  
+                    @endforeach                 
+                   </select>
                   </div>
                 </div>
 
@@ -202,9 +211,15 @@
                 </div>
 
                 <div class="form-group">
-                  {!! Form::label('color', __('fleet.color'), ['class' => 'col-xs-5 control-label']) !!}
+                  {!! Form::label('color_id', __('fleet.SelectVehicleColor'), ['class' => 'col-xs-5 control-label']) !!}
+  
                   <div class="col-xs-6">
-                    {!! Form::text('color', $vehicle->color,['class' => 'form-control','required']) !!}
+                   <select name="color_id" class="form-control" required id="color_id">
+                     <option></option>
+                     @foreach($colors as $color)
+                      <option value="{{$color->id}}" @if($color->id == $vehicle->color_id)selected @endif>{{$color->color}}</option>
+                     @endforeach
+                   </select>
                   </div>
                 </div>
 
@@ -344,7 +359,7 @@
               <div class="col-md-12">
                 <div class="card card-info">
                   <div class="card-header">
-                    <h3 class="card-title">@lang('fleet.acquisition') :<strong>{{ $vehicle->make }} {{ $vehicle->model }} {{ $vehicle->license_plate }}</strong>
+                    <h3 class="card-title">@lang('fleet.acquisition') :<strong>{{ $vehicle->maker->make }} {{ $vehicle->vehiclemodel->model }} {{ $vehicle->license_plate }}</strong>
                     </h3>
                   </div>
                   <div class="card-body" id="acq_table">
@@ -450,6 +465,26 @@
 $(document).ready(function() {
   $('#group_id').select2({placeholder: "@lang('fleet.selectGroup')"});
   $('#type_id').select2({placeholder:"@lang('fleet.type')"});
+  $('#make_id').select2({placeholder:"@lang('fleet.SelectVehicleMake')"});
+  $('#color_id').select2({placeholder:"@lang('fleet.SelectVehicleColor')"});
+      $('#make_id').on('change',function(){
+        // alert($(this).val());
+        $.ajax({
+          type: "GET",
+          url: "{{url('admin/get-models')}}/"+$(this).val(),
+          success: function(data){
+            var models =  $.parseJSON(data);
+              $('#model_id').empty();
+              $.each( models, function( key, value ) {
+                $('#model_id').append($('<option>', {
+                  value: value.id,
+                  text: value.text
+                }));
+              });    
+          },
+          dataType: "html"
+        });
+      });
   @if(isset($_GET['tab']) && $_GET['tab']!="")
     $('.nav-pills a[href="#{{$_GET['tab']}}"]').tab('show')
   @endif

@@ -57,7 +57,7 @@
 						<tr>
 							<td>{{ $part->date }}</td>
 							<td>{{ $part->cost }}</td>
-							<td>{{ $part->vehicle->make }} {{ $part->vehicle->model }} {{ $part->vehicle->license_plate }}</td>
+							<td>{{ $part->vehicler->make }} {{ $part->vehicle->vehiclemodel->model }} {{ $part->vehicle->license_plate }}</td>
 							<td>{{ $part->mileage}}</td>
 						</tr>
 					@endforeach

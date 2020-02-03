@@ -85,7 +85,7 @@
                     data-base_km_3="{{Hyvikk::fare(strtolower(str_replace(' ','',$vehicle->types->vehicletype)).'_night_base_km')}}"
                     data-base_fare_3="{{Hyvikk::fare(strtolower(str_replace(' ','',$vehicle->types->vehicletype)).'_night_base_fare')}}"
                     data-wait_time_3="{{Hyvikk::fare(strtolower(str_replace(' ','',$vehicle->types->vehicletype)).'_night_wait_time')}}"
-                    data-std_fare_3="{{Hyvikk::fare(strtolower(str_replace(' ','',$vehicle->types->vehicletype)).'_night_std_fare')}}">{{$vehicle->make}} - {{$vehicle->model}} - {{$vehicle->license_plate}}</option>
+                    data-std_fare_3="{{Hyvikk::fare(strtolower(str_replace(' ','',$vehicle->types->vehicletype)).'_night_std_fare')}}">{{$vehicle->maker->make}} - {{$vehicle->vehiclemodel->model}} - {{$vehicle->license_plate}}</option>
                 @endforeach
               </select>
             </div>
@@ -245,7 +245,7 @@
 <script type="text/javascript">
   $('#customer_id').select2({placeholder: "@lang('fleet.selectCustomer')"});
   $('#driver_id').select2({placeholder: "@lang('fleet.selectDriver')"});
-  $('#vehicle_id').select2({placeholder: "@lang('fleet.selectVehicler')"});
+  $('#vehicle_id').select2({placeholder: "@lang('fleet.selectVehicle')"});
   $('#pickup').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss',sideBySide: true,icons: {
               previous: 'fa fa-arrow-left',
               next: 'fa fa-arrow-right',

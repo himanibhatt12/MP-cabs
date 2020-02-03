@@ -42,7 +42,7 @@
               <td>
                 <input type="checkbox" name="ids[]" value="{{ $r->id }}" class="checkbox" id="chk{{ $r->id }}" onclick='checkcheckbox();'>
               </td>
-              <td>{{$r->vehicle->make}} - {{$r->vehicle->model}} - {{$r->vehicle->types['displayname']}}</td>
+              <td>{{$r->vehicle->maker->make}} - {{$r->vehicle->vehiclemodel->model}} - {{$r->vehicle->types['displayname']}}</td>
               <td>{{$r->user->name}}</td>
               <td>{{$r->reg_no}}</td>
               <td>
