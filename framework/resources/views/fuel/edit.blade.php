@@ -98,7 +98,7 @@ input:checked + .slider:before {
             <div class="form-group">
               {!! Form::label('vehicle_id',__('fleet.selectVehicle'), ['class' => 'form-label']) !!}
               <select id="vehicle_id" disabled="" name="vehicle_id" class="form-control xxhvk" required>
-                <option selected value="{{$vehicle_id}}">{{$data->vehicle_data['make']}} - {{$data->vehicle_data['model']}} - {{$data->vehicle_data['license_plate']}}</option>
+                <option selected value="{{$vehicle_id}}">{{$data->vehicle_data->maker->make}} - {{$data->vehicle_data->vehiclemodel->model}} - {{$data->vehicle_data->license_plate}}</option>
               </select>
             </div>
             <div class="form-group">

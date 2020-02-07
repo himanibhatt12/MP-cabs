@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class VehicleModelRequest extends FormRequest
+class CityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,8 +29,14 @@ class VehicleModelRequest extends FormRequest
     public function rules()
     {
         return [
-            'make_id' => 'required',
-            'model' => 'required',
+            'city' => 'required|unique:cities,city,' . \Request::get("id"),
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'city.unique' => 'City already exists',
         ];
     }
 }

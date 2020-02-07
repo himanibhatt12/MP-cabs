@@ -6,30 +6,34 @@ use App\Http\Requests\Request;
 use Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest {
+class UserRequest extends FormRequest
+{
 
-	public function authorize() {
-		if (Auth::user()->user_type == "S" || Auth::user()->user_type == "O") {
-			return true;
-		} else {
-			abort(404);
-		}
-	}
+    public function authorize()
+    {
+        if (Auth::user()->user_type == "S" || Auth::user()->user_type == "O" || Auth::user()->user_type == "V") {
+            return true;
+        } else {
+            abort(404);
+        }
+    }
 
-	public function rules() {
-		return [
-			'module' => 'required',
-			'first_name' => 'required',
-			'last_name' => 'required',
-			'email' => 'required|email|unique:users,email,' . \Request::get("id"),
-			'password' => 'required|min:6',
-			'profile_image' => 'nullable|image|mimes:jpg,png,jpeg',
-		];
-	}
-	public function messages() {
-		return [
-			'module.required' => 'You must have to select Permission',
+    public function rules()
+    {
+        return [
+            'module' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email,' . \Request::get("id"),
+            'password' => 'required|min:6',
+            'profile_image' => 'nullable|image|mimes:jpg,png,jpeg',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'module.required' => 'You must have to select Permission',
 
-		];
-	}
+        ];
+    }
 }

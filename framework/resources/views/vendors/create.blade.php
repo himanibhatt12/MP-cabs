@@ -27,110 +27,90 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              {!! Form::label('photo', __('fleet.picture'), ['class' => 'form-label']) !!}
-              <br>
-              {!! Form::file('photo',null,['class' => 'form-control','required']) !!}
+              {!! Form::label('first_name', __('fleet.firstname'), ['class' => 'form-label']) !!}
+              {!! Form::text('first_name', null,['class' => 'form-control','required']) !!}
+            </div>
+
+            <div class="form-group">
+              {!! Form::label('last_name', __('fleet.lastname'), ['class' => 'form-label']) !!}
+              {!! Form::text('last_name', null,['class' => 'form-control','required']) !!}
+            </div>
+            <div class="form-group">
+              {!! Form::label('profile_image', __('fleet.profile_photo'), ['class' => 'form-label']) !!}
+              {!! Form::file('profile_image',null,['class' => 'form-control']) !!}
+            </div>
+            <div class="form-group">
+              {!! Form::label('group_id',__('fleet.selectGroup'), ['class' => 'form-label']) !!}
+              <select id="group_id" name="group_id" class="form-control">
+                <option value="">@lang('fleet.vehicleGroup')</option>
+                @foreach($groups as $group)
+                @if($group->id == 1)
+                <option value="{{$group->id}}" selected>{{$group->name}}</option>
+                @else
+                <option value="{{$group->id}}" >{{$group->name}}</option>
+                @endif
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group">
+              {!! Form::label('city_id',__('fleet.selectCity'), ['class' => 'form-label']) !!}
+              <select id="city_id" name="city_id" class="form-control">
+                <option value="">@lang('fleet.selectCity')</option>
+                @foreach($cities as $city)
+                <option value="{{$city->id}}">{{$city->city}}</option>
+                @endforeach
+              </select>
             </div>
           </div>
-
           <div class="col-md-6">
             <div class="form-group">
-              {!! Form::label('name',__('fleet.name'), ['class' => 'form-label']) !!}
-              {!! Form::text('name',null,['class'=>'form-control','required']) !!}
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="form-group">
-              {!! Form::label('phone',__('fleet.phone'), ['class' => 'form-label']) !!}
+              {!! Form::label('email', __('fleet.email'), ['class' => 'form-label']) !!}
               <div class="input-group mb-3">
-              <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-phone"></i></span></div>
-              {!! Form::number('phone',null,['class'=>'form-control','required']) !!}
+                <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span> </div>
+                {!! Form::email('email', null,['class' => 'form-control','required']) !!}
               </div>
             </div>
-          </div>
-
-          <div class="col-md-6">
             <div class="form-group">
-              {!! Form::label('email',__('fleet.email'), ['class' => 'form-label']) !!}
+              {!! Form::label('password', __('fleet.password'), ['class' => 'form-label']) !!}
               <div class="input-group mb-3">
-              <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-envelope"></i></span></div>
-              {!! Form::email('email',null,['class'=>'form-control','required']) !!}
+                <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-lock"></i></span></div>
+                {!! Form::password('password', ['class' => 'form-control','required']) !!}
               </div>
-            </div>
-          </div>
+            </div>            
 
-          <div class="col-md-6">
             <div class="form-group">
-              {!! Form::label('type', __('fleet.vendor_type'), ['class' => 'form-label']) !!}
-              <div id="nothing">
-                <select class="form-control" required onchange="select_type()" id="type" name="type">
-                  @foreach($vendor_types as $type)
-                  <option value="{{$type}}">{{$type}}</option>
-                  @endforeach
-                </select>
+              {!! Form::label('module',__('fleet.select_modules'), ['class' => 'form-label']) !!} <br>
+              <div class="row">
+                <div class="col-md-4" style="padding: 0px;">
+                  <input type="checkbox" name="module[]" value="0" class="flat-red form-control">&nbsp; @lang('menu.users')<br>
+                  <input type="checkbox" name="module[]" value="1" class="flat-red form-control">&nbsp;  @lang('fleet.vehicles')<br>
+                  <input type="checkbox" name="module[]" value="2" class="flat-red form-control"> &nbsp;@lang('menu.transactions') <br>
+                  <input type="checkbox" name="module[]" value="3" class="flat-red form-control">&nbsp; @lang('fleet.bookings')<br>
+                  <input type="checkbox" name="module[]" value="13" class="flat-red form-control">&nbsp;  @lang('fleet.helpus')
+                </div>
+                <div class="col-md-4" style="padding: 0px;">
+                  <input type="checkbox" name="module[]" value="4" class="flat-red form-control">&nbsp; @lang('menu.reports')<br>
+                  <input type="checkbox" name="module[]" value="5" class="flat-red form-control">&nbsp; @lang('fleet.fuel')<br>
+
+                  <input type="checkbox" name="module[]" value="6" class="flat-red form-control">&nbsp; @lang('fleet.vendors')<br>
+                  <input type="checkbox" name="module[]" value="7" class="flat-red form-control">&nbsp; @lang('fleet.work_orders')<br>
+                  <input type="checkbox" name="module[]" value="14" class="flat-red form-control">&nbsp; @lang('fleet.parts')
+                </div>
+                <div class="col-md-4" style="padding: 0px;">
+                  <input type="checkbox" name="module[]" value="8" class="flat-red form-control">&nbsp; @lang('fleet.notes')<br>
+                  <input type="checkbox" name="module[]" value="9" class="flat-red form-control">&nbsp;  @lang('fleet.serviceReminders')<br>
+                  <input type="checkbox" name="module[]" value="10" class="flat-red form-control">&nbsp;  @lang('fleet.reviews')<br>
+                  <input type="checkbox" name="module[]" value="12" class="flat-red form-control">&nbsp;  @lang('fleet.maps')<br>
+                  <input type="checkbox" name="module[]" value="15" class="flat-red form-control">&nbsp;  @lang('fleet.testimonials')
+                </div>
               </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="form-group">
-              {!! Form::label('website',__('fleet.website'), ['class' => 'form-label']) !!}
-              {!! Form::text('website',null,['class'=>'form-control','required']) !!}
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="form-group">
-              {!! Form::label('address1',__('fleet.address1'), ['class' => 'form-label']) !!}
-              <div class="input-group mb-3">
-              <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-address-book-o" aria-hidden="true"></i></span></div>
-              {!! Form::text('address1',null,['class'=>'form-control','required']) !!}
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="form-group">
-              {!! Form::label('address2',__('fleet.address2'), ['class' => 'form-label']) !!}
-              <div class="input-group mb-3">
-              <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-address-book-o" aria-hidden="true"></i></span></div>
-              {!! Form::text('address2',null,['class'=>'form-control']) !!}
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="form-group">
-              {!! Form::label('city',__('fleet.city'), ['class' => 'form-label']) !!}
-              {!! Form::text('city',null,['class'=>'form-control','required']) !!}
-            </div>
-            <div class="form-group">
-              {!! Form::label('postal_code',__('fleet.postal_code'), ['class' => 'form-label']) !!}
-              {!! Form::text('postal_code',null,['class'=>'form-control']) !!}
-            </div>
-            <div class="form-group">
-              {!! Form::label('country',__('fleet.country'), ['class' => 'form-label']) !!}
-              {!! Form::text('country',null,['class'=>'form-control','required']) !!}
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              {!! Form::label('province',__('fleet.province'), ['class' => 'form-label']) !!}
-              {!! Form::text('province',null,['class'=>'form-control']) !!}
-            </div>
-            <div class="form-group">
-              {!! Form::label('note',__('fleet.note'), ['class' => 'form-label']) !!}
-              {!! Form::textarea('note',null,['class'=>'form-control','size'=>'30x4']) !!}
             </div>
           </div>
         </div>
-        <hr>
-        <div class="row">
+        
+        {{-- <div class="row">
           <div class="form-group col-md-6">
             {!! Form::label('udf1',__('fleet.add_udf'), ['class' => 'col-xs-5 control-label']) !!}
             <div class="row">
@@ -142,7 +122,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
         <div class="blank"></div>
         <div class="row">
           <div class="col-md-12">
@@ -165,6 +145,13 @@
       $("#nothing").html('{!! Form::text('type',null,['class' => 'form-control','required']) !!}');
     }
   }
+
+  $('#group_id').select2({placeholder: "@lang('fleet.selectGroup')"});
+    //Flat green color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    });
 </script>
 <script type="text/javascript">
   $(".add_udf").click(function () {

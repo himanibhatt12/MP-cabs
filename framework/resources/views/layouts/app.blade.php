@@ -145,7 +145,7 @@
                 @php($src=asset('uploads/'.Auth::user()->getMeta('driver_image')))
                 @endif
                 <img src="{{$src}}" class="img-size-50 mr-3 img-circle" alt="User Image">
-                @elseif(Auth::user()->user_type == 'S' || Auth::user()->user_type == 'O')
+                @elseif(Auth::user()->user_type == 'S' || Auth::user()->user_type == 'O' || Auth::user()->user_type == 'V')
                   @if(Auth::user()->getMeta('profile_image') == null)
                   <img src="{{ asset("assets/images/no-user.jpg")}}" class="img-size-50 mr-3 img-circle" alt="User Image">
                   @else
@@ -222,7 +222,7 @@
             @php($src=asset('uploads/'.Auth::user()->getMeta('driver_image')))
             @endif
             <img src="{{$src}}" class="img-circle elevation-2" alt="User Image">
-            @elseif(Auth::user()->user_type == 'S' || Auth::user()->user_type == 'O')
+            @elseif(Auth::user()->user_type == 'S' || Auth::user()->user_type == 'O' || Auth::user()->user_type == 'V')
               @if(Auth::user()->getMeta('profile_image') == null)
               <img src="{{ asset("assets/images/no-user.jpg")}}" class="img-circle elevation-2" alt="User Image">
               @else
@@ -315,7 +315,7 @@
           @endif
           <!-- customer -->
           <!-- user-type S or O -->
-          @if(Auth::user()->user_type=="S" || Auth::user()->user_type=="O")
+          @if(Auth::user()->user_type=="S" || Auth::user()->user_type=="O" || Auth::user()->user_type=="V")
           <li class="nav-item">
             <a href="{{ url('admin/')}}" class="nav-link @if(Request::is('admin')) active @endif">
               <i class="nav-icon fa fa-dashboard"></i>
@@ -424,7 +424,7 @@
           <!-- driver -->
 
           <!-- sidebar menus for office-admin and super-admin -->
-        @if(Auth::user()->user_type == "S" || Auth::user()->user_type == "O")
+        @if(Auth::user()->user_type == "S" || Auth::user()->user_type == "O" || Auth::user()->user_type == "V")
         @php($modules=unserialize(Auth::user()->getMeta('module'))) <!--array of selected modules of logged in user-->
         @else
         @php($modules=array())
@@ -432,7 +432,7 @@
 
         @if (!Auth::guest() &&  Auth::user()->user_type!="D" && Auth::user()->user_type != "C" )
 
-            @if((Request::is('admin/drivers*')) || (Request::is('admin/users*')) || (Request::is('admin/customers*')) )
+            @if((Request::is('admin/drivers*')) || (Request::is('admin/users*')) || (Request::is('admin/customers*')) ||(Request::is('admin/vendors*')))
             @php($class="menu-open")
             @php($active="active")
 
@@ -457,6 +457,12 @@
               </li>
               @if(Auth::user()->user_type=="S")
               <li class="nav-item">
+                <a href="{{ route('vendors.index')}}" class="nav-link @if(Request::is('admin/vendors*')) active @endif">
+                  <i class="fa fa-address-card nav-icon"></i>
+                  <p>@lang('fleet.vendors')</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ route('users.index')}}" class="nav-link @if(Request::is('admin/users*')) active @endif">
                   <i class="fa fa-user nav-icon"></i>
                   <p>@lang('fleet.users')</p>
@@ -471,6 +477,39 @@
               @endif
             </ul>
           </li> @endif
+
+
+          @if((Request::is('admin/cities*')))
+          @php($class="menu-open")
+          @php($active="active")
+
+          @else
+          @php($class="")
+          @php($active="")
+          @endif
+          <li class="nav-item has-treeview {{$class}}">
+            <a href="#" class="nav-link {{$active}}">
+              <i class="nav-icon fa fa-th-list"></i>
+              <p>
+                @lang('fleet.manage_cities')
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('cities.index')}}" class="nav-link @if(Request::is('admin/cities*') && !(Request::is('admin/cities/create'))) active @endif">
+                  <i class="fa fa-th-list nav-icon"></i>
+                  <p>@lang('fleet.cities')</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('cities.create')}}" class="nav-link @if(Request::is('admin/cities/create')) active @endif">
+                  <i class="fa fa-plus-square nav-icon"></i>
+                  <p>@lang('fleet.add_city')</p>
+                </a>
+              </li>
+            </ul>
+          </li> 
 
             @if((Request::is('admin/driver-logs')) || (Request::is('admin/vehicle-types*')) || (Request::is('admin/vehicles*')) || (Request::is('admin/vehicle_group*')) || (Request::is('admin/vehicle-reviews*')) || (Request::is('admin/view-vehicle-review*')) || (Request::is('admin/vehicle-review*')) || (Request::is('admin/vehicle-make*')) || (Request::is('admin/vehicle-model*')) || (Request::is('admin/vehicle-color*')))
             @php($class="menu-open")
@@ -495,6 +534,7 @@
                   <p>@lang('menu.manageVehicles')</p>
                 </a>
               </li>
+              @if(Auth::user()->user_type == "S")
               <li class="nav-item">
                 <a href="{{ route('vehicle-make.index')}}" class="nav-link @if(Request::is('admin/vehicle-make*')) active @endif">
                   <i class="fa fa-car nav-icon"></i>
@@ -513,6 +553,7 @@
                   <p>@lang('fleet.vehicle_colors')</p>
                 </a>
               </li>
+              @endif
               <li class="nav-item">
                 <a href="{{ route('vehicle-types.index')}}" class="nav-link @if(Request::is('admin/vehicle-types*')) active @endif">
                   <i class="fa fa-th-list nav-icon"></i>
@@ -702,14 +743,14 @@
                 </a>
               </li>
               @endif
-              @if(in_array(6,$modules))
+              {{-- @if(in_array(6,$modules))
               <li class="nav-item">
                 <a href="{{ route('reports.vendors') }}" class="nav-link @if(Request::is('admin/reports/vendors')) active @endif">
                   <i class="fa fa-cubes nav-icon"></i>
                   <p>@lang('fleet.vendorReport')</p>
                 </a>
               </li>
-              @endif
+              @endif --}}
               @if(in_array(2,$modules))
               <li class="nav-item">
                 <a href="{{ route('reports.yearly') }}" class="nav-link @if(Request::is('admin/reports/yearly')) active @endif">
@@ -745,7 +786,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('fuel.index') }}" class="nav-link @if(Request::is('admin/fuel')) active @endif">
+                <a href="{{ route('fuel.index') }}" class="nav-link @if(Request::is('admin/fuel*') && !Request::is('admin/fuel/create')) active @endif">
                   <i class="fa fa-history nav-icon"></i>
                   <p>@lang('fleet.manage_fuel')</p>
                 </a>
@@ -761,7 +802,7 @@
             @php($class="")
             @php($active="")
             @endif
-          @if(in_array(6,$modules)) <li class="nav-item has-treeview {{$class}}">
+          {{-- @if(in_array(6,$modules)) <li class="nav-item has-treeview {{$class}}">
             <a href="#" class="nav-link {{$active}}">
               <i class="nav-icon fa fa-cubes"></i>
               <p>
@@ -783,7 +824,7 @@
                 </a>
               </li>
             </ul>
-          </li> @endif
+          </li> @endif --}}
 
 
             @if(Request::is('admin/parts*') && !Request::is('admin/parts-used*'))
@@ -1102,7 +1143,7 @@
               </p>
             </a>
           </li> @endif
-          @if(in_array(Auth::user()->user_type, ['S','O']))
+          @if(in_array(Auth::user()->user_type, ['S','O','V']))
           <li class="nav-item">
             <a href="{{ url('admin/messages')}}" class="nav-link @if(Request::is('admin/messages')) active @endif">
               <i class="nav-icon fa fa-comments"></i>
@@ -1167,7 +1208,7 @@
     <strong>@lang('fleet.copyright') &copy; 2017-{{date("Y")}} <a href="https://hyvikk.com">Hyvikk Solutions</a>.</strong>
     @lang('fleet.all_rights_reserved')
     <div class="float-right d-none d-sm-inline-block">
-      <b>@lang('fleet.version')</b> 4.0.2
+      <b>@lang('fleet.version')</b> 4.0.1
     </div>
   </footer>
 

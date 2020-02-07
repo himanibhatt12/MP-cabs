@@ -70,7 +70,7 @@
                 <tr>
                   <td>{{$row->day}}</td>
                   <td>{{$row->date}}</td>
-                  <td>{{$v[$row->vehicle_id]['make']}}-{{$v[$row->vehicle_id]['model']}}-{{$v[$row->vehicle_id]['license_plate']}}</td>
+                  <td>{{$v[$row->vehicle_id]->maker->make}}-{{$v[$row->vehicle_id]->vehiclemodel->model}}-{{$v[$row->vehicle_id]['license_plate']}}</td>
                   <td>{{Hyvikk::get('currency')}} {{$row->Income2}}</td>
                 </tr>
                 @endforeach

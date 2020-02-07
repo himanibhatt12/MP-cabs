@@ -35,7 +35,7 @@ class BookingsController extends Controller
             $data['data'] = Bookings::orderBy('id', 'desc')->get();
         } else {
             $vehicle_ids = VehicleModel::where('group_id', Auth::user()->group_id)->pluck('id')->toArray();
-            $data['data'] = Bookings::whereIn('vehicle_id', $vehicle_ids)->orderBy('id', 'desc')->get();
+            $data['data'] = Bookings::where('user_id', Auth::user()->id)->whereIn('vehicle_id', $vehicle_ids)->orderBy('id', 'desc')->get();
         }
         $data['types'] = IncCats::get();
 
@@ -129,7 +129,11 @@ class BookingsController extends Controller
         $to_date = $request->get("to_date");
         $req_type = $request->get("req");
         if ($req_type == "new") {
-            $q = "select id,name as text from users where user_type='D' and deleted_at is null and id not in (select driver_id from bookings where  deleted_at is null   and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
+            if (Auth::user()->user_type == "S") {
+                $q = "select id,name as text from users where user_type='D' and deleted_at is null and id not in (select driver_id from bookings where  deleted_at is null   and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
+            } else {
+                $q = "select id,name as text from users where user_id=" . Auth::id() . " and user_type='D' and deleted_at is null and id not in (select driver_id from bookings where  deleted_at is null   and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
+            }
 
             $d = collect(DB::select(DB::raw($q)));
 
@@ -137,7 +141,11 @@ class BookingsController extends Controller
         } else {
             $id = $request->get("id");
             $current = Bookings::find($id);
-            $q = "select id,name as text from users where user_type='D' and id not in (select driver_id from bookings where  id!=" . $id . " and deleted_at is null  and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
+            if (Auth::user()->user_type == "S") {
+                $q = "select id,name as text from users where user_type='D' and id not in (select driver_id from bookings where  id!=" . $id . " and deleted_at is null  and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
+            } else {
+                $q = "select id,name as text from users where user_id=" . Auth::id() . " and user_type='D' and id not in (select driver_id from bookings where  id!=" . $id . " and deleted_at is null  and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
+            }
             $d = collect(DB::select(DB::raw($q)));
 
             $chk = $d->where('id', $current->driver_id);
@@ -175,7 +183,7 @@ class BookingsController extends Controller
             if (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
                 $q = "select id,concat(make,' - ',model,' - ',license_plate) as text from vehicles where in_service=1 and deleted_at is null  and  id not in(select vehicle_id from bookings where  deleted_at is null  and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
             } else {
-                $q = "select id,concat(make,' - ',model,' - ',license_plate) as text from vehicles where in_service=1 and deleted_at is null and group_id=" . Auth::user()->group_id . " and  id not in(select vehicle_id from bookings where  deleted_at is null  and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
+                $q = "select id,concat(make,' - ',model,' - ',license_plate) as text from vehicles where user_id=" . Auth::id() . " and in_service=1 and deleted_at is null and group_id=" . Auth::user()->group_id . " and  id not in(select vehicle_id from bookings where  deleted_at is null  and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
             }
 
             $d = collect(DB::select(DB::raw($q)));
@@ -186,7 +194,7 @@ class BookingsController extends Controller
             $new = array();
             $vehicle_data = VehicleModel::whereIn('id', $v_ids)->get();
             foreach ($vehicle_data as $v) {
-                array_push($new, array("id" => $v->id, "text" => $v->maker->make . "-" . $v->vehiclemodel->model . "-" . $v->license_plate));
+                array_push($new, array("id" => $v->id, "text" => $v->maker->make . " - " . $v->vehiclemodel->model . " - " . $v->license_plate));
 
             }
             // foreach ($d as $ro) {
@@ -211,7 +219,7 @@ class BookingsController extends Controller
             if (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
                 $q = "select id,concat(make,' - ',model,' - ',license_plate) as text from vehicles where in_service=1 " . $condition . " and id not in (select vehicle_id from bookings where id!=$id and  deleted_at is null  and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
             } else {
-                $q = "select id,concat(make,' - ',model,' - ',license_plate) as text from vehicles where in_service=1 " . $condition . " and group_id=" . Auth::user()->group_id . " and id not in (select vehicle_id from bookings where id!=$id and  deleted_at is null  and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
+                $q = "select id,concat(make,' - ',model,' - ',license_plate) as text from vehicles where user_id=" . Auth::id() . " and in_service=1 " . $condition . " and group_id=" . Auth::user()->group_id . " and id not in (select vehicle_id from bookings where id!=$id and  deleted_at is null  and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
             }
 
             $d = collect(DB::select(DB::raw($q)));
@@ -234,9 +242,9 @@ class BookingsController extends Controller
             $vehicle_data = VehicleModel::whereIn('id', $v_ids)->get();
             foreach ($vehicle_data as $ro) {
                 if ($ro->id === $current->vehicle_id) {
-                    array_push($new, array("id" => $ro->id, "text" => $ro->maker->make . "-" . $ro->vehiclemodel->model . "-" . $ro->license_plate, "selected" => true));
+                    array_push($new, array("id" => $ro->id, "text" => $ro->maker->make . " - " . $ro->vehiclemodel->model . " - " . $ro->license_plate, "selected" => true));
                 } else {
-                    array_push($new, array("id" => $ro->id, "text" => $ro->maker->make . "-" . $ro->vehiclemodel->model . "-" . $ro->license_plate));
+                    array_push($new, array("id" => $ro->id, "text" => $ro->maker->make . " - " . $ro->vehiclemodel->model . " - " . $ro->license_plate));
                 }
             }
             $r['data'] = $new;
@@ -268,10 +276,13 @@ class BookingsController extends Controller
         $data = array();
         $start = $request->get("start");
         $end = $request->get("end");
+        $vehicle_ids = array(0);
         if (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
+            $vehicle_ids = VehicleModel::pluck('id')->toArray();
             $b = Bookings::where("pickup", ">=", $start)->where("dropoff", "<=", $end)->get();
+
         } else {
-            $vehicle_ids = VehicleModel::where('group_id', Auth::user()->group_id)->pluck('id')->toArray();
+            $vehicle_ids = VehicleModel::where('user_id', Auth::id())->where('group_id', Auth::user()->group_id)->pluck('id')->toArray();
             $b = Bookings::whereIn('vehicle_id', $vehicle_ids)->where("pickup", ">=", $start)->where("dropoff", "<=", $end)->get();
         }
 
@@ -291,7 +302,7 @@ class BookingsController extends Controller
             array_push($data, $x);
         }
 
-        $reminders = ServiceReminderModel::get();
+        $reminders = ServiceReminderModel::whereIn('vehicle_id', $vehicle_ids)->get();
         foreach ($reminders as $r) {
             $interval = substr($r->services->overdue_unit, 0, -3);
             $int = $r->services->overdue_time . $interval;
@@ -315,12 +326,13 @@ class BookingsController extends Controller
     {
         $user = Auth::user()->group_id;
         $data['customers'] = User::where('user_type', 'C')->get();
-        $data['drivers'] = User::whereUser_type("D")->get();
         $data['addresses'] = Address::where('customer_id', Auth::user()->id)->get();
-        if ($user == null) {
+        if ($user == null || Auth::user()->user_type == 'S') {
+            $data['drivers'] = User::whereUser_type("D")->get();
             $data['vehicles'] = VehicleModel::whereIn_service("1")->get();
         } else {
-            $data['vehicles'] = VehicleModel::where([['group_id', $user], ['in_service', '1']])->get();}
+            $data['drivers'] = User::where('user_id', Auth::id())->whereUser_type("D")->get();
+            $data['vehicles'] = VehicleModel::where([['group_id', $user], ['in_service', '1'], ['user_id', Auth::id()]])->get();}
         return view("bookings.create", $data);
     }
 
@@ -337,8 +349,12 @@ class BookingsController extends Controller
         // $drivers = collect(DB::select(DB::raw($q)));
         if (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
             $q1 = "select * from vehicles where in_service=1" . $condition . " and deleted_at is null and id not in (select vehicle_id from bookings where status=0 and  id!=" . $id . " and deleted_at is null and  (DATE_SUB(pickup, INTERVAL 15 MINUTE) between '" . $booking->pickup . "' and '" . $booking->dropoff . "' or DATE_ADD(dropoff, INTERVAL 15 MINUTE) between '" . $booking->pickup . "' and '" . $booking->dropoff . "'  or dropoff between '" . $booking->pickup . "' and '" . $booking->dropoff . "'))";
+            $index['drivers'] = User::whereUser_type("D")->get();
+
         } else {
-            $q1 = "select * from vehicles where in_service=1" . $condition . " and deleted_at is null and group_id=" . Auth::user()->group_id . " and id not in (select vehicle_id from bookings where status=0 and  id!=" . $id . " and deleted_at is null and  (DATE_SUB(pickup, INTERVAL 15 MINUTE) between '" . $booking->pickup . "' and '" . $booking->dropoff . "' or DATE_ADD(dropoff, INTERVAL 15 MINUTE) between '" . $booking->pickup . "' and '" . $booking->dropoff . "'  or dropoff between '" . $booking->pickup . "' and '" . $booking->dropoff . "'))";
+            $q1 = "select * from vehicles where user_id=" . Auth::id() . " and in_service=1" . $condition . " and deleted_at is null and group_id=" . Auth::user()->group_id . " and id not in (select vehicle_id from bookings where status=0 and  id!=" . $id . " and deleted_at is null and  (DATE_SUB(pickup, INTERVAL 15 MINUTE) between '" . $booking->pickup . "' and '" . $booking->dropoff . "' or DATE_ADD(dropoff, INTERVAL 15 MINUTE) between '" . $booking->pickup . "' and '" . $booking->dropoff . "'  or dropoff between '" . $booking->pickup . "' and '" . $booking->dropoff . "'))";
+            $index['drivers'] = User::where('user_id', Auth::id())->whereUser_type("D")->get();
+
         }
         $v_ids = array();
         $vehicles_data = collect(DB::select(DB::raw($q1)));
@@ -347,7 +363,6 @@ class BookingsController extends Controller
         }
         $vehicles = VehicleModel::whereIn('id', $v_ids)->get();
 
-        $index['drivers'] = User::whereUser_type("D")->get();
         $index['vehicles'] = $vehicles;
         $index['data'] = $booking;
         $index['udfs'] = unserialize($booking->getMeta('udf'));

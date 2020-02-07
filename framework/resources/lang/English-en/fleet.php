@@ -1,10 +1,15 @@
 <?php
 return [
+    'selectCity' => 'Select City Name', //
+    'cities' => 'Cities',
+    'add_city' => 'Add City',
+    'edit_city' => 'Edit City',
+    'manage_cities' => 'Manage Cities',
     'SelectVehicleColor' => 'Select Vehicle Color',
     'add_vehicle_color' => 'Add Vehicle Color',
     'edit_vehicle_color' => 'Edit Vehicle Color',
     'vehicle_colors' => 'Vehicle Colors',
-    'SelectVehicleModel' => 'Select Vehicle Model', //
+    'SelectVehicleModel' => 'Select Vehicle Model',
     'edit_vehicle_model' => 'Edit Vehicle Model',
     'SelectVehicleMake' => 'Select Vehicle Make',
     'add_vehicle_model' => 'Add Vehicle Model',
@@ -351,7 +356,7 @@ return [
     'edit_technician' => 'Edit Technician',
     'createtechnician' => 'Add Technician',
     'group' => 'Group',
-    'selectGroup' => 'Select Vehicle Group',
+    'selectGroup' => 'Select Vehicle Franchisee',
     'groupName' => 'Franchisee Name',
     'subscribers' => 'Subscribers',
     'vehiclesInGroup' => 'Vehicles in group',

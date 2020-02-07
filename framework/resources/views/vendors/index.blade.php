@@ -28,7 +28,7 @@
         @lang('fleet.vendors')
         &nbsp;
         <a href="{{ route('vendors.create')}}" class="btn btn-success">@lang('fleet.create_vendor')</a>
-        <button data-toggle="modal" data-target="#import" class="btn btn-warning">@lang('fleet.import')</button>
+        {{-- <button data-toggle="modal" data-target="#import" class="btn btn-warning">@lang('fleet.import')</button> --}}
         </h3>
       </div>
 
@@ -41,11 +41,9 @@
                 <input type="checkbox" id="chk_all">
               @endif
               </th>
-              <th>@lang('fleet.picture')</th>
-              <th>@lang('fleet.vendor')</th>
-              <th>@lang('fleet.vendor_type')</th>
-              <th>@lang('fleet.phone')</th>
-              <th>@lang('fleet.address')</th>
+              <th>#</th>
+              <th>@lang('fleet.profile_photo')</th>
+              <th>@lang('fleet.name')</th>
               <th>@lang('fleet.email')</th>
               <th>@lang('fleet.action')</th>
             </tr>
@@ -56,30 +54,15 @@
               <td>
                 <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="checkbox" id="chk{{ $row->id }}" onclick='checkcheckbox();'>
               </td>
+              <td>{{$row->id}}</td>
               <td>
-                @if($row->photo != null)
-                  <img src="{{asset('uploads/'.$row->photo)}}" height="70px" width="70px">
-                @else
-                  <img src="{{ asset("assets/images/no-user.jpg")}}" height="70px" width="70px">
-                @endif
+              @if($row->getMeta('profile_image') != null)
+              <img src="{{asset('uploads/'.$row->getMeta('profile_image'))}}" height="70px" width="70px">
+              @else
+              <img src="{{ asset("assets/images/no-user.jpg")}}" height="70px" width="70px">
+              @endif
               </td>
-              <td>
-                {{$row->name}}
-              </td>
-              <td>{{$row->type}}</td>
-              <td>
-                {{$row->phone}}
-              </td>
-              <td>{{$row->address1}}
-                <br>
-                {{$row->address2}}
-                &nbsp;
-                {{ $row->city }} @if($row->postal_code) ,{{ $row->postal_code }} @endif
-                &nbsp;
-                {{ $row->province }}
-                &nbsp;
-                {{ $row->country }}
-              </td>
+              <td>{{$row->name}}</td>
               <td>{{$row->email}}</td>
               <td>
               <div class="btn-group">
@@ -88,6 +71,7 @@
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu custom" role="menu">
+                  <a class="dropdown-item" class="mybtn changepass" data-id="{{$row->id}}" data-toggle="modal" data-target="#changepass" title="@lang('fleet.change_password')"><i class="fa fa-key"  aria-hidden="true" style="color:#269abc;"></i> @lang('fleet.change_password')</a>
                   <a class="dropdown-item" href="{{url("admin/vendors/".$row->id."/edit") }}"><span aria-hidden="true" class="fa fa-edit" style="color: #f0ad4e;"></span> @lang('fleet.edit')</a>
                   {!! Form::hidden("id",$row->id) !!}
                   <a class="dropdown-item" data-id="{{$row->id}}" data-toggle="modal" data-target="#myModal"><span aria-hidden="true" class="fa fa-trash" style="color: #dd4b39"></span> @lang('fleet.delete')</a>
@@ -107,11 +91,9 @@
                 <button class="btn btn-danger" id="bulk_delete" data-toggle="modal" data-target="#bulkModal" disabled>@lang('fleet.delete')</button>
               @endif
               </th>
-              <th>@lang('fleet.picture')</th>
-              <th>@lang('fleet.vendor')</th>
-              <th>@lang('fleet.vendor_type')</th>
-              <th>@lang('fleet.phone')</th>
-              <th>@lang('fleet.address')</th>
+              <th>#</th>
+              <th>@lang('fleet.profile_photo')</th>
+              <th>@lang('fleet.name')</th>
               <th>@lang('fleet.email')</th>
               <th>@lang('fleet.action')</th>
             </tr>
@@ -202,6 +184,39 @@
   </div>
 </div>
 <!-- Modal -->
+
+<!-- Modal -->
+<div id="changepass" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">@lang('fleet.change_password')</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        {!! Form::open(['url'=>url('admin/change_password'),'id'=>'changepass_form']) !!}
+        <form id="change" action="{{url('admin/change_password')}}" method="POST">
+          {!! Form::hidden('driver_id',"",['id'=>'driver_id'])!!}
+        <div class="form-group">
+          {!! Form::label('passwd',__('fleet.password'),['class'=>"form-label"]) !!}
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-lock"></i></span>
+            </div>
+            {!! Form::password('passwd',['class'=>"form-control",'id'=>'passwd','required']) !!}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="password" class="btn btn-info" type="submit" >@lang('fleet.change_password')</button>
+        </form>
+        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('fleet.close')
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
 @endsection
 
 @section('script')
@@ -272,5 +287,31 @@
         $('#chk_all').prop('checked', false);
     }
   }
+
+  $('#changepass').on('show.bs.modal', function(e) {
+    var id = e.relatedTarget.dataset.id;
+    $("#driver_id").val(id);
+  });
+
+   $("#changepass_form").on("submit",function(e){
+    $.ajax({
+      type: "POST",
+      url: $(this).attr("action"),
+      data: $(this).serialize(),
+      success: function(data){
+
+       new PNotify({
+            title: 'Success!',
+            text: "@lang('fleet.passwordChanged')",
+            type: 'info'
+        });
+      },
+
+      dataType: "html"
+    });
+    $('#changepass').modal("hide");
+    e.preventDefault();
+  });
+
 </script>
 @endsection

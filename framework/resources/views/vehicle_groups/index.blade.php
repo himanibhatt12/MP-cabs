@@ -25,11 +25,13 @@
         <table class="table" id="data_table">
           <thead class="thead-inverse">
             <tr>
+              @if(Auth::user()->user_type != 'V')
               <th>
                 @if($data->count() > 0)
                 <input type="checkbox" id="chk_all">
                 @endif
               </th>
+              @endif
               <th>@lang('fleet.groupName')</th>
               <th>@lang('fleet.description')</th>
               <th>@lang('fleet.vehicles')</th>
@@ -40,11 +42,13 @@
           <tbody>
             @foreach($data as $row)
             <tr>
+              @if(Auth::user()->user_type != 'V')
               <td>
               @if($row->id != '1')
                 <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="checkbox" id="chk{{ $row->id }}" onclick='checkcheckbox();'>
               @endif
               </td>
+              @endif
               <td>
               {{$row->name}}
               </td>
@@ -59,6 +63,7 @@
               @php($u = DB::table('users')->where('group_id',$row->id)->where('deleted_at',null)->count('group_id'))
               {{$u}}</td>
               <td>
+              @if(Auth::user()->user_type != 'V')
               <div class="btn-group">
                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                   <span class="fa fa-gear"></span>
@@ -75,17 +80,20 @@
               {!! Form::open(['url' => 'admin/vehicle_group/'.$row->id,'method'=>'DELETE','class'=>'form-horizontal','id'=>'form_'.$row->id]) !!}
               {!! Form::hidden("id",$row->id) !!}
               {!! Form::close() !!}
+              @endif
               </td>
             </tr>
             @endforeach
           </tbody>
           <tfoot>
             <tr>
+              @if(Auth::user()->user_type != 'V')
               <th>
                 @if($data->count() > 0 && $row->id != '1')
                   <button class="btn btn-danger" id="bulk_delete" data-toggle="modal" data-target="#bulkModal" disabled>@lang('fleet.delete')</button>
                 @endif
               </th>
+              @endif
               <th>@lang('fleet.groupName')</th>
               <th>@lang('fleet.description')</th>
               <th>@lang('fleet.vehicles')</th>

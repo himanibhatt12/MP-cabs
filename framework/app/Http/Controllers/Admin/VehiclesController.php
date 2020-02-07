@@ -44,14 +44,14 @@ class VehiclesController extends Controller
         // dd($collection);
         foreach ($collection as $vehicle) {
             $id = VehicleModel::create([
-                'make' => $vehicle[0],
-                'model' => $vehicle[1],
+                // 'make' => $vehicle[0],
+                // 'model' => $vehicle[1],
                 'year' => $vehicle[2],
                 'int_mileage' => $vehicle[4],
                 'reg_exp_date' => date('Y-m-d', strtotime($vehicle[5])),
                 'engine_type' => $vehicle[6],
                 'horse_power' => $vehicle[7],
-                'color' => $vehicle[8],
+                // 'color' => $vehicle[8],
                 'vin' => $vehicle[9],
                 'license_plate' => $vehicle[10],
                 'lic_exp_date' => date('Y-m-d', strtotime($vehicle[11])),
@@ -77,7 +77,7 @@ class VehiclesController extends Controller
         if ($user->group_id == null || $user->user_type == "S") {
             $index['data'] = VehicleModel::get();
         } else {
-            $index['data'] = VehicleModel::where('group_id', $user->group_id)->get();}
+            $index['data'] = VehicleModel::where('user_id', Auth::id())->where('group_id', $user->group_id)->get();}
 
         return view("vehicles.index", $index);
     }
@@ -220,7 +220,6 @@ class VehiclesController extends Controller
 
     public function store(VehicleRequest $request)
     {
-        // dd($request->all());
         $user_id = $request->get('user_id');
         $vehicle = VehicleModel::create([
             // 'make' => $request->get("make"),
@@ -382,7 +381,7 @@ class VehiclesController extends Controller
 
     public function review_edit($id)
     {
-        // dd($id);
+
         $data['review'] = VehicleReviewModel::find($id);
         $user = Auth::user();
         if ($user->group_id == null || $user->user_type == "S") {

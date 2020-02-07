@@ -20,20 +20,24 @@
 			<table class="table table-striped">
 				<tr>
 					<th>@lang('fleet.vehicle')</th>
-					<td>{{$vehicle->maker->make}}</td>
+					<td>@if($vehicle->make_id){{$vehicle->maker->make}}@endif</td>
 				</tr>
 
 				<tr>
 					<th>@lang('fleet.model')</th>
 					<td>
+						@if($vehicle->model_id)
 						{{$vehicle->vehiclemodel->model}}
+						@endif
 					</td>
 				</tr>
 
 				<tr>
 					<th>@lang('fleet.type')</th>
 					<td>
+						@if($vehicle->type_id)
 						{{$vehicle->types['displayname']}}
+						@endif
 					</td>
 				</tr>
 
@@ -84,7 +88,9 @@
 				<tr>
 					<th>@lang('fleet.color')</th>
 					<td>
+						@if($vehicle->color_id)
 						{{$vehicle->vehiclecolor->color}}
+						@endif
 					</td>
 				</tr>
 
@@ -132,7 +138,9 @@
 				<tr>
 					<th>@lang('fleet.vehicle')</th>
 					<td>
-					{{$vehicle->maker->make}}-{{$vehicle->vehiclemodel->model}}-{{$vehicle->types['displayname']}}
+					@if($vehicle->make_id != null && $vehicle->model_id != null)
+					{{$vehicle->maker->make}}-{{$vehicle->vehiclemodel->model}}-{{$vehicle->types->displayname}}
+					@endif
 					</td>
 				</tr>
 

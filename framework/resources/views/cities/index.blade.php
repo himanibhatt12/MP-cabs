@@ -1,6 +1,6 @@
-@extends("layouts.app")
+@extends('layouts.app')
 @section("breadcrumb")
-<li class="breadcrumb-item active"> @lang('fleet.fuel')</li>
+<li class="breadcrumb-item active">@lang('fleet.cities')</li>
 @endsection
 @section('extra_css')
 <style type="text/css">
@@ -15,11 +15,8 @@
   <div class="col-md-12">
     <div class="card card-info">
       <div class="card-header">
-        <h3 class="card-title">
-          @lang('fleet.manageFuel')
-          &nbsp;
-          <a href="{{ route('fuel.create')}}" class="btn btn-success">@lang('fleet.addNew')</a>
-        </h3>
+        <h3 class="card-title">@lang('fleet.cities') &nbsp;
+        <a href="{{ route('cities.create')}}" class="btn btn-success">@lang('fleet.addNew')</a></h3>
       </div>
 
       <div class="card-body table-responsive">
@@ -31,14 +28,8 @@
                 <input type="checkbox" id="chk_all">
                 @endif
               </th>
-              <th></th>
-              <th></th>
-              <th>@lang('fleet.date')</th>
-              <th>@lang('fleet.qty')</th>
-              <th>@lang('fleet.cost')</th>
-              <th>@lang('fleet.meter')</th>
-              <th>@lang('fleet.consumption')</th>
-              <th>@lang('fleet.province')</th>
+              <th>#</th>
+              <th>@lang('fleet.city')</th>
               <th>@lang('fleet.action')</th>
             </tr>
           </thead>
@@ -48,65 +39,27 @@
               <td>
                 <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="checkbox" id="chk{{ $row->id }}" onclick='checkcheckbox();'>
               </td>
+              <td>{{$row->id}}</td>
               <td>
-                @if($row->vehicle_data['vehicle_image'] != null)
-                  <img src="{{asset('uploads/'.$row->vehicle_data['vehicle_image'])}}" height="70px" width="70px">
-                @else
-                  <img src="{{ asset("assets/images/vehicle.jpeg")}}" height="70px" width="70px">
-                @endif
-              </td>
-              <td>
-                <a href="{{ url("admin/vehicles/".$row->vehicle_id."/edit")}}">
-                {{$row->vehicle_data->year}} {{$row->vehicle_data->maker->make}}-{{$row->vehicle_data->vehiclemodel->model}}
-                </a>
-                <br>
-                <b>@lang('fleet.vin'):</b> {{$row->vehicle_data['vin']}}
-              </td>
-              <td>{{$row->date}}</td>
-              <td> {{$row->qty}} @if(Hyvikk::get('fuel_unit') == "gallon") @lang('fleet.gal') @else Liter @endif </td>
-              <td>
-                @php ($total = $row->qty * $row->cost_per_unit)
-                {{ Hyvikk::get('currency') }} {{$total}}
-                <br>
-                {{ Hyvikk::get('currency') }} {{$row->cost_per_unit}}/ {{ Hyvikk::get('fuel_unit') }}
-              </td>
-              <td>
-                @lang('fleet.start'): {{$row->start_meter}} {{Hyvikk::get('dis_format')}}
-                <br>
-                @lang('fleet.end'): {{$row->end_meter}} {{Hyvikk::get('dis_format')}}
-                <br>
-                @lang('fleet.distence'):
-                
-                @if($row->end_meter == 0)
-                0.00 {{Hyvikk::get('dis_format')}}
-                @else
-                {{$row->end_meter - $row->start_meter}}  {{Hyvikk::get('dis_format')}}
-                @endif
-              </td>
-              <td>
-                {{ $row->consumption }}
-                @if(Hyvikk::get('dis_format') == "km")
-                 @if(Hyvikk::get('fuel_unit') == "gallon")KMPG @else KMPL @endif
-                @else
-                 @if(Hyvikk::get('fuel_unit') == "gallon")MPG @else MPL @endif
-                @endif
-              </td>
-              <td>
-                {{$row->province}}
+                {{ $row->city }}
               </td>
               <td>
               <div class="btn-group">
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                  <span class="fa fa-gear"></span>
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu custom" role="menu">
-                  <a class="dropdown-item" href="{{ url("admin/fuel/".$row->id."/edit")}}"> <span aria-hidden="true" class="fa fa-edit" style="color: #f0ad4e;"></span> @lang('fleet.edit')</a>
-                  <a class="dropdown-item" data-id="{{$row->id}}" data-toggle="modal" data-target="#myModal"><span aria-hidden="true" class="fa fa-trash" style="color: #dd4b39"></span> @lang('fleet.delete')</a>
-                </div>
-              </div>
-              {!! Form::open(['url' => 'admin/fuel/'.$row->id,'method'=>'DELETE','class'=>'form-horizontal','id'=>'form_'.$row->id]) !!}
+              <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+              <span class="fa fa-gear"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu custom" role="menu">
+              <a class="dropdown-item" href="{{url("admin/cities/".$row->id."/edit") }}"> <span aria-hidden="true" class="fa fa-edit" style="color: #f0ad4e;"></span> @lang('fleet.edit')</a>
               {!! Form::hidden("id",$row->id) !!}
+
+              <a class="dropdown-item" data-id="{{$row->id}}" data-toggle="modal" data-target="#myModal"> <span aria-hidden="true" class="fa fa-trash" style="color: #dd4b39"></span> @lang('fleet.delete')</a>
+              </div>
+              </div>
+              {!! Form::open(['url' => 'admin/cities/'.$row->id,'method'=>'DELETE','class'=>'form-horizontal','id'=>'form_'.$row->id]) !!}
+
+              {!! Form::hidden("id",$row->id) !!}
+
               {!! Form::close() !!}
               </td>
             </tr>
@@ -115,18 +68,12 @@
           <tfoot>
             <tr>
               <th>
-              @if($data->count() > 0)
-                <button class="btn btn-danger" id="bulk_delete" data-toggle="modal" data-target="#bulkModal" disabled>@lang('fleet.delete')</button>
-              @endif
+                @if($data->count() > 0)
+                  <button class="btn btn-danger" id="bulk_delete" data-toggle="modal" data-target="#bulkModal" disabled>@lang('fleet.delete')</button>
+                @endif
               </th>
-              <th></th>
-              <th></th>
-              <th>@lang('fleet.date')</th>
-              <th>@lang('fleet.qty')</th>
-              <th>@lang('fleet.cost')</th>
-              <th>@lang('fleet.meter')</th>
-              <th>@lang('fleet.consumption')</th>
-              <th>@lang('fleet.province')</th>
+              <th>#</th>
+              <th>@lang('fleet.city')</th>
               <th>@lang('fleet.action')</th>
             </tr>
           </tfoot>
@@ -146,7 +93,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        {!! Form::open(['url'=>'admin/delete-fuel','method'=>'POST','id'=>'form_delete']) !!}
+        {!! Form::open(['url'=>'admin/delete-city','method'=>'POST','id'=>'form_delete']) !!}
         <div id="bulk_hidden"></div>
         <p>@lang('fleet.confirm_bulk_delete')</p>
       </div>
@@ -252,4 +199,5 @@
     }
   }
 </script>
+
 @endsection

@@ -244,12 +244,8 @@ input:checked + .slider:before {
                 <div class="col-xs-6">
                   <select id="group_id" name="group_id" class="form-control">
                     <option value="">@lang('fleet.vehicleGroup')</option>
-                    @foreach($groups as $group)
-                    @if($group->id == 1)
-                    <option value="{{$group->id}}" selected>{{$group->name}}</option>
-                    @else
+                    @foreach($groups as $group)                    
                     <option value="{{$group->id}}" >{{$group->name}}</option>
-                    @endif
                     @endforeach
                   </select>
                 </div>

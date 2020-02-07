@@ -12,6 +12,7 @@
       <div class="card-body">
         <div class="row">
           @if(in_array(0,$modules))
+          @if(Auth::user()->user_type != 'V')
           <div class="col-lg-4 col-xs-6">
             <div class="info-box">
               <span class="info-box-icon bg-info"><i class="fa fa-users"></i></span>
@@ -22,6 +23,7 @@
               </div>
             </div>
           </div>
+          @endif
 
           <div class="col-lg-4 col-xs-6">
             <div class="info-box">
@@ -88,7 +90,7 @@
             </div>
           </div>
           @endif
-          @if(in_array(6,$modules))
+          @if(in_array(6,$modules) && Auth::user()->user_type != 'V')
           <div class="col-lg-4  col-xs-6">
             <div class="info-box">
               <span class="info-box-icon bg-success"><i class="fa fa-cubes"></i></span>

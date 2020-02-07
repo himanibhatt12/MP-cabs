@@ -59,10 +59,10 @@
                 <img src="{{ asset("assets/images/vehicle.jpeg")}}" height="70px" width="70px">
                 @endif
               </td>
-              <td>{{$row->maker->make}}</td>
-              <td>{{$row->vehiclemodel->model}}</td>
+              <td>@if($row->make_id){{$row->maker->make}}@endif</td>
+              <td>@if($row->model_id){{$row->vehiclemodel->model}}@endif</td>
               <td>@if($row->type_id){{$row->types->displayname}}@endif</td>
-              <td>{{$row->vehiclecolor->color}}</td>
+              <td>@if($row->color_id){{$row->vehiclecolor->color}}@endif</td>
               <td>{{$row->license_plate}}</td>
               <td>
                @if($row->group_id){{$row->group->name}}@endif

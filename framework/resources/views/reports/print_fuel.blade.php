@@ -51,7 +51,7 @@
       <div class="row">
         <div class="col-md-12 text-center">
           <h3>@lang('fleet.fuelReport')&nbsp;<small>@if($month_select != 0){{date('F', mktime(0, 0, 0, $month_select, 10))}}-@endif{{$year_select}}</small></h3>
-          <h4>{{$vehicle['make']}}-{{$vehicle['model']}}-{{$vehicle['license_plate']}}</h4>
+          <h4>{{$vehicle->maker->make}}-{{$vehicle->vehiclemodel->model}}-{{$vehicle->license_plate}}</h4>
 
         </div>
       </div>

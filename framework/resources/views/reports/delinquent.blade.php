@@ -30,7 +30,7 @@
             <select id="vehicle_id" name="vehicle_id" class="form-control vehicles" style="width: 250px" required>
               <option value="">@lang('fleet.selectVehicle')</option>
               @foreach($vehicles as $vehicle)
-              <option value="{{ $vehicle['id'] }}" @if($vehicle['id']==$vehicle_id) selected @endif>{{$vehicle['make']}}-{{$vehicle['model']}}-{{$vehicle['license_plate']}}</option>
+              <option value="{{ $vehicle->id }}" @if($vehicle->id==$vehicle_id) selected @endif>{{$vehicle->maker->make}}-{{$vehicle->vehiclemodel->model}}-{{$vehicle->license_plate}}</option>
               @endforeach
             </select>
           </div>
@@ -68,7 +68,7 @@
             <tr>
               <td>{{$row->day}}</td>
               <td>{{$row->date}}</td>
-              <td>{{$v[$row->vehicle_id]['make']}}-{{$v[$row->vehicle_id]['model']}}-{{$v[$row->vehicle_id]['license_plate']}}</td>
+              <td>{{$v[$row->vehicle_id]->maker->make}}-{{$v[$row->vehicle_id]->vehiclemodel->model}}-{{$v[$row->vehicle_id]['license_plate']}}</td>
               <td>{{Hyvikk::get('currency')}} {{$row->Income2}}</td>
             </tr>
           @endforeach

@@ -1,5 +1,14 @@
 <?php
 return [
+    'cities' => 'Cities',
+    'add_city' => 'Add City',
+    'edit_city' => 'Edit City',
+    'manage_cities' => 'Manage Cities',
+    'SelectVehicleColor' => 'Select Vehicle Color',
+    'add_vehicle_color' => 'Add Vehicle Color',
+    'edit_vehicle_color' => 'Edit Vehicle Color',
+    'vehicle_colors' => 'Vehicle Colors',
+    'SelectVehicleModel' => 'Select Vehicle Model',
     'edit_vehicle_model' => 'Edit Vehicle Model',
     'SelectVehicleMake' => 'Select Vehicle Make',
     'add_vehicle_model' => 'Add Vehicle Model',

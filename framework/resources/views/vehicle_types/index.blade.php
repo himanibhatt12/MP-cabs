@@ -23,11 +23,13 @@
         <table class="table" id="data_table">
           <thead class="thead-inverse">
             <tr>
+              @if(Auth::user()->user_type != 'V')
               <th>
                 @if($data->count() > 0)
                 <input type="checkbox" id="chk_all">
                 @endif
               </th>
+              @endif
               <th>#</th>
               <th>@lang('fleet.icon_img')</th>
               <th>@lang('fleet.vehicle_type')</th>
@@ -40,9 +42,11 @@
           <tbody>
             @foreach($data as $row)
             <tr>
+              @if(Auth::user()->user_type != 'V')
               <td>
                 <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="checkbox" id="chk{{ $row->id }}" onclick='checkcheckbox();'>
               </td>
+              @endif
               <td>{{$row->id}}</td>
               <td>
               @if($row->icon != null)
@@ -62,6 +66,7 @@
               @endif
               </td>
               <td>
+              @if(Auth::user()->user_type != 'V')
               <div class="btn-group">
               <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
               <span class="fa fa-gear"></span>
@@ -79,17 +84,20 @@
               {!! Form::hidden("id",$row->id) !!}
 
               {!! Form::close() !!}
+              @endif
               </td>
             </tr>
             @endforeach
           </tbody>
           <tfoot>
             <tr>
+              @if(Auth::user()->user_type != 'V')
               <th>
                 @if($data->count() > 0)
                   <button class="btn btn-danger" id="bulk_delete" data-toggle="modal" data-target="#bulkModal" disabled>@lang('fleet.delete')</button>
                 @endif
               </th>
+              @endif
               <th>#</th>
               <th>@lang('fleet.icon_img')</th>
               <th>@lang('fleet.vehicle_type')</th>
@@ -221,5 +229,4 @@
     }
   }
 </script>
-
 @endsection

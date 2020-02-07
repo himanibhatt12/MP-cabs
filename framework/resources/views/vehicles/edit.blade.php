@@ -359,7 +359,7 @@
               <div class="col-md-12">
                 <div class="card card-info">
                   <div class="card-header">
-                    <h3 class="card-title">@lang('fleet.acquisition') :<strong>{{ $vehicle->maker->make }} {{ $vehicle->vehiclemodel->model }} {{ $vehicle->license_plate }}</strong>
+                    <h3 class="card-title">@lang('fleet.acquisition'):<strong>@if($vehicle->make_id){{ $vehicle->maker->make }}@endif @if($vehicle->model_id){{ $vehicle->vehiclemodel->model }}@endif {{ $vehicle->license_plate }}</strong>
                     </h3>
                   </div>
                   <div class="card-body" id="acq_table">
