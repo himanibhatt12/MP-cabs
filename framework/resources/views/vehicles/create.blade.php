@@ -119,7 +119,7 @@ input:checked + .slider:before {
                 {!! Form::label('model_id', __('fleet.SelectVehicleModel'), ['class' => 'col-xs-5 control-label']) !!}
                 <div class="col-xs-6">
                  <select name="model_id" class="form-control" required id="model_id">
-                  <option></option>                   
+                   <option></option>
                  </select>
                 </div>
               </div>
@@ -186,7 +186,7 @@ input:checked + .slider:before {
                 </div>
               </div>
             </div>
-
+            
             <div class="col-md-6">
               <div class="form-group" >
                 {!! Form::label('engine_type', __('fleet.engine'), ['class' => 'col-xs-5 control-label']) !!}
@@ -305,7 +305,6 @@ input:checked + .slider:before {
       $('#group_id').select2({placeholder: "@lang('fleet.selectGroup')"});
       $('#type_id').select2({placeholder:"@lang('fleet.type')"});
       $('#make_id').select2({placeholder:"@lang('fleet.SelectVehicleMake')"});
-      $('#model_id').select2({placeholder:"@lang('fleet.SelectVehicleModel')"});
       $('#color_id').select2({placeholder:"@lang('fleet.SelectVehicleColor')"});
       $('#make_id').on('change',function(){
         // alert($(this).val());
@@ -315,11 +314,10 @@ input:checked + .slider:before {
           success: function(data){
             var models =  $.parseJSON(data);
               $('#model_id').empty();
+              $('#model_id').append('<option value=""></option>');
               $.each( models, function( key, value ) {
-                $('#model_id').append($('<option>', {
-                  value: value.id,
-                  text: value.text
-                }));
+                $('#model_id').append('<option value='+value.id+'>'+value.text+'</option>');
+                $('#model_id').select2({placeholder:"@lang('fleet.SelectVehicleModel')"});
               });    
           },
           dataType: "html"
