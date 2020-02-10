@@ -146,7 +146,7 @@ class VehiclesController extends Controller
             $except = array_diff($did, array($data->driver_id));
         } else { $except = $did;}
 
-        $drivers = User::whereUser_type("D")->whereNotIn('id', $except)->get();
+        $drivers = User::where('user_id', Auth::id())->whereUser_type("D")->whereNotIn('id', $except)->get();
         if (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
             $groups = VehicleGroupModel::all();
         } else {
@@ -311,7 +311,7 @@ class VehiclesController extends Controller
         if ($user->group_id == null || $user->user_type == "S") {
             $data['vehicles'] = VehicleModel::get();
         } else {
-            $data['vehicles'] = VehicleModel::where('group_id', $user->group_id)->get();
+            $data['vehicles'] = VehicleModel::where('user_id', Auth::id())->where('group_id', $user->group_id)->get();
         }
         return view('vehicles.vehicle_review', $data);
     }
@@ -387,7 +387,7 @@ class VehiclesController extends Controller
         if ($user->group_id == null || $user->user_type == "S") {
             $data['vehicles'] = VehicleModel::get();
         } else {
-            $data['vehicles'] = VehicleModel::where('group_id', $user->group_id)->get();
+            $data['vehicles'] = VehicleModel::where('user_id', Auth::id())->where('group_id', $user->group_id)->get();
         }
         return view('vehicles.vehicle_review_edit', $data);
     }

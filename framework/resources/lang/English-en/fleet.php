@@ -1,6 +1,6 @@
 <?php
 return [
-    'selectCity' => 'Select City Name', //
+    'selectCity' => 'Select City Name',
     'cities' => 'Cities',
     'add_city' => 'Add City',
     'edit_city' => 'Edit City',
