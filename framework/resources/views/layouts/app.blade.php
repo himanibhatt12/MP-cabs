@@ -1003,6 +1003,37 @@
               </li>
             </ul>
           </li> @endif
+          @if(Request::is('admin/faqs*'))
+            @php($class="menu-open")
+            @php($active="active")
+
+            @else
+            @php($class="")
+            @php($active="")
+            @endif
+          @if(in_array(16,$modules)) <li class="nav-item has-treeview {{$class}}">
+            <a href="#" class="nav-link {{$active}}">
+              <i class="nav-icon fa fa-question-circle"></i>
+              <p>
+                @lang('fleet.manage_faqs')
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('faqs.index') }}" class="nav-link @if((Request::is('admin/faqs*') && !(Request::is('admin/faqs/create')))) active @endif">
+                  <i class="fa fa-question nav-icon"></i>
+                  <p> @lang('fleet.faqs')</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route("faqs.create") }}" class="nav-link @if(Request::is('admin/faqs/create')) active @endif">
+                  <i class="fa fa-plus-square nav-icon"></i>
+                  <p>@lang('fleet.add_faq')</p>
+                </a>
+              </li>
+            </ul>
+          </li> @endif
 
           @endif <!-- for user-type O or S -->
           @if(Auth::user()->user_type=="S")

@@ -1,5 +1,11 @@
 <?php
 return [
+    'question' => 'Question',
+    'answer' => 'Answer',
+    'manage_faqs' => 'Manage FAQs',
+    'add_faq' => 'Add FAQ',
+    'edit_faq' => 'Edit FAQ',
+    'faqs' => 'FAQs', ///////
     'selectCity' => 'Select City Name',
     'cities' => 'Cities',
     'add_city' => 'Add City',

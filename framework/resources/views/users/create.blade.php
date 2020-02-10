@@ -158,7 +158,8 @@ input:checked + .slider:before {
                   <input type="checkbox" name="module[]" value="1" class="flat-red form-control">&nbsp;  @lang('fleet.vehicles')<br>
                   <input type="checkbox" name="module[]" value="2" class="flat-red form-control"> &nbsp;@lang('menu.transactions') <br>
                   <input type="checkbox" name="module[]" value="3" class="flat-red form-control">&nbsp; @lang('fleet.bookings')<br>
-                  <input type="checkbox" name="module[]" value="13" class="flat-red form-control">&nbsp;  @lang('fleet.helpus')
+                  <input type="checkbox" name="module[]" value="13" class="flat-red form-control">&nbsp;  @lang('fleet.helpus')<br>
+                  <input type="checkbox" name="module[]" value="16" class="flat-red form-control">&nbsp;  @lang('fleet.faqs')
                 </div>
                 <div class="col-md-4" style="padding: 0px;">
                   <input type="checkbox" name="module[]" value="4" class="flat-red form-control">&nbsp; @lang('menu.reports')<br>

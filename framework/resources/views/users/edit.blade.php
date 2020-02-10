@@ -154,7 +154,8 @@ input:checked + .slider:before {
                   <input type="checkbox" name="module[]" value="1" class="flat-red form-control" @if(in_array(1,$modules)) checked @endif>&nbsp; @lang('fleet.vehicles')<br>
                   <input type="checkbox" name="module[]" value="2" class="flat-red form-control" @if(in_array(2,$modules)) checked @endif>&nbsp; @lang('menu.transactions')<br>
                   <input type="checkbox" name="module[]" value="3" class="flat-red form-control" @if(in_array(3,$modules)) checked @endif>&nbsp; @lang('fleet.bookings')<br>
-                  <input type="checkbox" name="module[]" value="13" class="flat-red form-control" @if(in_array(13,$modules)) checked @endif>&nbsp;  @lang('fleet.helpus')
+                  <input type="checkbox" name="module[]" value="13" class="flat-red form-control" @if(in_array(13,$modules)) checked @endif>&nbsp;  @lang('fleet.helpus')<br>
+                  <input type="checkbox" name="module[]" value="16" class="flat-red form-control" @if(in_array(16,$modules)) checked @endif>&nbsp;  @lang('fleet.faqs')
                 </div>
                 <div class="col-md-4" style="padding: 0px;">
                   <input type="checkbox" name="module[]" value="4" class="flat-red form-control" @if(in_array(4,$modules)) checked @endif>&nbsp; @lang('menu.reports')<br>
