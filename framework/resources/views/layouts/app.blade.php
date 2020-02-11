@@ -478,7 +478,6 @@
             </ul>
           </li> @endif
 
-
           @if((Request::is('admin/cities*')))
           @php($class="menu-open")
           @php($active="active")
@@ -489,7 +488,7 @@
           @endif
           <li class="nav-item has-treeview {{$class}}">
             <a href="#" class="nav-link {{$active}}">
-              <i class="nav-icon fa fa-th-list"></i>
+              <i class="nav-icon fa fa-building"></i>
               <p>
                 @lang('fleet.manage_cities')
                 <i class="right fa fa-angle-left"></i>
@@ -506,6 +505,38 @@
                 <a href="{{ route('cities.create')}}" class="nav-link @if(Request::is('admin/cities/create')) active @endif">
                   <i class="fa fa-plus-square nav-icon"></i>
                   <p>@lang('fleet.add_city')</p>
+                </a>
+              </li>
+            </ul>
+          </li> 
+
+          @if((Request::is('admin/routes*')))
+          @php($class="menu-open")
+          @php($active="active")
+
+          @else
+          @php($class="")
+          @php($active="")
+          @endif
+          <li class="nav-item has-treeview {{$class}}">
+            <a href="#" class="nav-link {{$active}}">
+              <i class="nav-icon fa fa-road"></i>
+              <p>
+                @lang('fleet.manage_routes')
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('routes.index')}}" class="nav-link @if(Request::is('admin/routes*') && !(Request::is('admin/routes/create'))) active @endif">
+                  <i class="fa fa-road nav-icon"></i>
+                  <p>@lang('fleet.routes')</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('routes.create')}}" class="nav-link @if(Request::is('admin/routes/create')) active @endif">
+                  <i class="fa fa-plus-square nav-icon"></i>
+                  <p>@lang('fleet.add_route')</p>
                 </a>
               </li>
             </ul>

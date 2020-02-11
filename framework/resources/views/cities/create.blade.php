@@ -22,11 +22,32 @@
           </div>
         @endif
 
-        {!! Form::open(['route' => 'cities.store','method'=>'post']) !!}
+        {!! Form::open(['route' => 'cities.store','method'=>'post','files'=>true]) !!}
         <div class="row">
           <div class="form-group col-md-6">
             {!! Form::label('city', __('fleet.city'), ['class' => 'form-label']) !!}
             {!! Form::text('city', null,['class' => 'form-control','required']) !!}
+          </div>
+          <div class="form-group col-md-6">
+            {!! Form::label('cost', __('fleet.cost_per_day'), ['class' => 'form-label']) !!}              
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+              <span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+              {!! Form::number('cost', null,['class' => 'form-control','required','step'=>'0.01']) !!}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              {!! Form::label('image', __('fleet.picture'), ['class' => 'form-label']) !!}
+              <br>
+              {!! Form::file('image',null,['class' => 'form-control']) !!}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              {!! Form::label('other',__('fleet.other_info'), ['class' => 'form-label']) !!}
+              {!! Form::textarea('other',null,['class'=>'form-control','size'=>'30x2','required']) !!}
+            </div>
           </div>
         </div>
       </div>

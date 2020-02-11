@@ -5,10 +5,10 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CitiesModel extends Model
+class RouteModel extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $table = 'cities';
-    protected $fillable = ['city', 'cost', 'image', 'other'];
+    protected $table = 'routes';
+    protected $fillable = ['name', 'source', 'destination', 'image', 'cost', 'ratings'];
 }

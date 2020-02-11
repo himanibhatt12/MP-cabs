@@ -3,58 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CityRequest;
-use App\Model\CitiesModel;
+use App\Http\Requests\RouteRequest;
+use App\Model\RouteModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-class CitiesController extends Controller
+class RouteController extends Controller
 {
     public function index()
     {
-        $index['data'] = CitiesModel::get();
-        return view('cities.index', $index);
+        $data = RouteModel::get();
+        return view('routes.index', compact('data'));
     }
 
     public function create()
     {
-        return view('cities.create');
+        return view('routes.create');
     }
 
-    public function store(CityRequest $request)
+    public function store(RouteRequest $request)
     {
-        $new = CitiesModel::create([
-            'city' => $request->city,
+        $data = RouteModel::create([
+            'name' => $request->name,
+            'source' => $request->source,
+            'destination' => $request->destination,
             'cost' => $request->cost,
-            'other' => $request->other,
-        ]);
-        $file = $request->file('image');
-
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $destinationPath = './uploads'; // upload path
-            $extension = $file->getClientOriginalExtension();
-            $fileName1 = Str::uuid() . '.' . $extension;
-            $file->move($destinationPath, $fileName1);
-            $new->image = $fileName1;
-            $new->save();
-        }
-
-        return redirect()->route('cities.index');
-    }
-
-    public function edit($id)
-    {
-        $data['city'] = CitiesModel::find($id);
-        return view('cities.edit', $data);
-    }
-
-    public function update(CityRequest $request)
-    {
-        $data = CitiesModel::find($request->get('id'));
-        $data->update([
-            'city' => $request->city,
-            'cost' => $request->cost,
-            'other' => $request->other,
+            'ratings' => $request->ratings,
         ]);
         $file = $request->file('image');
 
@@ -66,18 +40,46 @@ class CitiesController extends Controller
             $data->image = $fileName1;
             $data->save();
         }
-        return redirect()->route('cities.index');
+        return redirect('admin/routes');
+    }
+
+    public function edit($id)
+    {
+        $data = RouteModel::find($id);
+        return view('routes.edit', compact('data'));
+    }
+
+    public function update(RouteRequest $request)
+    {
+        $data = RouteModel::find($request->id);
+        $data->name = $request->name;
+        $data->source = $request->source;
+        $data->destination = $request->destination;
+        $data->cost = $request->cost;
+        $data->ratings = $request->ratings;
+        $data->save();
+        $file = $request->file('image');
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $destinationPath = './uploads'; // upload path
+            $extension = $file->getClientOriginalExtension();
+            $fileName1 = Str::uuid() . '.' . $extension;
+            $file->move($destinationPath, $fileName1);
+            $data->image = $fileName1;
+            $data->save();
+        }
+        return redirect('admin/routes');
     }
 
     public function destroy(Request $request)
     {
-        CitiesModel::find($request->get('id'))->delete();
-        return redirect()->route('cities.index');
+        RouteModel::find($request->id)->delete();
+        return redirect('admin/routes');
     }
 
     public function bulk_delete(Request $request)
     {
-        CitiesModel::whereIn('id', $request->ids)->delete();
+        RouteModel::whereIn('id', $request->ids)->delete();
         return back();
     }
 }
