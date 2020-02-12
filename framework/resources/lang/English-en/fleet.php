@@ -1,5 +1,6 @@
 <?php
 return [
+    'company_reviews' => 'Company Reviews', /////////////////
     'cost_per_day' => 'Cost per Day',
     'other_info' => 'Other Info',
     'service_ratings' => 'Service Ratings',

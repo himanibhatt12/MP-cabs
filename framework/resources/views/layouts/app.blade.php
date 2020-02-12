@@ -1205,6 +1205,15 @@
               </p>
             </a>
           </li> @endif
+          <li class="nav-item">
+            <a href="{{ url('admin/company-reviews')}}" class="nav-link @if(Request::is('admin/company-reviews')) active @endif">
+              <i class="nav-icon fa fa-star"></i>
+              <p>
+                @lang('fleet.company_reviews')
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
           @if(in_array(Auth::user()->user_type, ['S','O','V']))
           <li class="nav-item">
             <a href="{{ url('admin/messages')}}" class="nav-link @if(Request::is('admin/messages')) active @endif">

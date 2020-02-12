@@ -52,7 +52,7 @@
               <td>
                 {{ $row->city }}
               </td>
-              <td>{{$row->cost}}</td>
+              <td>{{Hyvikk::get('currency')." ".$row->cost}}</td>
               <td>
               <div class="btn-group">
               <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
