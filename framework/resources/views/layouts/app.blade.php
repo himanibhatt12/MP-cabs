@@ -542,7 +542,7 @@
             </ul>
           </li> 
 
-            @if((Request::is('admin/driver-logs')) || (Request::is('admin/vehicle-types*')) || (Request::is('admin/vehicles*')) || (Request::is('admin/vehicle_group*')) || (Request::is('admin/vehicle-reviews*')) || (Request::is('admin/view-vehicle-review*')) || (Request::is('admin/vehicle-review*')) || (Request::is('admin/vehicle-make*')) || (Request::is('admin/vehicle-model*')) || (Request::is('admin/vehicle-color*')))
+            @if((Request::is('admin/driver-logs')) || (Request::is('admin/vehicle-types*')) || (Request::is('admin/vehicles*')) || (Request::is('admin/vehicle_group*')) || (Request::is('admin/vehicle-reviews*')) || (Request::is('admin/view-vehicle-review*')) || (Request::is('admin/vehicle-review*')) || (Request::is('admin/vehicle-make*')) || (Request::is('admin/vehicle-model*')) || (Request::is('admin/vehicle-color*')) || (Request::is('admin/vehicle-demands*')))
             @php($class="menu-open")
             @php($active="active")
 
@@ -563,6 +563,12 @@
                 <a href="{{ route('vehicles.index')}}" class="nav-link @if(Request::is('admin/vehicles*')) active @endif">
                   <i class="fa fa-truck nav-icon"></i>
                   <p>@lang('menu.manageVehicles')</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('vehicle-demands.index')}}" class="nav-link @if(Request::is('admin/vehicle-demands*')) active @endif">
+                  <i class="fa fa-truck nav-icon"></i>
+                  <p>@lang('fleet.vehicle_demand_requests')</p>
                 </a>
               </li>
               @if(Auth::user()->user_type == "S")

@@ -112,7 +112,6 @@ class DriversController extends Controller
 
     public function create()
     {
-
         $exclude = DriverVehicleModel::select('vehicle_id')->get('vehicle_id')->pluck('vehicle_id')->toArray();
         if (Auth::user()->user_type == "S") {
             $data['vehicles'] = VehicleModel::whereNotIn('id', $exclude)->get();

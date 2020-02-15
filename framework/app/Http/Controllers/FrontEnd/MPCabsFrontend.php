@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SubscriptionMail;
 use App\Model\CitiesModel;
 use App\Model\CompanyReviews;
 use App\Model\FaqsModel;
 use App\Model\RouteModel;
+use App\Model\VehicleMake;
+use App\Rules\UniqueContractNumber;
+use App\Rules\UniqueEId;
+use App\Rules\UniqueLicenceNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Validator;
 
@@ -87,6 +93,66 @@ class MPCabsFrontend extends Controller
             $data['success'] = "1";
             $data['message'] = "Your Review has been Submitted Successfully.";
             $data['data'] = array('id' => "$review->id");
+        }
+        return response()->json($data);
+    }
+
+    public function subscribe(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+        $errors = $validation->errors();
+        if (count($errors) > 0) {
+            $data['success'] = "0";
+            $data['message'] = implode(", ", $errors->all());
+            $data['data'] = "";
+        } else {
+            $data['success'] = "1";
+            $data['message'] = "Your Subscription Request has been Submitted Successfully.";
+            $data['data'] = "";
+            Mail::to(Hyvikk::get("email"))->send(new SubscriptionMail($request->email));
+        }
+        return response()->json($data);
+    }
+
+    public function register_driver(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'emp_id' => ['required', new UniqueEId],
+            'license_number' => ['required', new UniqueLicenceNumber],
+            'contract_number' => ['required', new UniqueContractNumber],
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'address' => 'required',
+            'phone' => 'required|numeric',
+            'email' => 'required|email|unique:users,email,' . \Request::get("id"),
+            'exp_date' => 'required|date|date_format:Y-m-d|after:tomorrow',
+            'start_date' => 'date|date_format:Y-m-d',
+            'driver_image' => 'nullable|image|mimes:jpg,png,jpeg',
+            'license_image' => 'nullable|image|mimes:jpg,png,jpeg',
+            'documents.*' => 'nullable|mimes:jpg,png,jpeg,pdf,doc,docx',
+        ]);
+        $errors = $validation->errors();
+        if (count($errors) > 0) {
+            $data['success'] = "0";
+            $data['message'] = implode(", ", $errors->all());
+            $data['data'] = "";
+        } else {
+            $data['success'] = "1";
+            $data['message'] = "Driver has been registered Successfully.";
+            $data['data'] = "";
+
+        }
+        return response()->json($data);
+    }
+
+    public function make()
+    {
+        $makes = VehicleMake::get();
+        $data = array();
+        foreach ($makes as $make) {
+            $data[] = array('id' => "$make->id", 'brand' => $make->make);
         }
         return response()->json($data);
     }

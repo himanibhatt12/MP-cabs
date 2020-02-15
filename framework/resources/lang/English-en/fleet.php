@@ -1,6 +1,10 @@
 <?php
 return [
-    'company_reviews' => 'Company Reviews', /////////////////
+    'edit_vehicle_demand_request' => 'Edit Vehicle Demand Request',
+    'date_time' => 'Date & Time',
+    'add_vehicle_demand_request' => 'Add Vehicle Demand Request',
+    'vehicle_demand_requests' => 'Vehicle Demand Requests',
+    'company_reviews' => 'Company Reviews',
     'cost_per_day' => 'Cost per Day',
     'other_info' => 'Other Info',
     'service_ratings' => 'Service Ratings',

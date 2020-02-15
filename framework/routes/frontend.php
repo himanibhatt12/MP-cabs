@@ -18,6 +18,7 @@ Route::namespace ('FrontEnd')->middleware(['throttle'])->group(function () {
     Route::get('faqs', 'MPCabsFrontend@faqs');
     Route::get('cities', 'MPCabsFrontend@cities');
     Route::get('routes', 'MPCabsFrontend@routes');
+    Route::get('brands', 'MPCabsFrontend@make');
 });
 
 Route::namespace ('FrontEnd')->middleware(['throttle', 'auth:api'])->group(function () {
@@ -26,4 +27,6 @@ Route::namespace ('FrontEnd')->middleware(['throttle', 'auth:api'])->group(funct
     Route::post('book-later', 'FrontendApiController@book_later');
     //
     Route::post('review-us', 'MPCabsFrontend@review_us');
+    Route::post('subscribe-newsletter', 'MPCabsFrontend@subscribe');
+    Route::post('register-driver', 'MPCabsFrontend@register_driver');
 });

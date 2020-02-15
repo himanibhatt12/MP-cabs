@@ -1,37 +1,7 @@
 <?php
-use App\Model\Bookings;
-use App\Model\User;
 Auth::routes();
-// use Backup;
+
 Route::namespace ('Admin')->group(function () {
-    Route::get('test1', function () {
-        $modules = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15);
-        $admin = User::create([
-            'name' => "Super Administrator",
-            'email' => "master@admin.com",
-            'password' => bcrypt('password'),
-            'api_token' => str_random(60),
-            'user_type' => "S",
-        ]);
-        $admin->setMeta(['profile_image' => 'no-user.jpg', 'module' => serialize($modules)]);
-        $admin->save();
-    });
-
-    Route::get('export-events', 'HomeController@export_calendar');
-
-    Route::get('multi-test', function () {
-        dd(version_compare(phpversion(), '7.3.0', '<'));
-        dd(phpversion());
-        $booking = Bookings::find(2);
-        dd($booking->test, $booking->test1);
-    });
-
-    Route::get('json-test', function () {
-        $arr = [1 => 'test', 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        $json = json_encode($arr);
-        dd($json);
-        dd(json_decode($json));
-    });
 
     Route::get("/clear_cache", function () {
         Artisan::call('cache:clear');
@@ -43,6 +13,9 @@ Route::namespace ('Admin')->group(function () {
     Route::get("/", 'HomeController@index')->middleware(['lang_check', 'auth']);
     Route::group(['middleware' => ['lang_check', 'auth', 'officeadmin']], function () {
         // new routes
+        Route::resource('vehicle-demands', 'VehicleDemandRequestController');
+        Route::post('delete-vehicle-demands', 'VehicleDemandRequestController@bulk_delete');
+
         Route::get('company-reviews', 'ReviewRatings@company_reviews');
 
         Route::resource('routes', 'RouteController');
