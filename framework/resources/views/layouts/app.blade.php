@@ -478,10 +478,40 @@
             </ul>
           </li> @endif
 
+          @if((Request::is('admin/coupons*')))
+          @php($class="menu-open")
+          @php($active="active")
+          @else
+          @php($class="")
+          @php($active="")
+          @endif
+          <li class="nav-item has-treeview {{$class}}">
+            <a href="#" class="nav-link {{$active}}">
+              <i class="nav-icon fa fa-tags"></i>
+              <p>
+                @lang('fleet.manage_coupons')
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('coupons.index')}}" class="nav-link @if(Request::is('admin/coupons*') && !(Request::is('admin/coupons/create'))) active @endif">
+                  <i class="fa fa-tag nav-icon"></i>
+                  <p>@lang('fleet.coupons')</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('coupons.create')}}" class="nav-link @if(Request::is('admin/coupons/create')) active @endif">
+                  <i class="fa fa-plus-square nav-icon"></i>
+                  <p>@lang('fleet.add_coupon')</p>
+                </a>
+              </li>
+            </ul>
+          </li> 
+
           @if((Request::is('admin/cities*')))
           @php($class="menu-open")
           @php($active="active")
-
           @else
           @php($class="")
           @php($active="")

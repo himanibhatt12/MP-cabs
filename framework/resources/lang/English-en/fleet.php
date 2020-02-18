@@ -1,5 +1,13 @@
 <?php
 return [
+    'percent' => 'Percentage',
+    'manage_coupons' => 'Manage Coupons',
+    'discount_value' => 'Discount Value',
+    'discount_type' => 'Discount Type',
+    'coupon_code' => 'Coupon Code',
+    'add_coupon' => 'Add Coupon',
+    'edit_coupon' => 'Edit Coupon',
+    'coupons' => 'Coupons',
     'edit_vehicle_demand_request' => 'Edit Vehicle Demand Request',
     'date_time' => 'Date & Time',
     'add_vehicle_demand_request' => 'Add Vehicle Demand Request',

@@ -1,0 +1,10 @@
+Driver:
+notifications
+vehicle info > model,type,make
+add ride offer > amount, fare settings
+
+Customer:
+payment without vehicle type
+payment gateway in app
+coupen details
+ride offer request
