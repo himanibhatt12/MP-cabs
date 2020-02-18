@@ -13,6 +13,9 @@ Route::namespace ('Admin')->group(function () {
     Route::get("/", 'HomeController@index')->middleware(['lang_check', 'auth']);
     Route::group(['middleware' => ['lang_check', 'auth', 'officeadmin']], function () {
         // new routes
+        Route::resource('packages', 'PackagesController');
+        Route::post('delete-packages', 'PackagesController@bulk_delete');
+
         Route::resource('coupons', 'CouponController');
         Route::post('delete-coupons', 'CouponController@bulk_delete');
 

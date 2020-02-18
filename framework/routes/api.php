@@ -41,6 +41,7 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('apply-coupon', 'MPCabsApi@apply_coupon');
     Route::post('add-offer', 'MPCabsApi@add_offer');
     Route::post('edit-offer', 'MPCabsApi@edit_offer');
+    Route::post('packages', 'MPCabsApi@packages');
 
 });
 

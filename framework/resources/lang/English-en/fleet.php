@@ -1,5 +1,11 @@
 <?php
 return [
+    'rate_per_hour' => 'Rate per Hour',
+    'rate_per_km' => 'Rate per km',
+    'packages' => 'Rental Packages',
+    'add_package' => 'Add Package',
+    'edit_package' => 'Edit Package',
+    'manage_packages' => 'Manage Packages',
     'percent' => 'Percentage',
     'manage_coupons' => 'Manage Coupons',
     'discount_value' => 'Discount Value',

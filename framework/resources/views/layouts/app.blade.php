@@ -509,6 +509,37 @@
             </ul>
           </li> 
 
+          @if((Request::is('admin/packages*')))
+          @php($class="menu-open")
+          @php($active="active")
+          @else
+          @php($class="")
+          @php($active="")
+          @endif
+          <li class="nav-item has-treeview {{$class}}">
+            <a href="#" class="nav-link {{$active}}">
+              <i class="nav-icon fa fa-cubes"></i>
+              <p>
+                @lang('fleet.manage_packages')
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('packages.index')}}" class="nav-link @if(Request::is('admin/packages*') && !(Request::is('admin/packages/create'))) active @endif">
+                  <i class="fa fa-cube nav-icon"></i>
+                  <p>@lang('fleet.packages')</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('packages.create')}}" class="nav-link @if(Request::is('admin/packages/create')) active @endif">
+                  <i class="fa fa-plus-square nav-icon"></i>
+                  <p>@lang('fleet.add_package')</p>
+                </a>
+              </li>
+            </ul>
+          </li> 
+
           @if((Request::is('admin/cities*')))
           @php($class="menu-open")
           @php($active="active")

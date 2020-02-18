@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Model\CouponModel;
+use App\Model\PackagesModel;
 use App\Model\RideOffers;
 use App\Model\User;
 use Hyvikk;
@@ -11,6 +12,26 @@ use Validator;
 
 class MPCabsApi extends Controller
 {
+
+    public function packages()
+    {
+        $packages = PackagesModel::get();
+        $details = array();
+        foreach ($packages as $package) {
+            $details[] = array(
+                'vehicle_make' => $package->vehicle->maker->make,
+                'vehicle_model' => $package->vehicle->vehiclemodel->model,
+                'vehicle_plate' => $package->vehicle->license_plate,
+                'hourly_rate' => $package->hourly_rate,
+                'km_rate' => $package->km_rate,
+            );
+        }
+        $data['success'] = "1";
+        $data['message'] = "Data fetched!";
+        $data['data'] = $details;
+        return $data;
+    }
+
     public function edit_offer(Request $request)
     {
         $validation = Validator::make($request->all(), [
