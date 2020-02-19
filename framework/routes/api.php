@@ -36,13 +36,20 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('/destination-reached', 'DriversApi@destination_reached');
     Route::post('/confirm-payment', 'DriversApi@confirm_payment');
     Route::post('/active-drivers', 'DriversApi@active_drivers');
-    // new
-    Route::post('offers', 'MPCabsApi@offers');
-    Route::post('apply-coupon', 'MPCabsApi@apply_coupon');
-    Route::post('add-offer', 'MPCabsApi@add_offer');
-    Route::post('edit-offer', 'MPCabsApi@edit_offer');
-    Route::post('packages', 'MPCabsApi@packages');
+    // customers APIs
+    Route::post('offers', 'MPCabsCustomersApi@offers');
+    Route::post('apply-coupon', 'MPCabsCustomersApi@apply_coupon');
+    Route::post('packages', 'MPCabsCustomersApi@packages');
 
+    // drivers APIs
+    Route::post('my-offers/{id}', 'MPCabsDriversApi@my_offers');
+    Route::post('add-offer', 'MPCabsDriversApi@add_offer');
+    Route::post('edit-offer', 'MPCabsDriversApi@edit_offer');
+    Route::post('vehicle-make', 'MPCabsDriversApi@make');
+    Route::post('vehicle-colors', 'MPCabsDriversApi@colors');
+    Route::post('vehicle-model/{id}', 'MPCabsDriversApi@models');
+    Route::post('vehicle-types', 'MPCabsDriversApi@types');
+    Route::post('register-driver', 'MPCabsDriversApi@register_driver');
 });
 
 Route::middleware('auth:api')->post('/user', function (Request $request) {

@@ -1,18 +1,17 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Model\CouponModel;
 use App\Model\PackagesModel;
 use App\Model\RideOffers;
-use App\Model\User;
 use Hyvikk;
 use Illuminate\Http\Request;
 use Validator;
 
-class MPCabsApi extends Controller
+class MPCabsCustomersApi extends Controller
 {
-
     public function packages()
     {
         $packages = PackagesModel::get();
@@ -29,71 +28,6 @@ class MPCabsApi extends Controller
         $data['success'] = "1";
         $data['message'] = "Data fetched!";
         $data['data'] = $details;
-        return $data;
-    }
-
-    public function edit_offer(Request $request)
-    {
-        $validation = Validator::make($request->all(), [
-            'user_id' => 'required',
-            'source' => 'required',
-            'destination' => 'required',
-            'valid_from' => 'required',
-            'valid_till' => 'required',
-            'id' => 'required',
-        ]);
-        $errors = $validation->errors();
-
-        if (count($errors) > 0) {
-            $data['success'] = "0";
-            $data['message'] = implode(", ", $errors->all());
-            $data['data'] = "";
-        } else {
-            $user = User::find($request->user_id);
-            $offer = RideOffers::find($request->id);
-
-            $offer->destination = $request->destination;
-            $offer->source = $request->source;
-            $offer->vehicle_id = $user->vehicle_id;
-            $offer->valid_from = $request->valid_from;
-            $offer->valid_till = $request->valid_till;
-            $offer->save();
-
-            $data['success'] = "1";
-            $data['message'] = "Ride Offer updated successfully!";
-            $data['data'] = array('id' => $offer->id);
-        }
-        return $data;
-    }
-
-    public function add_offer(Request $request)
-    {
-        $validation = Validator::make($request->all(), [
-            'user_id' => 'required',
-            'source' => 'required',
-            'destination' => 'required',
-            'valid_from' => 'required',
-            'valid_till' => 'required',
-        ]);
-        $errors = $validation->errors();
-
-        if (count($errors) > 0) {
-            $data['success'] = "0";
-            $data['message'] = implode(", ", $errors->all());
-            $data['data'] = "";
-        } else {
-            $user = User::find($request->user_id);
-            $offer = RideOffers::create([
-                'source' => $request->source,
-                'destination' => $request->destination,
-                'vehicle_id' => $user->vehicle_id,
-                'valid_from' => $request->valid_from,
-                'valid_till' => $request->valid_till,
-            ]);
-            $data['success'] = "1";
-            $data['message'] = "Ride Offer added successfully!";
-            $data['data'] = array('id' => $offer->id);
-        }
         return $data;
     }
 

@@ -9,9 +9,6 @@ use App\Model\CompanyReviews;
 use App\Model\FaqsModel;
 use App\Model\RouteModel;
 use App\Model\VehicleMake;
-use App\Rules\UniqueContractNumber;
-use App\Rules\UniqueEId;
-use App\Rules\UniqueLicenceNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -116,36 +113,35 @@ class MPCabsFrontend extends Controller
         return response()->json($data);
     }
 
-    public function register_driver(Request $request)
-    {
-        $validation = Validator::make($request->all(), [
-            'emp_id' => ['required', new UniqueEId],
-            'license_number' => ['required', new UniqueLicenceNumber],
-            'contract_number' => ['required', new UniqueContractNumber],
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'address' => 'required',
-            'phone' => 'required|numeric',
-            'email' => 'required|email|unique:users,email,' . \Request::get("id"),
-            'exp_date' => 'required|date|date_format:Y-m-d|after:tomorrow',
-            'start_date' => 'date|date_format:Y-m-d',
-            'driver_image' => 'nullable|image|mimes:jpg,png,jpeg',
-            'license_image' => 'nullable|image|mimes:jpg,png,jpeg',
-            'documents.*' => 'nullable|mimes:jpg,png,jpeg,pdf,doc,docx',
-        ]);
-        $errors = $validation->errors();
-        if (count($errors) > 0) {
-            $data['success'] = "0";
-            $data['message'] = implode(", ", $errors->all());
-            $data['data'] = "";
-        } else {
-            $data['success'] = "1";
-            $data['message'] = "Driver has been registered Successfully.";
-            $data['data'] = "";
-
-        }
-        return response()->json($data);
-    }
+    // public function register_driver(Request $request)
+    // {
+    //     $validation = Validator::make($request->all(), [
+    //         'emp_id' => ['required', new UniqueEId],
+    //         'license_number' => ['required', new UniqueLicenceNumber],
+    //         'contract_number' => ['required', new UniqueContractNumber],
+    //         'first_name' => 'required',
+    //         'last_name' => 'required',
+    //         'address' => 'required',
+    //         'phone' => 'required|numeric',
+    //         'email' => 'required|email|unique:users,email,' . \Request::get("id"),
+    //         'exp_date' => 'required|date|date_format:Y-m-d|after:tomorrow',
+    //         'start_date' => 'date|date_format:Y-m-d',
+    //         'driver_image' => 'nullable|image|mimes:jpg,png,jpeg',
+    //         'license_image' => 'nullable|image|mimes:jpg,png,jpeg',
+    //         'documents.*' => 'nullable|mimes:jpg,png,jpeg,pdf,doc,docx',
+    //     ]);
+    //     $errors = $validation->errors();
+    //     if (count($errors) > 0) {
+    //         $data['success'] = "0";
+    //         $data['message'] = implode(", ", $errors->all());
+    //         $data['data'] = "";
+    //     } else {
+    //         $data['success'] = "1";
+    //         $data['message'] = "Driver has been registered Successfully.";
+    //         $data['data'] = "";
+    //     }
+    //     return response()->json($data);
+    // }
 
     public function make()
     {

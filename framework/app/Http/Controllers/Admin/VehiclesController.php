@@ -231,7 +231,7 @@ class VehiclesController extends Controller
             'year' => $request->get("year"),
             'engine_type' => $request->get("engine_type"),
             'horse_power' => $request->get("horse_power"),
-            'color' => $request->get("color"),
+            // 'color' => $request->get("color"),
             'vin' => $request->get("vin"),
             'license_plate' => $request->get("license_plate"),
             'int_mileage' => $request->get("int_mileage"),

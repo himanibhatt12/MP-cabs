@@ -10,5 +10,5 @@ class RideOffers extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $table = 'offers';
-    protected $fillable = ['source', 'destination', 'vehicle_id', 'valid_from', 'valid_till'];
+    protected $fillable = ['source', 'destination', 'vehicle_id', 'valid_from', 'valid_till', 'user_id'];
 }
