@@ -123,7 +123,7 @@
                   <div class="col-xs-6">
                    <select name="model_id" class="form-control" required id="model_id">
                     @foreach($models as $model)
-                      <option value="$model->id" @if($model->id == $vehicle->model_id) selected @endif>{{ $model->model }}</option>  
+                      <option value="{{ $model->id }}" @if($model->id == $vehicle->model_id) selected @endif>{{ $model->model }}</option>  
                     @endforeach                 
                    </select>
                   </div>

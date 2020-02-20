@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Model\Bookings;
 use App\Model\CouponModel;
 use App\Model\PackagesModel;
 use App\Model\RideOffers;
@@ -17,12 +18,19 @@ class MPCabsCustomersApi extends Controller
         $packages = PackagesModel::get();
         $details = array();
         foreach ($packages as $package) {
+            if ($package->vehicle->vehicle_image != null) {
+                $image = asset('uploads/' . $package->vehicle->vehicle_image);
+            } else {
+                $image = asset("assets/images/vehicle.jpeg");
+            }
+
             $details[] = array(
                 'vehicle_make' => $package->vehicle->maker->make,
                 'vehicle_model' => $package->vehicle->vehiclemodel->model,
                 'vehicle_plate' => $package->vehicle->license_plate,
                 'hourly_rate' => $package->hourly_rate,
                 'km_rate' => $package->km_rate,
+                'image' => $image,
             );
         }
         $data['success'] = "1";
@@ -82,7 +90,7 @@ class MPCabsCustomersApi extends Controller
     {
         $validation = Validator::make($request->all(), [
             'total_kms' => 'required|numeric',
-            'vehicletype' => 'required|exists:vehicle_types,vehicletype,vehicletype,' . $request->vehicletype,
+            'vehicletype' => 'nullable|exists:vehicle_types,vehicletype,vehicletype,' . $request->vehicletype,
         ]);
         $errors = $validation->errors();
 
@@ -91,12 +99,23 @@ class MPCabsCustomersApi extends Controller
             $data['message'] = implode(", ", $errors->all());
             $data['data'] = "";
         } else {
-            $km_base = Hyvikk::fare(strtolower(str_replace(' ', '', $request->vehicletype)) . '_base_km');
+            if ($request->vehicletype) {
+                $km_base = Hyvikk::fare(strtolower(str_replace(' ', '', $request->vehicletype)) . '_base_km');
+                $base_fare = Hyvikk::fare(strtolower(str_replace(' ', '', $request->vehicletype)) . '_base_fare');
+                $std_fare = Hyvikk::fare(strtolower(str_replace(' ', '', $request->vehicletype)) . '_std_fare');
+                $base_km = Hyvikk::fare(strtolower(str_replace(' ', '', $request->vehicletype)) . '_base_km');
+            } else {
+                $km_base = Hyvikk::fare('base_km');
+                $base_fare = Hyvikk::fare('base_fare');
+                $std_fare = Hyvikk::fare('std_fare');
+                $base_km = Hyvikk::fare('base_km');
+            }
+
             if ($request->total_kms <= $km_base) {
-                $total_fare = Hyvikk::fare(strtolower(str_replace(' ', '', $request->vehicletype)) . '_base_fare');
+                $total_fare = $base_fare;
 
             } else {
-                $total_fare = Hyvikk::fare(strtolower(str_replace(' ', '', $request->vehicletype)) . '_base_fare') + (($request->total_kms - $km_base) * Hyvikk::fare(strtolower(str_replace(' ', '', $request->vehicletype)) . '_std_fare'));
+                $total_fare = $base_fare + (($request->total_kms - $km_base) * $std_fare);
             }
             // calculate tax charges
             $count = 0;
@@ -117,8 +136,8 @@ class MPCabsCustomersApi extends Controller
                 'total_tax_percent' => $total_tax_percent,
                 'total_tax_charge_rs' => $total_tax_charge_rs,
                 'ride_amount' => $total_fare,
-                'base_fare' => Hyvikk::fare(strtolower(str_replace(' ', '', $request->vehicletype)) . '_base_fare'),
-                'base_km' => Hyvikk::fare(strtolower(str_replace(' ', '', $request->vehicletype)) . '_base_km'),
+                'base_fare' => $base_fare,
+                'base_km' => $base_km,
             );
         }
         return $data;
@@ -128,9 +147,12 @@ class MPCabsCustomersApi extends Controller
     {
         $validation = Validator::make($request->all(), [
             'booking_option' => 'required',
-            'booking_type' => 'required',
+            'booking_type' => 'required|integer', //0 => book now, 1 => book later
             'source' => 'required',
             'destination' => 'required',
+            'user_id' => 'required|integer',
+            'journey_date' => 'required',
+            'journey_time' => 'required',
         ]);
         $errors = $validation->errors();
 
@@ -139,8 +161,49 @@ class MPCabsCustomersApi extends Controller
             $data['message'] = implode(", ", $errors->all());
             $data['data'] = "";
         } else {
+            $book = Bookings::create([
+                'customer_id' => $request->user_id,
+                'pickup_addr' => $request->source,
+                'dest_addr' => $request->destination,
+            ]);
+
+            // $book->source_lat = $request->source_lat;
+            // $book->source_long = $request->source_long;
+            // $book->dest_lat = $request->dest_lat;
+            // $book->dest_long = $request->dest_long;
+            $book->journey_date = $request->journey_date;
+            $book->journey_time = $request->journey_time;
+            $book->booking_type = $request->booking_type;
+            $book->accept_status = 0; // 0 = yet to accept, 1 = accept
+            $book->ride_status = null;
+            $book->save();
             $data['success'] = "1";
-            $data['message'] = "Fare calculated successfully!";
+            $data['message'] = "Booking added successfully!";
+            $data['data'] = array('booking_id' => $book->id);
+        }
+        return $data;
+    }
+
+    public function request_offer(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'source' => 'required',
+            'destination' => 'required',
+            'user_id' => 'required|integer',
+            'journey_date' => 'required',
+            'journey_time' => 'required',
+            'amount' => 'required',
+        ]);
+        $errors = $validation->errors();
+
+        if (count($errors) > 0) {
+            $data['success'] = "0";
+            $data['message'] = implode(", ", $errors->all());
+            $data['data'] = "";
+        } else {
+
+            $data['success'] = "1";
+            $data['message'] = "Ride request send successfully!";
             $data['data'] = "";
         }
         return $data;

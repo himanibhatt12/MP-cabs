@@ -14,7 +14,7 @@ class Bookings extends Model
     protected $table = "bookings";
     protected $metaTable = 'bookings_meta';
     protected $fillable = [
-        'customer_id', 'vehicle_id', 'user_id', 'pickup', 'dropoff', 'pickup_addr', 'dest_addr', 'travellers', 'status', 'comment', 'dropoff_time', 'driver_id', 'note',
+        'customer_id', 'vehicle_id', 'user_id', 'pickup', 'dropoff', 'pickup_addr', 'dest_addr', 'travellers', 'status', 'comment', 'dropoff_time', 'driver_id', 'note', 'is_booked',
     ];
 
     protected function getMetaKeyName()
@@ -26,6 +26,7 @@ class Bookings extends Model
     {
         return $this->hasOne("App\Model\VehicleModel", "id", "vehicle_id")->withTrashed();
     }
+
     public function customer()
     {
         return $this->hasOne("App\Model\User", "id", "customer_id")->withTrashed();
