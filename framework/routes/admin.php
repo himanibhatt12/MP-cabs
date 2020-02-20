@@ -1,6 +1,5 @@
 <?php
 Auth::routes();
-
 Route::namespace ('Admin')->group(function () {
 
     Route::get("/clear_cache", function () {

@@ -123,4 +123,26 @@ class MPCabsCustomersApi extends Controller
         }
         return $data;
     }
+
+    public function new_booking(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'booking_option' => 'required',
+            'booking_type' => 'required',
+            'source' => 'required',
+            'destination' => 'required',
+        ]);
+        $errors = $validation->errors();
+
+        if (count($errors) > 0) {
+            $data['success'] = "0";
+            $data['message'] = implode(", ", $errors->all());
+            $data['data'] = "";
+        } else {
+            $data['success'] = "1";
+            $data['message'] = "Fare calculated successfully!";
+            $data['data'] = "";
+        }
+        return $data;
+    }
 }

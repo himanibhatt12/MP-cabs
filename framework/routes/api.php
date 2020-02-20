@@ -41,6 +41,7 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('apply-coupon', 'MPCabsCustomersApi@apply_coupon');
     Route::post('packages', 'MPCabsCustomersApi@packages');
     Route::post('fare-calculation', 'MPCabsCustomersApi@fare_calculation');
+    Route::post('new-booking', 'MPCabsCustomersApi@new_booking');
 
     // drivers APIs
     Route::post('my-offers/{id}', 'MPCabsDriversApi@my_offers');

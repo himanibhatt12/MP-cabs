@@ -21,18 +21,147 @@
 			<div class="card-body">
 				<div>
 					<ul class="nav nav-pills custom">
+						<li class="nav-item"><a href="#general" data-toggle="tab" class="nav-link text-uppercase active"> @lang('fleet.general_fare') <i class="fa"></i></a></li>
 					@foreach($types as $type)
-						<li class="nav-item"><a href="#{{strtolower(str_replace(' ','',$type))}}" data-toggle="tab" class="nav-link text-uppercase @if(reset($types) == $type) active @endif "> {{$type}} <i class="fa"></i></a></li>
+						<li class="nav-item"><a href="#{{strtolower(str_replace(' ','',$type))}}" data-toggle="tab" class="nav-link text-uppercase "> {{$type}} <i class="fa"></i></a></li>
 					@endforeach
 					</ul>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="tab-content card-body">
+							<div class="tab-pane active" id="general">
+								{!! Form::open(['url' => 'admin/fare-settings?tab=general','files'=>true,'method'=>'post']) !!}
+								<div class="row">
+									<div class="form-group col-md-3">
+										{!! Form::label('base_fare',__('fleet.general_base_fare'),['class'=>"form-label"]) !!}
+
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+											{!! Form::number('name[base_fare]',Hyvikk::fare('base_fare'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('base_km',__('fleet.general_base_km'). " ".Hyvikk::get('dis_format'),['class'=>"form-label"]) !!}
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('dis_format')}}</span></div>
+											{!! Form::number('name[base_km]',Hyvikk::fare('base_km'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('base_time',__('fleet.general_wait_time'),['class'=>"form-label"]) !!}
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+
+											{!! Form::number('name[base_time]',Hyvikk::fare('base_time'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('std_fare',__('fleet.std_fare')." ".Hyvikk::get('dis_format') ,['class'=>"form-label"]) !!}
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+											{!! Form::number('name[std_fare]',Hyvikk::fare('std_fare'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('weekend_base_fare',__('fleet.weekend_base_fare'),['class'=>"form-label"]) !!}
+
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+											{!! Form::number('name[weekend_base_fare]',Hyvikk::fare('weekend_base_fare'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('weekend_base_km',__('fleet.weekend_base_km')." ".Hyvikk::get('dis_format'),['class'=>"form-label"]) !!}
+
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('dis_format')}}</span></div>
+											{!! Form::number('name[weekend_base_km]',Hyvikk::fare('weekend_base_km'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('weekend_wait_time',__('fleet.weekend_wait_time'),['class'=>"form-label"]) !!}
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+
+											{!! Form::number('name[weekend_wait_time]',Hyvikk::fare('weekend_wait_time'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('weekend_std_fare',__('fleet.weekend_std_fare')." ".Hyvikk::get('dis_format'),['class'=>"form-label"]) !!}
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+											{!! Form::number('name[weekend_std_fare]',Hyvikk::fare('weekend_std_fare'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('night_base_fare',__('fleet.night_base_fare'),['class'=>"form-label"]) !!}
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+											{!! Form::number('name[night_base_fare]',Hyvikk::fare('night_base_fare'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('night_base_km',__('fleet.night_base_km')." ".Hyvikk::get('dis_format'),['class'=>"form-label"]) !!}
+
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('dis_format')}}</span></div>
+											{!! Form::number('name[night_base_km]',Hyvikk::fare('night_base_km'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('night_wait_time',__('fleet.night_wait_time'),['class'=>"form-label"]) !!}
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+
+											{!! Form::number('name[night_wait_time]',Hyvikk::fare('night_wait_time'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+
+									<div class="form-group col-md-3">
+										{!! Form::label('night_std_fare',__('fleet.night_std_fare')." ".Hyvikk::get('dis_format'),['class'=>"form-label"]) !!}
+
+										<div class="input-group mb-3">
+											<div class="input-group-prepend">
+											<span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+											{!! Form::number('name[night_std_fare]',Hyvikk::fare('night_std_fare'),['class'=>"form-control",'required']) !!}
+										</div>
+									</div>
+								</div>
+								<div class="card-footer">
+									<div class="col-md-2">
+										<div class="form-group">
+											<input type="submit"  class="form-control btn btn-success" value="@lang('fleet.save')" />
+										</div>
+									</div>
+								</div>
+								{!! Form::close()!!}
+							</div>
 							@foreach($types as $type)
 							@php($type =strtolower(str_replace(" ","",$type)))
-
-							<div class="tab-pane @if(strtolower(str_replace(' ','',reset($types))) == $type) active @endif" id="{{$type}}">
+							{{-- @if(strtolower(str_replace(' ','',reset($types))) == $type) active @endif --}}
+							<div class="tab-pane"  id="{{$type}}">
 								{!! Form::open(['url' => 'admin/fare-settings?tab='.$type,'files'=>true,'method'=>'post']) !!}
 								<div class="row">
 									<div class="form-group col-md-3">

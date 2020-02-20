@@ -310,7 +310,7 @@ return [
     'base_km' => 'Base km',
     'base_fare' => 'Base Fare',
     'base_min' => 'Stand/Waiting time (per 60 minutes)', //xx
-    'general_fare_km' => 'General Fare (per km)', //xx
+    'general_fare' => 'General Fare',
     'general_fare_min' => 'General Fare (per minutes)', //xx
     'weekend_fare_min' => 'Weekend Fare (per minutes)', //xx
     'night_fare_min' => 'Night Fare (per minutes)', //xx
