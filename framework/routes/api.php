@@ -9,7 +9,6 @@ Route::namespace ('Api')->middleware(['throttle'])->group(function () {
     Route::post('/forgot-password', 'UsersApi@forgot_password');
     Route::post('/get-settings', 'DriversApi@get_settings');
     Route::get('/codes', 'DriversApi@get_code');
-
 });
 
 Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function () {
@@ -36,10 +35,12 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('/destination-reached', 'DriversApi@destination_reached');
     Route::post('/confirm-payment', 'DriversApi@confirm_payment');
     Route::post('/active-drivers', 'DriversApi@active_drivers');
+
     // customers APIs
     Route::post('offers', 'MPCabsCustomersApi@offers');
     Route::post('apply-coupon', 'MPCabsCustomersApi@apply_coupon');
     Route::post('packages', 'MPCabsCustomersApi@packages');
+    Route::post('fare-calculation', 'MPCabsCustomersApi@fare_calculation');
 
     // drivers APIs
     Route::post('my-offers/{id}', 'MPCabsDriversApi@my_offers');
