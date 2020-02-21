@@ -1,5 +1,6 @@
 <?php
 return [
+    'booking_type' => 'Booking Type',
     'rate_per_hour' => 'Rate per Hour',
     'rate_per_km' => 'Rate per km',
     'packages' => 'Rental Packages',

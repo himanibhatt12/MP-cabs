@@ -37,7 +37,7 @@
                 <th style="width: 10% !important">@lang('fleet.dropoff_addr')</th>
                 <th style="width: 10% !important">@lang('fleet.pickup')</th>
                 <th style="width: 10% !important">@lang('fleet.dropoff')</th>
-                <th style="width: 10% !important">@lang('fleet.passengers')</th>
+                <th style="width: 10% !important">@lang('fleet.booking_type')</th>
                 <th style="width: 10% !important">@lang('fleet.journey_status')</th>
                 <th>@lang('fleet.booking_status')</th>
                 <th style="width: 10% !important">@lang('fleet.amount')</th>
@@ -68,7 +68,7 @@
                 {{date('d/m/Y g:i A',strtotime($row->dropoff))}}
                 @endif
                 </td>
-                <td style="width: 10% !important">{{$row->travellers}}</td>
+                <td style="width: 10% !important">{{$row->booking_option}}</td>
                 <td style="width: 10% !important">
                 @if($row->status == 1)
                 <span class="text-success">
@@ -162,7 +162,7 @@
                 <th>@lang('fleet.dropoff_addr')</th>
                 <th>@lang('fleet.pickup')</th>
                 <th>@lang('fleet.dropoff')</th>
-                <th>@lang('fleet.passengers')</th>
+                <th>@lang('fleet.booking_type')</th>
                 <th>@lang('fleet.journey_status')</th>
                 <th>@lang('fleet.booking_status')</th>
                 <th>@lang('fleet.amount')</th>

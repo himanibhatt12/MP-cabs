@@ -201,6 +201,7 @@ class DriversApi extends Controller
             $data['data'] = "";
         } else {
             $u = User::find($request->get('user_id'));
+            $booking->is_booked = 1;
             $booking->accept_status = 1;
             $booking->driver_id = $request->get('user_id');
             if ($u->getMeta('vehicle_id') != null) {

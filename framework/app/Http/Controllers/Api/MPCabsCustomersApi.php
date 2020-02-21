@@ -143,6 +143,29 @@ class MPCabsCustomersApi extends Controller
         return $data;
     }
 
+    public function booking_history($id)
+    {
+        $bookings = Bookings::where('customer_id', $id)->where('is_booked', 1)->get();
+        $details = array();
+        foreach ($bookings as $booking) {
+            $details[] = array(
+                'id' => $booking->id,
+                'source' => $booking->pickup_addr,
+                'destination' => $booking->dest_addr,
+                'ride_status' => $booking->ride_status,
+                'booking_option' => $booking->booking_option,
+                'timetoreach' => $booking->approx_timetoreach,
+                'amount' => $booking->tax_total,
+                'total_kms' => $booking->total_kms,
+                'booked_on' => date('Y-m-d H:i:s', strtotime($booking->created_at)),
+            );
+        }
+        $data['success'] = "1";
+        $data['message'] = "Data fetched!";
+        $data['data'] = $details;
+        return $data;
+    }
+
     public function new_booking(Request $request)
     {
         $validation = Validator::make($request->all(), [
@@ -153,6 +176,7 @@ class MPCabsCustomersApi extends Controller
             'user_id' => 'required|integer',
             'journey_date' => 'required',
             'journey_time' => 'required',
+            'total_kms' => 'required|numeric',
         ]);
         $errors = $validation->errors();
 
@@ -171,12 +195,16 @@ class MPCabsCustomersApi extends Controller
             // $book->source_long = $request->source_long;
             // $book->dest_lat = $request->dest_lat;
             // $book->dest_long = $request->dest_long;
+            $book->booking_option = $request->booking_option;
             $book->journey_date = $request->journey_date;
             $book->journey_time = $request->journey_time;
             $book->booking_type = $request->booking_type;
             $book->accept_status = 0; // 0 = yet to accept, 1 = accept
             $book->ride_status = null;
+            $book->total_kms = $request->total_kms;
+            $book->approx_timetoreach = $request->approx_timetoreach;
             $book->save();
+            // send notification to drivers
             $data['success'] = "1";
             $data['message'] = "Booking added successfully!";
             $data['data'] = array('booking_id' => $book->id);
@@ -193,6 +221,8 @@ class MPCabsCustomersApi extends Controller
             'journey_date' => 'required',
             'journey_time' => 'required',
             'amount' => 'required',
+            'total_kms' => 'required|numeric',
+            'approx_timetoreach' => 'required',
         ]);
         $errors = $validation->errors();
 
@@ -201,11 +231,30 @@ class MPCabsCustomersApi extends Controller
             $data['message'] = implode(", ", $errors->all());
             $data['data'] = "";
         } else {
-
+            $booking = Bookings::create([
+                'customer_id' => $request->user_id,
+                'pickup_addr' => $request->source,
+                'dest_addr' => $request->destination,
+            ]);
+            $booking->booking_option = "offer request";
+            $booking->journey_date = $request->journey_date;
+            $booking->journey_time = $request->journey_time;
+            $booking->booking_type = 1;
+            $booking->accept_status = 0; // 0 = yet to accept, 1 = accept
+            $booking->ride_status = null;
+            $booking->total = $request->amount;
+            $booking->total_kms = $request->total_kms;
+            $booking->tax_total = $request->amount;
+            $booking->total_tax_percent = 0;
+            $booking->total_tax_charge_rs = 0;
+            $booking->approx_timetoreach = $request->approx_timetoreach;
+            $booking->save();
+            // send notification to drivers
             $data['success'] = "1";
-            $data['message'] = "Ride request send successfully!";
-            $data['data'] = "";
+            $data['message'] = "Offer request send successfully!";
+            $data['data'] = array('booking_id' => $booking->id);
         }
         return $data;
     }
+
 }

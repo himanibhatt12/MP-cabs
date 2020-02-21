@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Model\Bookings;
 use App\Model\DriverLogsModel;
 use App\Model\DriverVehicleModel;
 use App\Model\RideOffers;
@@ -17,6 +18,32 @@ use Validator;
 
 class MPCabsDriversApi extends Controller
 {
+
+    public function customer_offer_requests()
+    {
+        $bookings = Bookings::meta()->where('bookings_meta.key', '=', 'booking_option')->where('bookings_meta.value', '=', 'offer request')->where('is_booked', 0)->get();
+        $details = array();
+        foreach ($bookings as $booking) {
+            $details[] = array(
+                'id' => $booking->id,
+                'source' => $booking->pickup_addr,
+                'destination' => $booking->dest_addr,
+                'booking_option' => $booking->booking_option,
+                'timetoreach' => $booking->approx_timetoreach,
+                'amount' => $booking->tax_total,
+                'total_kms' => $booking->total_kms,
+                'journey_date' => $booking->journey_date,
+                'journey_time' => $booking->journey_time,
+                'customer_name' => $booking->customer->name,
+                'customer_mobile' => $booking->customer->mobno,
+            );
+        }
+        $data['success'] = "1";
+        $data['message'] = "Data fetched!";
+        $data['data'] = $details;
+        return $data;
+    }
+
     public function register_driver(Request $request)
     {
         $validation = Validator::make($request->all(), [
