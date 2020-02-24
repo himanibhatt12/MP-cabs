@@ -7,6 +7,7 @@ use App\Model\Bookings;
 use App\Model\CouponModel;
 use App\Model\PackagesModel;
 use App\Model\RideOffers;
+use App\Model\RouteModel;
 use Hyvikk;
 use Illuminate\Http\Request;
 use Validator;
@@ -166,6 +167,26 @@ class MPCabsCustomersApi extends Controller
         return $data;
     }
 
+    public function routes()
+    {
+        $routes = RouteModel::get();
+        $details = array();
+        foreach ($routes as $route) {
+            $details[] = array(
+                'id' => $route->id,
+                'name' => $route->name,
+                'source' => $route->source,
+                'destination' => $route->destination,
+                'cost' => $route->cost,
+                'ratings' => $route->ratings,
+            );
+        }
+        $data['success'] = "1";
+        $data['message'] = "Data fetched!";
+        $data['data'] = $details;
+        return $data;
+    }
+
     public function new_booking(Request $request)
     {
         $validation = Validator::make($request->all(), [
@@ -257,4 +278,78 @@ class MPCabsCustomersApi extends Controller
         return $data;
     }
 
+    public function book_package(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'journey_date' => 'required',
+            'journey_time' => 'required',
+            'amount' => 'required|numeric',
+            'package_id' => 'required|integer',
+        ]);
+        $errors = $validation->errors();
+
+        if (count($errors) > 0) {
+            $data['success'] = "0";
+            $data['message'] = implode(", ", $errors->all());
+            $data['data'] = "";
+        } else {
+            dd($request->all());
+            $package = PackagesModel::find($request->package_id);
+            $booking = Bookings::create([
+                'customer_id' => $request->user_id,
+                'vehicle_id' => $package->vehicle_id,
+            ]);
+            $booking->journey_date = $request->journey_date;
+            $booking->journey_time = $request->journey_time;
+            $booking->total = $request->amount;
+            $booking->package_id = $request->package_id;
+            $booking->booking_option = "rental package";
+            $booking->save();
+            $data['success'] = "1";
+            $data['message'] = "Package booked successfully!";
+            $data['data'] = "";
+        }
+        return $data;
+    }
+
+    public function book_route(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'user_id' => 'required|integer',
+            'journey_date' => 'required',
+            'journey_time' => 'required',
+            'amount' => 'required|numeric',
+            'route_id' => 'required|integer',
+            'source' => 'required',
+            'destination' => 'required',
+            'total_kms' => 'required|numeric',
+        ]);
+        $errors = $validation->errors();
+
+        if (count($errors) > 0) {
+            $data['success'] = "0";
+            $data['message'] = implode(", ", $errors->all());
+            $data['data'] = "";
+        } else {
+            $route = RouteModel::find($request->route_id);
+            $booking = Bookings::create([
+                'customer_id' => $request->user_id,
+                'pickup_addr' => $request->source,
+                'dest_addr' => $request->destination,
+            ]);
+            $booking->journey_date = $request->journey_date;
+            $booking->journey_time = $request->journey_time;
+            $booking->total_kms = $request->total_kms;
+            $booking->driving_time = $request->driving_time;
+            $booking->route_id = $request->route_id;
+            $booking->tax_total = $request->amount;
+            $booking->booking_option = "fixed route";
+            $booking->save();
+            $data['success'] = "1";
+            $data['message'] = "Route booked successfully!";
+            $data['data'] = "";
+        }
+        return $data;
+    }
 }

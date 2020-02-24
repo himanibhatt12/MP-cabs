@@ -50,7 +50,9 @@
                 <td>
                   <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="checkbox" id="chk{{ $row->id }}" onclick='checkcheckbox();'>
                 </td>
-                <td style="width: 10% !important">{{$row->customer->name}}</td>
+                <td style="width: 10% !important">
+                  {{$row->customer->name}}
+                </td>
                 <td style="width: 10% !important">
                   @if($row->vehicle_id)
                   {{$row->vehicle->maker->make}} - {{$row->vehicle->vehiclemodel->model}} - {{$row->vehicle->license_plate}}

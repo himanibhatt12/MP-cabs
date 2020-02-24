@@ -22,6 +22,21 @@ class Bookings extends Model
         return 'booking_id'; // The parent foreign key
     }
 
+    public function package()
+    {
+        return $this->hasOne("App\Model\PackagesModel", "id", "package_id")->withTrashed();
+    }
+
+    public function route()
+    {
+        return $this->hasOne("App\Model\RouteModel", "id", "route_id")->withTrashed();
+    }
+
+    public function offer()
+    {
+        return $this->hasOne("App\Model\RideOffers", "id", "offer_id")->withTrashed();
+    }
+
     public function vehicle()
     {
         return $this->hasOne("App\Model\VehicleModel", "id", "vehicle_id")->withTrashed();

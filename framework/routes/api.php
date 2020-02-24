@@ -42,14 +42,17 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('packages', 'MPCabsCustomersApi@packages');
     Route::post('fare-calculation', 'MPCabsCustomersApi@fare_calculation');
     Route::post('booking-history/{id}', 'MPCabsCustomersApi@booking_history');
+    Route::post('routes', 'MPCabsCustomersApi@routes');
     Route::post('new-booking', 'MPCabsCustomersApi@new_booking'); // incomplete
     Route::post('send-ride-request', 'MPCabsCustomersApi@request_offer'); // incomplete
+    Route::post('book-package', 'MPCabsCustomersApi@book_package'); // incomplete
+    Route::post('book-route', 'MPCabsCustomersApi@book_route'); // incomplete
 
     // drivers APIs
+    Route::post('add-offer', 'MPCabsDriversApi@add_offer'); // with new vehicle incomplete
+    Route::post('edit-offer', 'MPCabsDriversApi@edit_offer'); //
     Route::post('customer-offer-requests', 'MPCabsDriversApi@customer_offer_requests');
     Route::post('my-offers/{id}', 'MPCabsDriversApi@my_offers');
-    Route::post('add-offer', 'MPCabsDriversApi@add_offer');
-    Route::post('edit-offer', 'MPCabsDriversApi@edit_offer');
     Route::post('vehicle-make', 'MPCabsDriversApi@make');
     Route::post('vehicle-colors', 'MPCabsDriversApi@colors');
     Route::post('vehicle-model/{id}', 'MPCabsDriversApi@models');
