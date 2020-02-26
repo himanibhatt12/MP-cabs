@@ -21,7 +21,7 @@
     <div class="card card-info">
       <div class="card-header">
         <h3 class="card-title">@lang('fleet.manageVehicles') &nbsp; <a href="{{ route('vehicles.create')}}" class="btn btn-success">@lang('fleet.addNew')</a>
-          <button data-toggle="modal" data-target="#import" class="btn btn-warning">@lang('fleet.import')</button>
+          {{-- <button data-toggle="modal" data-target="#import" class="btn btn-warning">@lang('fleet.import')</button> --}}
         </h3>
       </div>
 

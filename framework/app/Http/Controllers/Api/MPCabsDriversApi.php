@@ -50,13 +50,13 @@ class MPCabsDriversApi extends Controller
             'make_id' => 'required|integer',
             'model_id' => 'required|integer',
             'type_id' => 'required|integer',
+            'vehicle_number' => 'required',
             // 'color_id' => 'required|integer',
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'mobile' => 'required|numeric',
             'alt_mobile' => 'required|numeric',
             'password' => 'required|same:confirm_password',
-            'vehicle_number' => 'required',
             'id_proof' => 'required',
             'insurance' => 'required',
             'rc_book' => 'required',
@@ -71,15 +71,16 @@ class MPCabsDriversApi extends Controller
             $data['message'] = implode(", ", $errors->all());
             $data['data'] = "";
         } else {
-            if ($request->vehicle_id == null) {$vehicle = VehicleModel::create([
-                'make_id' => $request->make_id,
-                'model_id' => $request->model_id,
-                'license_plate' => $request->vehicle_number,
-                // 'color_id' => $request->color_id,
-                // 'user_id' => $user->id,
-                'in_service' => 1,
-                'type_id' => $request->type_id,
-            ]);
+            if ($request->vehicle_id == null) {
+                $vehicle = VehicleModel::create([
+                    'make_id' => $request->make_id,
+                    'model_id' => $request->model_id,
+                    'type_id' => $request->type_id,
+                    'license_plate' => $request->vehicle_number,
+                    'in_service' => 1,
+                    // 'color_id' => $request->color_id,
+                    // 'user_id' => $user->id,
+                ]);
                 if ($request->file('insurance') && $request->file('insurance')->isValid()) {
                     $this->upload_vehicle_doc($request->file('insurance'), 'documents', $vehicle->id);
                 }
@@ -116,8 +117,6 @@ class MPCabsDriversApi extends Controller
 
             if ($request->file('driving_license') && $request->file('driving_license')->isValid()) {
                 $this->upload_user_file($request->file('driving_license'), "license_image", $user->id);
-                // $user->id_proof_type = "License";
-                // $user->save();
             }
             if ($request->file('id_proof')) {
                 $this->upload_user_file($request->file('id_proof'), "id_proof", $user->id);
@@ -126,7 +125,7 @@ class MPCabsDriversApi extends Controller
             $vehicle = VehicleModel::find($vehicle_id);
             $vehicle->driver_id = $user->id;
             $vehicle->save();
-            DriverLogsModel::create(['driver_id' => $user->id, 'vehicle_id' => $vehicle->id, 'date' => date('Y-m-d H:i:s')]);
+            DriverLogsModel::create(['driver_id' => $user->id, 'vehicle_id' => $vehicle_id, 'date' => date('Y-m-d H:i:s')]);
             DriverVehicleModel::updateOrCreate(['vehicle_id' => $vehicle_id], ['vehicle_id' => $vehicle_id, 'driver_id' => $user->id]);
             $data['success'] = "1";
             $data['message'] = "Driver registered successfully!";
@@ -314,6 +313,8 @@ class MPCabsDriversApi extends Controller
                 'source' => $offer->source,
                 'destination' => $offer->destination,
                 'valid_till' => date('d-m-Y g:i A', strtotime($offer->valid_till)),
+                'vehicle_id' => $offer->vehicle_id,
+                'vehicle' => $offer->vehicle->maker->make . '-' . $offer->vehicle->vehiclemodel->model . '-' . $offer->vehicle->license_plate,
             );
         }
         $data['success'] = "1";
@@ -340,6 +341,7 @@ class MPCabsDriversApi extends Controller
                 $details[] = array(
                     'id' => $vehicle->id,
                     'name' => $vehicle->maker->make . '-' . $vehicle->vehiclemodel->model . '-' . $vehicle->license_plate,
+                    'type' => $vehicle->types->displayname,
                 );
             }
         }
@@ -348,5 +350,4 @@ class MPCabsDriversApi extends Controller
         $data['data'] = $details;
         return $data;
     }
-
 }

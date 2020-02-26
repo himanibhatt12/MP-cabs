@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 Route::namespace ('Api')->middleware(['throttle'])->group(function () {
     Route::post('/login', 'Auth@login');
     Route::post('/user-registration', 'UsersApi@user_registration');
@@ -47,6 +46,7 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('send-ride-request', 'MPCabsCustomersApi@request_offer'); // incomplete
     Route::post('book-package', 'MPCabsCustomersApi@book_package'); // incomplete
     Route::post('book-route', 'MPCabsCustomersApi@book_route'); // incomplete
+    Route::post('booking-details/{id}', 'MPCabsCustomersApi@booking_details');
 
     // drivers APIs
     Route::post('add-offer', 'MPCabsDriversApi@add_offer'); // with new vehicle incomplete
@@ -60,8 +60,4 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('register-driver', 'MPCabsDriversApi@register_driver');
     Route::post('delete-ride-offer/{id}', 'MPCabsDriversApi@delete_offer');
     Route::post('vehicles', 'MPCabsDriversApi@vehicles');
-});
-
-Route::middleware('auth:api')->post('/user', function (Request $request) {
-    return $request->user();
 });

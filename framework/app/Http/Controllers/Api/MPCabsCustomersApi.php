@@ -33,6 +33,7 @@ class MPCabsCustomersApi extends Controller
                 'hourly_rate' => $package->hourly_rate,
                 'km_rate' => $package->km_rate,
                 'image' => $image,
+                'vehicle_type' => $package->vehicle->types->displayname,
             );
         }
         $data['success'] = "1";
@@ -51,6 +52,8 @@ class MPCabsCustomersApi extends Controller
                 'source' => $offer->source,
                 'destination' => $offer->destination,
                 'valid_till' => date('d-m-Y g:i A', strtotime($offer->valid_till)),
+                'vehicle_id' => $offer->vehicle_id,
+                'vehicle' => $offer->vehicle->maker->make . '-' . $offer->vehicle->vehiclemodel->model . '-' . $offer->vehicle->license_plate,
             );
         }
         $data['success'] = "1";
@@ -356,6 +359,35 @@ class MPCabsCustomersApi extends Controller
             $data['message'] = "Route booked successfully!";
             $data['data'] = array('booking_id' => $booking->id);
         }
+        return $data;
+    }
+
+    public function booking_details($id)
+    {
+        $taxes = json_decode(Hyvikk::get('tax_charge'));
+        $booking = Bookings::find($id);
+        $tax_charge = array();
+        foreach ($taxes as $key => $val) {
+            $tax_charge[$key] = ($booking->total * $val) / 100;
+        }
+        $details = array(
+            'journey_date' => $booking->journey_date,
+            'journey_time' => $booking->journey_time,
+            'booking_option' => $booking->booking_option,
+            'total_kms' => $booking->total_kms,
+            'vehicle_make' => $booking->vehicle->maker->make,
+            'vehicle_model' => $booking->vehicle->vehiclemodel->model,
+            'vehicle_type' => $booking->vehicle->types->displayname,
+            'vehicle_color' => $booking->vehicle->vehiclecolor->color,
+            'vehicle_number' => $booking->vehicle->license_plate,
+            'ride_amount' => $booking->total,
+            'total_amount' => $booking->tax_total,
+            'taxes' => $taxes,
+            'tax_charges' => $tax_charge,
+        );
+        $data['success'] = "1";
+        $data['message'] = "Booking details fetched successfully!";
+        $data['data'] = $details;
         return $data;
     }
 
