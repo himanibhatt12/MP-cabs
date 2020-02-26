@@ -222,10 +222,6 @@ class VehiclesController extends Controller
     {
         $user_id = $request->get('user_id');
         $vehicle = VehicleModel::create([
-            // 'make' => $request->get("make"),
-            // 'model' => $request->get("model"),
-            // 'type' => $request->get("type"),
-            // 'color' => $request->get("color"),
             'make_id' => $request->make_id,
             'model_id' => $request->model_id,
             'color_id' => $request->color_id,

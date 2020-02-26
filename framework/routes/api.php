@@ -58,6 +58,8 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('vehicle-model/{id}', 'MPCabsDriversApi@models');
     Route::post('vehicle-types', 'MPCabsDriversApi@types');
     Route::post('register-driver', 'MPCabsDriversApi@register_driver');
+    Route::post('delete-ride-offer/{id}', 'MPCabsDriversApi@delete_offer');
+    Route::post('vehicles', 'MPCabsDriversApi@vehicles');
 });
 
 Route::middleware('auth:api')->post('/user', function (Request $request) {

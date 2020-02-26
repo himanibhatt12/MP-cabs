@@ -7,7 +7,6 @@ use App\Model\Expense;
 // use App\Model\PartsModel;
 use App\Model\IncomeModel;
 use App\Model\ReviewModel;
-use App\Model\ServiceReminderModel;
 use App\Model\User;
 use App\Model\VehicleModel;
 use Auth;
@@ -15,127 +14,6 @@ use DB;
 
 class HomeController extends Controller
 {
-
-    public function export_calendar()
-    {
-        $bookings = Bookings::where('pickup', '!=', null)->where('dropoff', '!=', null)->get();
-        $vCalendar = new \Eluceo\iCal\Component\Calendar("Fleet manager");
-        foreach ($bookings as $booking) {
-            $vehicle = null;
-            if ($booking->vehicle_id != null) {
-                $vehicle = $booking->vehicle->make . " -" . $booking->vehicle->model . "-" . $booking->vehicle->license_plate;
-            }
-            $vEvent = new \Eluceo\iCal\Component\Event();
-            $vEvent
-                ->setDtStart(new \DateTime($booking->pickup))
-                ->setDtEnd(new \DateTime($booking->dropoff))
-                ->setNoTime(true)
-                ->setSummary($booking->customer->name)
-                ->setDescription("<table><tr><th>Customer</th><td> " . $booking->customer->name . "</td>	</tr><tr><th>Vehicle</th>
-		<td> " . $vehicle . "</td>
-
-	</tr>
-	<tr>
-		<th>Travellers</th>
-		<td>" . $booking->travellers . "</td>
-	</tr>
-	<tr>
-		<th>Note</th>
-		<td>" . $booking->note . "</td>
-	</tr>
-	<tr>
-		<th>Pickup Date & Time</th>
-		<td>" . date('d/m/Y g:i A', strtotime($booking->pickup)) . "</td>
-	</tr>
-	<tr>
-		<th>Dropoff Date & Time</th>
-		<td>" . date('d/m/Y g:i A', strtotime($booking->dropoff)) . "</td>
-	</tr>
-	<tr>
-		<th>Pickup Address</th>
-		<td> " . $booking->pickup_addr . "</td>
-	</tr>
-	<tr>
-		<th>Destination Address</th>
-		<td>" . $booking->dest_addr . "</td>
-	</tr>
-</table>")
-                ->setDescriptionHTML("<table><tr><th>Customer</th><td> " . $booking->customer->name . "</td>	</tr><tr><th>Vehicle</th>
-		<td> " . $vehicle . "</td>
-
-	</tr>
-	<tr>
-		<th>Travellers</th>
-		<td>" . $booking->travellers . "</td>
-	</tr>
-	<tr>
-		<th>Note</th>
-		<td>" . $booking->note . "</td>
-	</tr>
-	<tr>
-		<th>Pickup Date & Time</th>
-		<td>" . date('d/m/Y g:i A', strtotime($booking->pickup)) . "</td>
-	</tr>
-	<tr>
-		<th>Dropoff Date & Time</th>
-		<td>" . date('d/m/Y g:i A', strtotime($booking->dropoff)) . "</td>
-	</tr>
-	<tr>
-		<th>Pickup Address</th>
-		<td> " . $booking->pickup_addr . "</td>
-	</tr>
-	<tr>
-		<th>Destination Address</th>
-		<td>" . $booking->dest_addr . "</td>
-	</tr>
-</table>");
-            $vCalendar->addComponent($vEvent);
-        }
-
-        $reminders = ServiceReminderModel::get();
-        foreach ($reminders as $r) {
-            $interval = substr($r->services->overdue_unit, 0, -3);
-            $int = $r->services->overdue_time . $interval;
-            $date = date('Y-m-d', strtotime($int, strtotime(date('Y-m-d'))));
-            $vEvent = new \Eluceo\iCal\Component\Event();
-            $vEvent
-                ->setDtStart(new \DateTime($date))
-                ->setDtEnd(new \DateTime($date))
-                ->setNoTime(true)
-                ->setSummary($r->services->description)
-                ->setDescription("Bold Text")
-                ->setDescriptionHTML('<b>Bold text!</b>');
-            $vCalendar->addComponent($vEvent);
-        }
-        header('Content-Type: text/calendar; charset=utf-8');
-        header('Content-Disposition: attachment; filename="cal.ics"');
-        echo $vCalendar->render();
-    }
-
-    public function cal()
-    {
-        $vCalendar = new \Eluceo\iCal\Component\Calendar('www.example.com');
-        $vEvent = new \Eluceo\iCal\Component\Event();
-        $vEvent
-            ->setDtStart(new \DateTime('2020-02-05'))
-            ->setDtEnd(new \DateTime('2020-02-05'))
-            ->setNoTime(true)
-            ->setSummary('testing1')
-        ;
-        $vEvent1 = new \Eluceo\iCal\Component\Event();
-
-        $vEvent1
-            ->setDtStart(new \DateTime('2020-02-09'))
-            ->setDtEnd(new \DateTime('2020-02-09'))
-            ->setNoTime(true)
-            ->setSummary('testing2')
-        ;
-        $vCalendar->addComponent($vEvent);
-        $vCalendar->addComponent($vEvent1);
-        header('Content-Type: text/calendar; charset=utf-8');
-        header('Content-Disposition: attachment; filename="cal.ics"');
-        echo $vCalendar->render();
-    }
 
     public function index()
     {

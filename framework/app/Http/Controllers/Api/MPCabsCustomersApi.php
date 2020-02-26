@@ -26,6 +26,7 @@ class MPCabsCustomersApi extends Controller
             }
 
             $details[] = array(
+                'package_id' => $package->id,
                 'vehicle_make' => $package->vehicle->maker->make,
                 'vehicle_model' => $package->vehicle->vehiclemodel->model,
                 'vehicle_plate' => $package->vehicle->license_plate,
@@ -46,6 +47,7 @@ class MPCabsCustomersApi extends Controller
         $details = array();
         foreach ($offers as $offer) {
             $details[] = array(
+                'offer_id' => $offer->id,
                 'source' => $offer->source,
                 'destination' => $offer->destination,
                 'valid_till' => date('d-m-Y g:i A', strtotime($offer->valid_till)),
@@ -210,6 +212,7 @@ class MPCabsCustomersApi extends Controller
                 'customer_id' => $request->user_id,
                 'pickup_addr' => $request->source,
                 'dest_addr' => $request->destination,
+                'status' => 0,
             ]);
 
             // $book->source_lat = $request->source_lat;
@@ -256,6 +259,7 @@ class MPCabsCustomersApi extends Controller
                 'customer_id' => $request->user_id,
                 'pickup_addr' => $request->source,
                 'dest_addr' => $request->destination,
+                'sttus' => 0,
             ]);
             $booking->booking_option = "offer request";
             $booking->journey_date = $request->journey_date;
@@ -299,6 +303,7 @@ class MPCabsCustomersApi extends Controller
             $booking = Bookings::create([
                 'customer_id' => $request->user_id,
                 'vehicle_id' => $package->vehicle_id,
+                'status' => 0,
             ]);
             $booking->journey_date = $request->journey_date;
             $booking->journey_time = $request->journey_time;
@@ -308,7 +313,7 @@ class MPCabsCustomersApi extends Controller
             $booking->save();
             $data['success'] = "1";
             $data['message'] = "Package booked successfully!";
-            $data['data'] = "";
+            $data['data'] = array('booking_id' => $booking->id);
         }
         return $data;
     }
@@ -337,6 +342,7 @@ class MPCabsCustomersApi extends Controller
                 'customer_id' => $request->user_id,
                 'pickup_addr' => $request->source,
                 'dest_addr' => $request->destination,
+                'status' => 0,
             ]);
             $booking->journey_date = $request->journey_date;
             $booking->journey_time = $request->journey_time;
@@ -348,8 +354,9 @@ class MPCabsCustomersApi extends Controller
             $booking->save();
             $data['success'] = "1";
             $data['message'] = "Route booked successfully!";
-            $data['data'] = "";
+            $data['data'] = array('booking_id' => $booking->id);
         }
         return $data;
     }
+
 }

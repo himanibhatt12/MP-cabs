@@ -84,7 +84,7 @@
                 </td>
                 <td>{{ $row->ride_status }}</td>
                 <td style="width: 10% !important">
-                @if($row->receipt == 1)
+                @if($row->tax_total)
                 {{Hyvikk::get('currency')}} {{($row->tax_total) ? $row->tax_total : $row->total}}
                 @endif
                 </td>

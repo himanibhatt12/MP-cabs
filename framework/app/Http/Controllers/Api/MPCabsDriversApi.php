@@ -50,7 +50,7 @@ class MPCabsDriversApi extends Controller
             'make_id' => 'required|integer',
             'model_id' => 'required|integer',
             'type_id' => 'required|integer',
-            'color_id' => 'required|integer',
+            // 'color_id' => 'required|integer',
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'mobile' => 'required|numeric',
@@ -71,27 +71,30 @@ class MPCabsDriversApi extends Controller
             $data['message'] = implode(", ", $errors->all());
             $data['data'] = "";
         } else {
-            $vehicle = VehicleModel::create([
+            if ($request->vehicle_id == null) {$vehicle = VehicleModel::create([
                 'make_id' => $request->make_id,
                 'model_id' => $request->model_id,
-                'color_id' => $request->color_id,
                 'license_plate' => $request->vehicle_number,
-                'vin' => $request->vehicle_number,
+                // 'color_id' => $request->color_id,
                 // 'user_id' => $user->id,
                 'in_service' => 1,
-                'type_id' => $request->get('type_id'),
+                'type_id' => $request->type_id,
             ]);
-            if ($request->file('insurance') && $request->file('insurance')->isValid()) {
-                $this->upload_vehicle_doc($request->file('insurance'), 'documents', $vehicle->id);
-            }
-            if ($request->file('rc_book') && $request->file('rc_book')->isValid()) {
-                $this->upload_vehicle_doc($request->file('rc_book'), 'rc_book', $vehicle->id);
-            }
-            if ($request->file('permit') && $request->file('permit')->isValid()) {
-                $this->upload_vehicle_doc($request->file('permit'), 'permit', $vehicle->id);
-            }
-            if ($request->file('vehicle_fitness') && $request->file('vehicle_fitness')->isValid()) {
-                $this->upload_vehicle_doc($request->file('vehicle_fitness'), 'vehicle_fitness', $vehicle->id);
+                if ($request->file('insurance') && $request->file('insurance')->isValid()) {
+                    $this->upload_vehicle_doc($request->file('insurance'), 'documents', $vehicle->id);
+                }
+                if ($request->file('rc_book') && $request->file('rc_book')->isValid()) {
+                    $this->upload_vehicle_doc($request->file('rc_book'), 'rc_book', $vehicle->id);
+                }
+                if ($request->file('permit') && $request->file('permit')->isValid()) {
+                    $this->upload_vehicle_doc($request->file('permit'), 'permit', $vehicle->id);
+                }
+                if ($request->file('vehicle_fitness') && $request->file('vehicle_fitness')->isValid()) {
+                    $this->upload_vehicle_doc($request->file('vehicle_fitness'), 'vehicle_fitness', $vehicle->id);
+                }
+                $vehicle_id = $vehicle->id;
+            } else {
+                $vehicle_id = $request->vehicle_id;
             }
             $user = User::create([
                 "name" => $request->name,
@@ -108,7 +111,7 @@ class MPCabsDriversApi extends Controller
             $user->gender = $request->gender;
             $user->phone = $request->mobile;
             $user->alt_mobile = $request->alt_mobile;
-            $user->vehicle_id = $vehicle->id;
+            $user->vehicle_id = $vehicle_id;
             $user->save();
 
             if ($request->file('driving_license') && $request->file('driving_license')->isValid()) {
@@ -120,15 +123,15 @@ class MPCabsDriversApi extends Controller
                 $this->upload_user_file($request->file('id_proof'), "id_proof", $user->id);
             }
 
-            $vehicle = VehicleModel::find($vehicle->id);
+            $vehicle = VehicleModel::find($vehicle_id);
             $vehicle->driver_id = $user->id;
             $vehicle->save();
             DriverLogsModel::create(['driver_id' => $user->id, 'vehicle_id' => $vehicle->id, 'date' => date('Y-m-d H:i:s')]);
-            DriverVehicleModel::updateOrCreate(['vehicle_id' => $vehicle->id], ['vehicle_id' => $vehicle->id, 'driver_id' => $user->id]);
+            DriverVehicleModel::updateOrCreate(['vehicle_id' => $vehicle_id], ['vehicle_id' => $vehicle_id, 'driver_id' => $user->id]);
             $data['success'] = "1";
             $data['message'] = "Driver registered successfully!";
             $data['data'] = array(
-                'vehicle_id' => $vehicle->id,
+                'vehicle_id' => $vehicle_id,
                 'driver_id' => $user->id,
                 'api_token' => $user->api_token,
             );
@@ -165,11 +168,12 @@ class MPCabsDriversApi extends Controller
         $vehicle_type_data = array();
         foreach ($vehicle_types as $vehicle_type) {
             if ($vehicle_type->icon != null) {
-                $url = $vehicle_type->icon;
+                $url = asset("assets/images/" . $vehicle_type->icon);
             } else {
-                $url = null;
+                $url = asset("assets/images/vehicle.jpeg");
             }
-            $vehicle_type_data[] = array('id' => $vehicle_type->id,
+            $vehicle_type_data[] = array(
+                'id' => $vehicle_type->id,
                 'vehicletype' => $vehicle_type->vehicletype,
                 'displayname' => $vehicle_type->displayname,
                 'icon' => $url,
@@ -270,11 +274,25 @@ class MPCabsDriversApi extends Controller
             $data['message'] = implode(", ", $errors->all());
             $data['data'] = "";
         } else {
+            // incomplete
             $user = User::find($request->user_id);
+            if ($request->make_id) {
+                $vehicle = VehicleModel::create([
+                    'make_id' => $request->make_id,
+                    'model_id' => $request->model_id,
+                    // 'color_id' => $request->color_id,
+                    'license_plate' => $request->vehicle_number,
+                    'in_service' => 1,
+                    'type_id' => $request->type_id,
+                ]);
+                $v_id = $vehicle->id;
+            } else {
+                $v_id = $user->vehicle_id;
+            }
             $offer = RideOffers::create([
                 'source' => $request->source,
                 'destination' => $request->destination,
-                'vehicle_id' => $user->vehicle_id,
+                'vehicle_id' => $v_id,
                 'valid_from' => $request->valid_from,
                 'valid_till' => $request->valid_till,
                 'user_id' => $request->user_id,
@@ -292,10 +310,38 @@ class MPCabsDriversApi extends Controller
         $details = array();
         foreach ($offers as $offer) {
             $details[] = array(
+                'offer_id' => $offer->id,
                 'source' => $offer->source,
                 'destination' => $offer->destination,
                 'valid_till' => date('d-m-Y g:i A', strtotime($offer->valid_till)),
             );
+        }
+        $data['success'] = "1";
+        $data['message'] = "Data fetched!";
+        $data['data'] = $details;
+        return $data;
+    }
+
+    public function delete_offer($id)
+    {
+        $offers = RideOffers::find($id)->delete();
+        $data['success'] = "1";
+        $data['message'] = "Ride offer deleted successfully!";
+        $data['data'] = "";
+        return $data;
+    }
+
+    public function vehicles()
+    {
+        $vehicles = VehicleModel::get();
+        $details = array();
+        foreach ($vehicles as $vehicle) {
+            if ($vehicle->driver_id == null) {
+                $details[] = array(
+                    'id' => $vehicle->id,
+                    'name' => $vehicle->maker->make . '-' . $vehicle->vehiclemodel->model . '-' . $vehicle->license_plate,
+                );
+            }
         }
         $data['success'] = "1";
         $data['message'] = "Data fetched!";
