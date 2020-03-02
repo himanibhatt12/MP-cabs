@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Model\Address;
 use App\Model\Bookings;
 use App\Model\CouponModel;
 use App\Model\PackagesModel;
@@ -51,6 +52,8 @@ class MPCabsCustomersApi extends Controller
                 'offer_id' => $offer->id,
                 'source' => $offer->source,
                 'destination' => $offer->destination,
+                'distance' => $offer->distance,
+                'timing' => $offer->timing,
                 'valid_till' => date('d-m-Y g:i A', strtotime($offer->valid_till)),
                 'vehicle_id' => $offer->vehicle_id,
                 'vehicle' => $offer->vehicle->maker->make . '-' . $offer->vehicle->vehiclemodel->model . '-' . $offer->vehicle->license_plate,
@@ -138,7 +141,7 @@ class MPCabsCustomersApi extends Controller
             $data['success'] = "1";
             $data['message'] = "Fare calculated successfully!";
             $data['data'] = array(
-                'tax_total' => $tax_total,
+                'total_amount' => $tax_total,
                 'total_tax_percent' => $total_tax_percent,
                 'total_tax_charge_rs' => $total_tax_charge_rs,
                 'ride_amount' => $total_fare,
@@ -203,6 +206,7 @@ class MPCabsCustomersApi extends Controller
             'journey_date' => 'required',
             'journey_time' => 'required',
             'total_kms' => 'required|numeric',
+
         ]);
         $errors = $validation->errors();
 
@@ -231,6 +235,9 @@ class MPCabsCustomersApi extends Controller
             $book->total_kms = $request->total_kms;
             $book->approx_timetoreach = $request->approx_timetoreach;
             $book->save();
+            Address::updateOrCreate(['customer_id' => $request->user_id, 'address' => $request->source]);
+
+            Address::updateOrCreate(['customer_id' => $request->customer_id, 'address' => $request->destination]);
             // send notification to drivers
             $data['success'] = "1";
             $data['message'] = "Booking added successfully!";
@@ -301,12 +308,14 @@ class MPCabsCustomersApi extends Controller
             $data['message'] = implode(", ", $errors->all());
             $data['data'] = "";
         } else {
-            dd($request->all());
+            // dd($request->all());
             $package = PackagesModel::find($request->package_id);
             $booking = Bookings::create([
+                'status' => 0,
                 'customer_id' => $request->user_id,
                 'vehicle_id' => $package->vehicle_id,
-                'status' => 0,
+                'pickup_addr' => $package->source,
+                'dest_addr' => $package->destination,
             ]);
             $booking->journey_date = $request->journey_date;
             $booking->journey_time = $request->journey_time;
@@ -390,5 +399,4 @@ class MPCabsCustomersApi extends Controller
         $data['data'] = $details;
         return $data;
     }
-
 }

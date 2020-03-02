@@ -50,24 +50,24 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              {!! Form::label('pickup',__('fleet.pickup'), ['class' => 'form-label']) !!}
+              {!! Form::label('booking_option',__('fleet.bookingOption'), ['class' => 'form-label']) !!}
+              <select id="booking_option" name="booking_option" class="form-control" required>
+                <option value="">-</option>
+                <option value="Local" @if($data->booking_option == "Local")selected @endif>Local</option>
+                <option value="RoundTrip" @if($data->booking_option == "RoundTrip")selected @endif>RoundTrip</option>
+                <option value="Rental" @if($data->booking_option == "Rental") selected @endif>Rental</option>
+                <option value="oneway" @if($data->booking_option == "oneway") selected @endif>One Way</option>                
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              {!! Form::label('pickup',__('fleet.journeyDateTime'), ['class' => 'form-label']) !!}
               <div class='input-group date' id='from_date'>
                 <div class="input-group-prepend">
                 <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                 </div>
                 {!! Form::text('pickup',$data->pickup,['class'=>'form-control','required']) !!}
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('dropoff',__('fleet.dropoff'), ['class' => 'form-label']) !!}
-              <div class='input-group date' id='to_date'>
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><span class="fa fa-calendar"></span>
-                  </span>
-                </div>
-                {!! Form::text('dropoff',$data->dropoff,['class'=>'form-control','required']) !!}
               </div>
             </div>
           </div>
@@ -99,8 +99,7 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              {!! Form::label('travellers',__('fleet.no_travellers'), ['class' => 'form-label']) !!}
-              {!! Form::number('travellers',$data->travellers,['class'=>'form-control','min'=>1]) !!}
+             
             </div>
           </div>
         </div>
@@ -176,6 +175,7 @@
   $('#customer_id').select2({placeholder: "@lang('fleet.selectCustomer')"});
   $('#driver_id').select2({placeholder: "@lang('fleet.selectDriver')"});
   $('#vehicle_id').select2({placeholder: "@lang('fleet.selectVehicle')"});
+  $('#booking_option').select2({placeholder: "@lang('fleet.bookingOption')"});
   function get_driver(from_date,to_date){
     var id=$("input:hidden[name=id]").val();
     $.ajaxSetup({
@@ -261,20 +261,20 @@
               down: "fa fa-arrow-down"
     }});
 
-    $("#pickup").on("dp.change", function (e) {
-      if($('#dropoff').val() == null || $('#dropoff').val() == ""){
-        var to_date=e.date.format("YYYY-MM-DD HH:mm:ss");
-      }
-      else{
-        var to_date=$('#dropoff').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss");
-      }
-      var from_date=e.date.format("YYYY-MM-DD HH:mm:ss");
+    // $("#pickup").on("dp.change", function (e) {
+    //   if($('#dropoff').val() == null || $('#dropoff').val() == ""){
+    //     var to_date=e.date.format("YYYY-MM-DD HH:mm:ss");
+    //   }
+    //   else{
+    //     var to_date=$('#dropoff').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss");
+    //   }
+    //   var from_date=e.date.format("YYYY-MM-DD HH:mm:ss");
 
-      get_driver(from_date,to_date);
-      get_vehicle(from_date,to_date);
+    //   get_driver(from_date,to_date);
+    //   get_vehicle(from_date,to_date);
 
-      $('#dropoff').data("DateTimePicker").minDate(e.date);
-    });
+    //   $('#dropoff').data("DateTimePicker").minDate(e.date);
+    // });
 
     $("#dropoff").on("dp.change", function (e) {
       $('#pickup').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss")

@@ -1410,7 +1410,7 @@ $(document).ready(function() {
         text: '<i class="fa fa-print"></i> {{__("fleet.print")}}',
 
         exportOptions: {
-           columns: ([1,2,3,4,5,6,7,8,9,10]),
+           columns: ([1,2,3,4,5,6,7,8,9]),
         },
         customize: function ( win ) {
                 $(win.document.body)

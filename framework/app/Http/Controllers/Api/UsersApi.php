@@ -378,7 +378,7 @@ class UsersApi extends Controller
 
         ]);
         $errors = $validation->errors();
-        dd($errors);
+        // dd($errors);
         $number = $request->get('mobno');
         $userid = $request->get('user_id');
         $mobno = User::meta()
@@ -754,7 +754,7 @@ class UsersApi extends Controller
                 } else {
                     $total_kms = "";
                 }
-                $details[] = array('booking_id' => $book->id, 'user_id' => $book->customer_id, 'book_date' => date('Y-m-d', strtotime($book->created_at)), 'book_time' => date('H:i:s', strtotime($book->created_at)), 'source_address' => $book->pickup_addr, 'source_time' => date('Y-m-d H:i:s', strtotime($book->getMeta('ridestart_timestamp'))), 'dest_address' => $book->dest_addr, 'dest_time' => date('Y-m-d H:i:s', strtotime($book->getMeta('rideend_timestamp'))), 'driving_time' => $book->getMeta('driving_time'), 'total_kms' => $total_kms, 'amount' => $book->getMeta('total'), 'ride_status' => $book->getMeta('ride_status'));
+                $details[] = array('booking_id' => $book->id, 'user_id' => $book->customer_id, 'book_date' => date('Y-m-d', strtotime($book->created_at)), 'book_time' => date('H:i:s', strtotime($book->created_at)), 'source_address' => $book->pickup_addr, 'source_time' => date('Y-m-d H:i:s', strtotime($book->getMeta('ridestart_timestamp'))), 'dest_address' => $book->dest_addr, 'dest_time' => date('Y-m-d H:i:s', strtotime($book->getMeta('rideend_timestamp'))), 'driving_time' => $book->getMeta('driving_time'), 'total_kms' => $total_kms, 'amount' => $book->getMeta('total'), 'ride_status' => $book->getMeta('ride_status'), 'booking_option' => $book->booking_option);
             }
             $data['data'] = array('rides' => $details);
 
@@ -789,6 +789,7 @@ class UsersApi extends Controller
                 'total_kms' => $booking->getMeta('total_kms') . " " . $unit,
                 'amount' => $booking->getMeta('total'),
                 'ride_status' => $booking->getMeta('ride_status'),
+                'booking_option' => $booking->booking_option,
             );
             $d = User::find($booking->driver_id);
             $reviews = ReviewModel::where('booking_id', $request->get('booking_id'))->first();

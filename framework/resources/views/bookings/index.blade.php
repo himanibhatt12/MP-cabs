@@ -35,8 +35,7 @@
                 <th style="width: 10% !important">@lang('fleet.vehicle')</th>
                 <th style="width: 10% !important">@lang('fleet.pickup_addr')</th>
                 <th style="width: 10% !important">@lang('fleet.dropoff_addr')</th>
-                <th style="width: 10% !important">@lang('fleet.pickup')</th>
-                <th style="width: 10% !important">@lang('fleet.dropoff')</th>
+                <th style="width: 10% !important">@lang('fleet.journeyDateTime')</th>
                 <th style="width: 10% !important">@lang('fleet.booking_type')</th>
                 <th style="width: 10% !important">@lang('fleet.journey_status')</th>
                 <th>@lang('fleet.booking_status')</th>
@@ -63,11 +62,6 @@
                 <td style="width: 10% !important">
                 @if($row->pickup != null)
                 {{date('d/m/Y g:i A',strtotime($row->pickup))}}
-                @endif
-                </td>
-                <td style="width: 10% !important">
-                @if($row->dropoff != null)
-                {{date('d/m/Y g:i A',strtotime($row->dropoff))}}
                 @endif
                 </td>
                 <td style="width: 10% !important">{{$row->booking_option}}</td>
@@ -162,8 +156,7 @@
                 <th>@lang('fleet.vehicle')</th>
                 <th>@lang('fleet.pickup_addr')</th>
                 <th>@lang('fleet.dropoff_addr')</th>
-                <th>@lang('fleet.pickup')</th>
-                <th>@lang('fleet.dropoff')</th>
+                <th>@lang('fleet.journeyDateTime')</th>
                 <th>@lang('fleet.booking_type')</th>
                 <th>@lang('fleet.journey_status')</th>
                 <th>@lang('fleet.booking_status')</th>

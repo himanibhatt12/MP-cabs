@@ -115,8 +115,11 @@ class DriversApi extends Controller
                 'journey_date' => $booking->getMeta('journey_date'),
                 'journey_time' => $booking->getMeta('journey_time'),
                 'accept_status' => $booking->getMeta('accept_status'),
-                'approx_timetoreach' => $booking->getMeta('approx_timetoreach')),
-                'user_details' => $user_details);
+                'approx_timetoreach' => $booking->getMeta('approx_timetoreach'),
+                'booking_option' => $booking->booking_option,
+            ),
+                'user_details' => $user_details,
+            );
         }
         return $data;
     }
@@ -222,7 +225,9 @@ class DriversApi extends Controller
                     'journey_date' => $booking->getMeta('journey_date'),
                     'journey_time' => $booking->getMeta('journey_time'),
                     'accept_status' => $booking->getMeta('accept_status'),
-                    'approx_timetoreach' => $booking->getMeta('approx_timetoreach')),
+                    'approx_timetoreach' => $booking->getMeta('approx_timetoreach'),
+                    'booking_option' => $booking->booking_option,
+                ),
                     'user_details' => $user_details);
             } else {
                 $data['success'] = 0;
@@ -363,6 +368,7 @@ class DriversApi extends Controller
                         'journey_date' => $u->getMeta('journey_date'),
                         'journey_time' => $u->getMeta('journey_time'),
                         'ride_status' => $u->getMeta('ride_status'),
+                        'booking_option' => $u->booking_option,
                     );
                 }
                 if ($u->getMeta('ride_status') == "Completed") {
@@ -379,6 +385,7 @@ class DriversApi extends Controller
                         'journey_date' => $u->getMeta('journey_date'),
                         'journey_time' => $u->getMeta('journey_time'),
                         'ride_status' => $u->getMeta('ride_status'),
+                        'booking_option' => $u->booking_option,
                     );
                 }
                 if ($u->getMeta('ride_status') == "Cancelled") {
@@ -390,6 +397,7 @@ class DriversApi extends Controller
                         'journey_date' => $u->getMeta('journey_date'),
                         'journey_time' => $u->getMeta('journey_time'),
                         'ride_status' => $u->getMeta('ride_status'),
+                        'booking_option' => $u->booking_option,
                     );
                 }
             }
@@ -429,6 +437,7 @@ class DriversApi extends Controller
                     'ride_status' => $booking->getMeta('ride_status'),
                     'journey_date' => $booking->getMeta('journey_date'),
                     'journey_time' => $booking->getMeta('journey_time'),
+                    'booking_option' => $booking->booking_option,
                 );
 
             }
@@ -447,6 +456,7 @@ class DriversApi extends Controller
                     'ride_status' => $booking->getMeta('ride_status'),
                     'journey_date' => $booking->getMeta('journey_date'),
                     'journey_time' => $booking->getMeta('journey_time'),
+                    'booking_option' => $booking->booking_option,
                 );
 
                 $r1 = ReviewModel::where('booking_id', $request->get('booking_id'))->first();
@@ -466,6 +476,7 @@ class DriversApi extends Controller
                     'ride_status' => $booking->getMeta('ride_status'),
                     'journey_date' => $booking->getMeta('journey_date'),
                     'journey_time' => $booking->getMeta('journey_time'),
+                    'booking_option' => $booking->booking_option,
                 );
             }
             $data['success'] = 1;
@@ -639,6 +650,7 @@ class DriversApi extends Controller
                 'total_kms' => $booking->getMeta('total_kms') . " " . $unit,
                 'amount' => $booking->getMeta('tax_total'),
                 'ride_status' => $booking->getMeta('ride_status'),
+                'booking_option' => $booking->booking_option,
             );
 
             $user = User::find($booking->customer_id);

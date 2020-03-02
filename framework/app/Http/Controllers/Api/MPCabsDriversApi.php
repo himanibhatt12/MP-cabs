@@ -47,11 +47,11 @@ class MPCabsDriversApi extends Controller
     public function register_driver(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'make_id' => 'required|integer',
-            'model_id' => 'required|integer',
-            'type_id' => 'required|integer',
-            'vehicle_number' => 'required',
-            // 'color_id' => 'required|integer',
+            'make_id' => 'required_if:vehicle_id,|integer|nullable',
+            'model_id' => 'required_if:vehicle_id,|integer|nullable',
+            'type_id' => 'required_if:vehicle_id,|integer|nullable',
+            'vehicle_number' => 'required_if:vehicle_id,|unique:vehicles,license_plate|nullable',
+            'vehicle_id' => 'required_if:make_id,|integer|nullable',
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'mobile' => 'required|numeric',
@@ -232,6 +232,8 @@ class MPCabsDriversApi extends Controller
             'valid_from' => 'required',
             'valid_till' => 'required',
             'id' => 'required',
+            'distance' => 'required|numeric',
+            'timing' => 'required',
         ]);
         $errors = $validation->errors();
 
@@ -248,6 +250,8 @@ class MPCabsDriversApi extends Controller
             $offer->vehicle_id = $user->vehicle_id;
             $offer->valid_from = $request->valid_from;
             $offer->valid_till = $request->valid_till;
+            $offer->distance = $request->distance;
+            $offer->timing = $request->timing;
             $offer->save();
 
             $data['success'] = "1";
@@ -260,11 +264,20 @@ class MPCabsDriversApi extends Controller
     public function add_offer(Request $request)
     {
         $validation = Validator::make($request->all(), [
+            // select or add new vehicle
+            'make_id' => 'required_if:vehicle_id,|integer|nullable',
+            'model_id' => 'required_if:vehicle_id,|integer|nullable',
+            'type_id' => 'required_if:vehicle_id,|integer|nullable',
+            'vehicle_number' => 'required_if:vehicle_id,|unique:vehicles,license_plate|nullable',
+            'vehicle_id' => 'required_if:make_id,|integer|nullable',
+            //
             'user_id' => 'required|integer',
             'source' => 'required',
             'destination' => 'required',
             'valid_from' => 'required',
             'valid_till' => 'required',
+            'distance' => 'required|numeric',
+            'timing' => 'required',
         ]);
         $errors = $validation->errors();
 
@@ -279,7 +292,6 @@ class MPCabsDriversApi extends Controller
                 $vehicle = VehicleModel::create([
                     'make_id' => $request->make_id,
                     'model_id' => $request->model_id,
-                    // 'color_id' => $request->color_id,
                     'license_plate' => $request->vehicle_number,
                     'in_service' => 1,
                     'type_id' => $request->type_id,
@@ -295,6 +307,8 @@ class MPCabsDriversApi extends Controller
                 'valid_from' => $request->valid_from,
                 'valid_till' => $request->valid_till,
                 'user_id' => $request->user_id,
+                'distance' => $request->distance,
+                'timing' => $request->timing,
             ]);
             $data['success'] = "1";
             $data['message'] = "Ride Offer added successfully!";
@@ -310,6 +324,8 @@ class MPCabsDriversApi extends Controller
         foreach ($offers as $offer) {
             $details[] = array(
                 'offer_id' => $offer->id,
+                'distance' => $offer->distance,
+                'timing' => $offer->timing,
                 'source' => $offer->source,
                 'destination' => $offer->destination,
                 'valid_till' => date('d-m-Y g:i A', strtotime($offer->valid_till)),
@@ -350,4 +366,5 @@ class MPCabsDriversApi extends Controller
         $data['data'] = $details;
         return $data;
     }
+
 }

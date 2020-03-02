@@ -16,7 +16,7 @@ use App\Model\ServiceReminderModel;
 use App\Model\User;
 use App\Model\VehicleModel;
 use Auth;
-use Carbon\Carbon;
+// use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -32,10 +32,10 @@ class BookingsController extends Controller
         if (Auth::user()->user_type == "C") {
             $data['data'] = Bookings::where('customer_id', Auth::user()->id)->orderBy('id', 'desc')->get();
         } elseif (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
-            $data['data'] = Bookings::orderBy('id', 'desc')->get();
+            $data['data'] = Bookings::where('is_booked', 1)->orderBy('id', 'desc')->get();
         } else {
             $vehicle_ids = VehicleModel::where('group_id', Auth::user()->group_id)->pluck('id')->toArray();
-            $data['data'] = Bookings::where('user_id', Auth::user()->id)->whereIn('vehicle_id', $vehicle_ids)->orderBy('id', 'desc')->get();
+            $data['data'] = Bookings::where('user_id', Auth::user()->id)->whereIn('vehicle_id', $vehicle_ids)->where('is_booked', 1)->orderBy('id', 'desc')->get();
         }
         $data['types'] = IncCats::get();
 
@@ -400,38 +400,38 @@ class BookingsController extends Controller
 
     public function store(BookingRequest $request)
     {
-
-        $xx = $this->check_booking($request->get("pickup"), $request->get("dropoff"), $request->get("vehicle_id"));
+        // $xx = $this->check_booking($request->pickup, $request->dropoff, $request->vehicle_id);
+        $xx = 1;
         if ($xx) {
             $id = Bookings::create($request->all())->id;
 
-            Address::updateOrCreate(['customer_id' => $request->get('customer_id'), 'address' => $request->get('pickup_addr')]);
+            Address::updateOrCreate(['customer_id' => $request->customer_id, 'address' => $request->pickup_addr]);
 
-            Address::updateOrCreate(['customer_id' => $request->get('customer_id'), 'address' => $request->get('dest_addr')]);
+            Address::updateOrCreate(['customer_id' => $request->customer_id, 'address' => $request->dest_addr]);
 
             $booking = Bookings::find($id);
-            $booking->user_id = $request->get("user_id");
-            $booking->driver_id = $request->get('driver_id');
-            $dropoff = Carbon::parse($booking->dropoff);
-            $pickup = Carbon::parse($booking->pickup);
-            $diff = $pickup->diffInMinutes($dropoff);
-            $booking->note = $request->get('note');
-            $booking->duration = $diff;
-            $booking->udf = serialize($request->get('udf'));
+            $booking->booking_option = $request->booking_option;
+            $booking->user_id = $request->user_id;
+            $booking->driver_id = $request->driver_id;
+            // $dropoff = Carbon::parse($booking->dropoff);
+            // $pickup = Carbon::parse($booking->pickup);
+            // $diff = $pickup->diffInMinutes($dropoff);
+            // $booking->duration = $diff;
+            $booking->is_booked = 1; // is_booked = 0 => booking request by customer
+            $booking->note = $request->note;
+            $booking->udf = serialize($request->udf);
             $booking->accept_status = 1; //0=yet to accept, 1= accept
             $booking->ride_status = "Upcoming";
-            $booking->booking_type = 1;
+            $booking->booking_type = 1; // 1 = book later, 0 = book now
             $booking->journey_date = date('d-m-Y', strtotime($booking->pickup));
             $booking->journey_time = date('H:i:s', strtotime($booking->pickup));
             $booking->save();
-            $mail = Bookings::find($id);
             $this->booking_notification($booking->id);
             // browser notification
             $this->push_notification($booking->id);
             if (Hyvikk::email_msg('email') == 1) {
-                Mail::to($mail->customer->email)->send(new VehicleBooked($booking));
-                Mail::to($mail->driver->email)->send(new DriverBooked($booking));
-
+                Mail::to($booking->customer->email)->send(new VehicleBooked($booking));
+                Mail::to($booking->driver->email)->send(new DriverBooked($booking));
             }
             return redirect()->route("bookings.index");
         } else {
@@ -490,29 +490,28 @@ class BookingsController extends Controller
     }
     public function update(Request $request)
     {
-
-        $booking = Bookings::whereId($request->get("id"))->first();
-
-        $booking->vehicle_id = $request->get("vehicle_id");
-        $booking->user_id = $request->get("user_id");
-        $booking->driver_id = $request->get('driver_id');
-        $booking->travellers = $request->get("travellers");
-        $booking->pickup = $request->get("pickup");
-        $booking->dropoff = $request->get("dropoff");
-        $booking->pickup_addr = $request->get("pickup_addr");
-        $booking->dest_addr = $request->get("dest_addr");
+        $booking = Bookings::find($request->id);
+        $booking->booking_option = $request->booking_option;
+        $booking->vehicle_id = $request->vehicle_id;
+        $booking->user_id = $request->user_id;
+        $booking->driver_id = $request->driver_id;
+        $booking->travellers = $request->travellers;
+        $booking->pickup = $request->pickup;
+        // $booking->dropoff = $request->dropoff;
+        $booking->pickup_addr = $request->pickup_addr;
+        $booking->dest_addr = $request->dest_addr;
         if ($booking->ride_status == null) {
             $booking->ride_status = "Upcoming";
         }
 
-        $dropoff = Carbon::parse($request->get("dropoff"));
-        $pickup = Carbon::parse($request->get("pickup"));
-        $booking->note = $request->get('note');
-        $diff = $pickup->diffInMinutes($dropoff);
-        $booking->duration = $diff;
-        $booking->journey_date = date('d-m-Y', strtotime($request->get("pickup")));
-        $booking->journey_time = date('H:i:s', strtotime($request->get("pickup")));
-        $booking->udf = serialize($request->get('udf'));
+        // $dropoff = Carbon::parse($request->dropoff);
+        // $pickup = Carbon::parse($request->pickup);
+        // $diff = $pickup->diffInMinutes($dropoff);
+        // $booking->duration = $diff;
+        $booking->note = $request->note;
+        $booking->journey_date = date('d-m-Y', strtotime($request->pickup));
+        $booking->journey_time = date('H:i:s', strtotime($request->pickup));
+        $booking->udf = serialize($request->udf);
         $booking->save();
 
         return redirect()->route('bookings.index');

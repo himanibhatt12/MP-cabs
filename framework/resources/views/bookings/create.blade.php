@@ -50,23 +50,24 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              {!! Form::label('pickup',__('fleet.pickup'), ['class' => 'form-label']) !!}
-              <div class='input-group mb-3 date'>
-                <div class="input-group-prepend">
-                  <span class="input-group-text"> <span class="fa fa-calendar"></span></span>
-                </div>
-                {!! Form::text('pickup',date("Y-m-d H:i:s"),['class'=>'form-control','required']) !!}
-              </div>
+              {!! Form::label('booking_option',__('fleet.bookingOption'), ['class' => 'form-label']) !!}
+              <select id="booking_option" name="booking_option" class="form-control" required>
+                <option value="">-</option>
+                <option value="Local">Local</option>
+                <option value="RoundTrip">RoundTrip</option>
+                <option value="Rental">Rental</option>
+                <option value="oneway">One Way</option>                
+              </select>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              {!! Form::label('dropoff',__('fleet.dropoff'), ['class' => 'form-label']) !!}
+              {!! Form::label('pickup',__('fleet.journeyDateTime'), ['class' => 'form-label']) !!}
               <div class='input-group date'>
                 <div class="input-group-prepend">
                   <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                 </div>
-                {!! Form::text('dropoff',date("Y-m-d H:i:s"),['class'=>'form-control','required']) !!}
+                {!! Form::text('pickup',date("Y-m-d H:i:s"),['class'=>'form-control','required']) !!}
               </div>
             </div>
           </div>
@@ -98,8 +99,7 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              {!! Form::label('travellers',__('fleet.no_travellers'), ['class' => 'form-label']) !!}
-              {!! Form::number('travellers',1,['class'=>'form-control','min'=>1]) !!}
+             
             </div>
           </div>
         </div>
@@ -247,6 +247,7 @@
   $('#customer_id').select2({placeholder: "@lang('fleet.selectCustomer')"});
   $('#driver_id').select2({placeholder: "@lang('fleet.selectDriver')"});
   $('#vehicle_id').select2({placeholder: "@lang('fleet.selectVehicle')"});
+  $('#booking_option').select2({placeholder: "@lang('fleet.bookingOption')"});
   $('#pickup').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss',sideBySide: true,icons: {
               previous: 'fa fa-arrow-left',
               next: 'fa fa-arrow-right',
@@ -373,13 +374,13 @@
       $("#dest_addr").val(address);
     });
 
-    $("#pickup").on("dp.change", function (e) {
-      var to_date=$('#dropoff').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss");
-      var from_date=e.date.format("YYYY-MM-DD HH:mm:ss");
-      get_driver(from_date,to_date);
-      get_vehicle(from_date,to_date);
-      $('#dropoff').data("DateTimePicker").minDate(e.date);
-    });
+    // $("#pickup").on("dp.change", function (e) {
+    //   var to_date=$('#dropoff').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss");
+    //   var from_date=e.date.format("YYYY-MM-DD HH:mm:ss");
+    //   get_driver(from_date,to_date);
+    //   get_vehicle(from_date,to_date);
+    //   $('#dropoff').data("DateTimePicker").minDate(e.date);
+    // });
 
     $("#dropoff").on("dp.change", function (e) {
       $('#pickup').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss")

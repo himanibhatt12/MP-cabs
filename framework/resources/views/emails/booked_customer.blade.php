@@ -13,7 +13,7 @@ Dear {{$booking->customer->name}},
 	<tr><td>Pickup Time: </td><td>{{date('g:i A',strtotime($booking->pickup))}}</td></tr>
 	<tr><td>Pickup Address: </td><td>{{$booking->pickup_addr}}</td></tr>
 	<tr><td>Destination Address: </td><td>{{$booking->dest_addr}}</td></tr>
-	<tr><td>Travellers: </td><td>{{$booking->travellers}}</td></tr>
+	
 
 </table>
 @endcomponent
