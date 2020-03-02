@@ -73,6 +73,11 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-md-12 package">
+
+          </div>
+        </div>
+        <div class="row">
           <div class="col-md-4">
             <div class="form-group">
               {!! Form::label('vehicle_id',__('fleet.selectVehicle'), ['class' => 'form-label']) !!}
@@ -415,7 +420,20 @@
   $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
     checkboxClass: 'icheckbox_flat-green',
     radioClass   : 'iradio_flat-green'
-  })
+  });
+
+  $('#booking_option').on('change',function(){
+    if($(this).val()=="Rental"){
+      // alert($(this).val());
+      $('.package').append('<div class="form-group">{!! Form::label("package_id",__("fleet.packages"), ["class" => "form-label"]) !!} <select id="package_id" name="package_id" class="form-control" required><option value="">-</option>@foreach($packages as $package) <option value="{{ $package->id }}">{{$package->id}}</option> @endforeach</select></div>');
+      $('#package_id').select2({placeholder:"@lang('fleet.packages')"});
+    }
+    else{
+      $('.package').html("");
+    }
+    
+  });
+
 </script>
 @if(Hyvikk::api('google_api') == "1")
   <script>

@@ -15,9 +15,6 @@ use App\Model\IncomeModel;
 use App\Model\ServiceItemsModel;
 use App\Model\User;
 use App\Model\VehicleModel;
-use App\Rules\UniqueContractNumber;
-use App\Rules\UniqueEId;
-use App\Rules\UniqueLicenceNumber;
 use Auth;
 use DB;
 use Firebase;
@@ -644,8 +641,8 @@ class DriversController extends Controller
             DriverLogsModel::create(['driver_id' => $user->id, 'vehicle_id' => $request->get('vehicle_id'), 'date' => date('Y-m-d H:i:s')]);
             DriverVehicleModel::updateOrCreate(['driver_id' => $user->id], ['vehicle_id' => $request->get('vehicle_id'), 'driver_id' => $user->id]);
         }
-        if ($request->file('driver_image') && $request->file('driver_image')->isValid()) {
-            $this->upload_file($request->file('driver_image'), "driver_image", $id);
+        if ($request->file('id_proof') && $request->file('id_proof')->isValid()) {
+            $this->upload_file($request->file('id_proof'), "id_proof", $id);
         }
 
         if ($request->file('license_image') && $request->file('license_image')->isValid()) {
@@ -653,17 +650,16 @@ class DriversController extends Controller
             $user->id_proof_type = "License";
             $user->save();
         }
-        if ($request->file('documents')) {
-            $this->upload_file($request->file('documents'), "documents", $id);
-
-        }
+        // if ($request->file('documents')) {
+        //     $this->upload_file($request->file('documents'), "documents", $id);
+        // }
         $user->user_id = Auth::id();
-        $user->name = $request->get("first_name") . " " . $request->get("last_name");
+        $user->name = $request->name;
         $user->email = $request->get('email');
         $user->save();
         $form_data = $request->all();
-        unset($form_data['driver_image']);
-        unset($form_data['documents']);
+        // unset($form_data['driver_image']);
+        unset($form_data['id_proof']);
         unset($form_data['license_image']);
 
         $user->setMeta($form_data);
@@ -675,23 +671,24 @@ class DriversController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'emp_id' => ['required', new UniqueEId],
-            'license_number' => ['required', new UniqueLicenceNumber],
-            'contract_number' => ['required', new UniqueContractNumber],
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'address' => 'required',
+            // 'emp_id' => ['required', new UniqueEId],
+            // 'license_number' => ['required', new UniqueLicenceNumber],
+            // 'contract_number' => ['required', new UniqueContractNumber],
+            'name' => 'required',
+            // 'last_name' => 'required',
+            // 'address' => 'required',
             'phone' => 'required|numeric',
             'email' => 'required|email|unique:users,email,' . \Request::get("id"),
-            'exp_date' => 'required|date|date_format:Y-m-d|after:tomorrow',
-            'start_date' => 'date|date_format:Y-m-d',
-            'driver_image' => 'nullable|image|mimes:jpg,png,jpeg',
+            // 'exp_date' => 'required|date|date_format:Y-m-d|after:tomorrow',
+            // 'start_date' => 'date|date_format:Y-m-d',
+            'id_proof' => 'nullable|image|mimes:jpg,png,jpeg',
             'license_image' => 'nullable|image|mimes:jpg,png,jpeg',
-            'documents.*' => 'nullable|mimes:jpg,png,jpeg,pdf,doc,docx',
+            // 'documents.*' => 'nullable|mimes:jpg,png,jpeg,pdf,doc,docx',
+            'password' => 'required',
         ]);
 
         $id = User::create([
-            "name" => $request->get("first_name") . " " . $request->get("last_name"),
+            "name" => $request->name,
             "email" => $request->get("email"),
             "password" => bcrypt($request->get("password")),
             "user_type" => "D",
@@ -700,9 +697,9 @@ class DriversController extends Controller
         ])->id;
         $user = User::find($id);
 
-        if ($request->file('driver_image') && $request->file('driver_image')->isValid()) {
+        if ($request->file('id_proof') && $request->file('id_proof')->isValid()) {
 
-            $this->upload_file($request->file('driver_image'), "driver_image", $id);
+            $this->upload_file($request->file('id_proof'), "id_proof", $id);
         }
 
         if ($request->file('license_image') && $request->file('license_image')->isValid()) {
@@ -710,15 +707,15 @@ class DriversController extends Controller
             $user->id_proof_type = "License";
             $user->save();
         }
-        if ($request->file('documents')) {
-            $this->upload_file($request->file('documents'), "documents", $id);
-
-        }
+        // if ($request->file('documents')) {
+        //     $this->upload_file($request->file('documents'), "documents", $id);
+        // }
 
         $form_data = $request->all();
-        unset($form_data['driver_image']);
-        unset($form_data['documents']);
+        // unset($form_data['driver_image']);
+        // unset($form_data['documents']);
         unset($form_data['license_image']);
+        unset($form_data['id_proof']);
         $user->setMeta($form_data);
         $user->save();
 

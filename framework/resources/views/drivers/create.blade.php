@@ -38,24 +38,35 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              {!! Form::label('first_name', __('fleet.firstname'), ['class' => 'form-label required','autofocus']) !!}
-              {!! Form::text('first_name', null,['class' => 'form-control','required','autofocus']) !!}
+              {!! Form::label('name', __('fleet.name'), ['class' => 'form-label required','autofocus']) !!}
+              {!! Form::text('name', null,['class' => 'form-control','required','autofocus']) !!}
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              {!! Form::label('middle_name', __('fleet.middlename'), ['class' => 'form-label']) !!}
-              {!! Form::text('middle_name', null,['class' => 'form-control']) !!}
+              {!! Form::label('email', __('fleet.email'), ['class' => 'form-label required']) !!}
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                </div>
+                {!! Form::email('email', null,['class' => 'form-control','required']) !!}
+              </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              {!! Form::label('last_name', __('fleet.lastname'), ['class' => 'form-label required']) !!}
-              {!! Form::text('last_name', null,['class' => 'form-control','required']) !!}
+              {!! Form::label('phone', __('fleet.phone'), ['class' => 'form-label required']) !!}                             
+              {!! Form::number('phone', null,['class' => 'form-control','required']) !!}              
             </div>
           </div>
         </div>
         <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              {!! Form::label('alt_mobile', __('fleet.alt_mobile'), ['class' => 'form-label']) !!}
+              {!! Form::text('alt_mobile', null,['class' => 'form-control']) !!}
+            </div>
+          </div>
           <div class="col-md-4">
             <div class="form-group">
               {!! Form::label('vehicle_id',__('fleet.assign_vehicle'), ['class' => 'form-label']) !!}
@@ -70,99 +81,14 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              {!! Form::label('address', __('fleet.address'), ['class' => 'form-label required']) !!}
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-address-book-o"></i></span>
-                </div>
-                {!! Form::text('address', null,['class' => 'form-control','required']) !!}
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('email', __('fleet.email'), ['class' => 'form-label required']) !!}
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-                </div>
-                {!! Form::email('email', null,['class' => 'form-control','required']) !!}
-              </div>
+              {!! Form::label('gender', __('fleet.gender') , ['class' => 'form-label']) !!}<br>
+              <input type="radio" name="gender" class="flat-red gender" value="1" checked> @lang('fleet.male')
+              &nbsp; &nbsp;
+              <input type="radio" name="gender" class="flat-red gender" value="0"> @lang('fleet.female')
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('phone', __('fleet.phone'), ['class' => 'form-label required']) !!}
-              <div class="input-group">
-                <div class="input-group-prepend">
-                {!! Form::select('phone_code',$phone_code,null,['class' => 'form-control code','required','style'=>'width:80px']) !!}
-                </div>
-                {!! Form::number('phone', null,['class' => 'form-control','required']) !!}
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('emp_id', __('fleet.employee_id'), ['class' => 'form-label']) !!}
-              {!! Form::text('emp_id', null,['class' => 'form-control','required']) !!}
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('contract_number', __('fleet.contract'), ['class' => 'form-label']) !!}
-              {!! Form::text('contract_number', null,['class' => 'form-control','required']) !!}
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('license_number', __('fleet.licenseNumber'), ['class' => 'form-label required']) !!}
-              {!! Form::text('license_number', null,['class' => 'form-control','required']) !!}
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('issue_date', __('fleet.issueDate'), ['class' => 'form-label']) !!}
-              <div class="input-group date">
-                <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
-                {!! Form::text('issue_date', null,['class' => 'form-control','required']) !!}
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('exp_date', __('fleet.expirationDate'), ['class' => 'form-label required']) !!}
-              <div class="input-group date">
-                <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
-                {!! Form::text('exp_date', null,['class' => 'form-control','required']) !!}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('start_date', __('fleet.join_date'), ['class' => 'form-label']) !!}
-              <div class="input-group date">
-                <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
-                {!! Form::text('start_date', null,['class' => 'form-control','required']) !!}
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('end_date', __('fleet.leave_date'), ['class' => 'form-label']) !!}
-              <div class="input-group date">
-                <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
-                {!! Form::text('end_date', null,['class' => 'form-control']) !!}
-              </div>
-            </div>
-          </div>
           <div class="col-md-4">
             <div class="form-group">
               {!! Form::label('password', __('fleet.password'), ['class' => 'form-label']) !!}
@@ -177,34 +103,17 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              {!! Form::label('gender', __('fleet.gender') , ['class' => 'form-label']) !!}<br>
-              <input type="radio" name="gender" class="flat-red gender" value="1" checked> @lang('fleet.male')<br>
-
-              <input type="radio" name="gender" class="flat-red gender" value="0"> @lang('fleet.female')
+              {!! Form::label('id_proof', __('fleet.id_proof'), ['class' => 'form-label']) !!} <br>
+              {!! Form::file('id_proof',null,['class' => 'form-control']) !!}
             </div>
-
+          </div>
+          <div class="col-md-6">  
             <div class="form-group">
-              {!! Form::label('driver_image', __('fleet.driverImage'), ['class' => 'form-label']) !!}
-
-              {!! Form::file('driver_image',null,['class' => 'form-control','required']) !!}
-            </div>
-            <div class="form-group">
-              {!! Form::label('documents', __('fleet.documents'), ['class' => 'form-label']) !!}
-              {!! Form::file('documents',null,['class' => 'form-control','required']) !!}
-            </div>
-
-
-            <div class="form-group">
-              {!! Form::label('license_image', __('fleet.licenseImage'), ['class' => 'form-label']) !!}
+              {!! Form::label('license_image', __('fleet.licenseImage'), ['class' => 'form-label']) !!} <br>
               {!! Form::file('license_image',null,['class' => 'form-control','required']) !!}
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              {!! Form::label('econtact', __('fleet.emergency_details'), ['class' => 'form-label']) !!}
-              {!! Form::textarea('econtact',null,['class' => 'form-control']) !!}
-            </div>
-          </div>
+          
         </div>
         <div class="col-md-12">
           {!! Form::submit(__('fleet.saveDriver'), ['class' => 'btn btn-success']) !!}

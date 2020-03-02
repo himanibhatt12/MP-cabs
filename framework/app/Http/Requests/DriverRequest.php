@@ -23,30 +23,29 @@ class DriverRequest extends FormRequest
         if ($this->request->has("edit")) {
             return [
 
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'address' => 'required',
+                'name' => 'required',
+                // 'last_name' => 'required',
+                // 'address' => 'required',
                 'phone' => 'required|numeric',
                 'email' => 'required|email|unique:users,email,' . \Request::get("id"),
-                'start_date' => 'date|date_format:Y-m-d',
-                'driver_image' => 'nullable|image|mimes:jpg,png,jpeg',
+                // 'start_date' => 'date|date_format:Y-m-d',
+                'id_proof' => 'nullable|image|mimes:jpg,png,jpeg',
                 'license_image' => 'nullable|image|mimes:jpg,png,jpeg',
-                'documents.*' => 'nullable|mimes:jpg,png,jpeg,pdf,doc,docx',
+                // 'documents.*' => 'nullable|mimes:jpg,png,jpeg,pdf,doc,docx',
 
             ];
         } else {
             return [
 
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'address' => 'required',
+                'name' => 'required',
+                // 'last_name' => 'required',
+                // 'address' => 'required',
                 'phone' => 'required|numeric',
                 'email' => 'required|email|unique:users,email,' . \Request::get("id"),
-                'exp_date' => 'required|date|date_format:Y-m-d|after:tomorrow',
-                'start_date' => 'date|date_format:Y-m-d',
-                'driver_image' => 'nullable|image|mimes:jpg,png,jpeg',
+                // 'start_date' => 'date|date_format:Y-m-d',
+                'id_proof' => 'nullable|image|mimes:jpg,png,jpeg',
                 'license_image' => 'nullable|image|mimes:jpg,png,jpeg',
-                'documents' => 'nullable|mimes:jpg,png,jpeg,pdf,doc,docx',
+                // 'documents.*' => 'nullable|mimes:jpg,png,jpeg,pdf,doc,docx',
 
             ];
         }

@@ -34,7 +34,7 @@
       <div class="card-header">
         <h3 class="card-title">@lang('menu.drivers') &nbsp;
           <a href="{{ route("drivers.create") }}" class="btn btn-success"> @lang('fleet.addDriver') </a>
-          <button data-toggle="modal" data-target="#import" class="btn btn-warning">@lang('fleet.import')</button>
+          {{-- <button data-toggle="modal" data-target="#import" class="btn btn-warning">@lang('fleet.import')</button> --}}
         </h3>
       </div>
 
@@ -48,13 +48,11 @@
                 @endif
               </th>
               <th>#</th>
-              <th>@lang('fleet.driverImage')</th>
               <th>@lang('fleet.name')</th>
               <th>@lang('fleet.email')</th>
               <th>@lang('fleet.is_active')</th>
               <th>@lang('fleet.phone')</th>
               <th>@lang('fleet.assigned_vehicle')</th>
-              <th>@lang('fleet.start_date')</th>
               <th>@lang('fleet.action')</th>
             </tr>
           </thead>
@@ -65,24 +63,12 @@
                 <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="checkbox" id="chk{{ $row->id }}" onclick='checkcheckbox();'>
               </td>
               <td>{{$row->id}}</td>
-              <td>
-                @if($row->getMeta('driver_image') != null)
-                @if(starts_with($row->getMeta('driver_image'),'http'))
-                @php($src = $row->getMeta('driver_image'))
-                @else
-                @php($src=asset('uploads/'.$row->getMeta('driver_image')))
-                @endif
-                <img src="{{$src}}" height="70px" width="70px">
-                @else
-                <img src="{{ asset("assets/images/no-user.jpg")}}" height="70px" width="70px">
-                @endif
-              </td>
+              
               <td>{{$row->name}}</td>
               <td>{{$row->email}}</td>
               <td>{{($row->getMeta('is_active')) ? "YES" : "NO"}}</td>
               <td>{{$row->getMeta('phone')}}</td>
               <td>@if($row->vehicle_id != null) {{$row->driver_vehicle->vehicle->maker->make}}-{{$row->driver_vehicle->vehicle->vehiclemodel->model}}-{{$row->driver_vehicle->vehicle->license_plate}} @endif</td>
-              <td>{{$row->getMeta('start_date')}}</td>
               <td>
               <div class="btn-group">
                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -115,13 +101,11 @@
                 @endif
               </th>
               <th>#</th>
-              <th>@lang('fleet.driverImage')</th>
               <th>@lang('fleet.name')</th>
               <th>@lang('fleet.email')</th>
               <th>@lang('fleet.is_active')</th>
               <th>@lang('fleet.phone')</th>
               <th>@lang('fleet.assigned_vehicle')</th>
-              <th>@lang('fleet.start_date')</th>
               <th>@lang('fleet.action')</th>
             </tr>
           </tfoot>

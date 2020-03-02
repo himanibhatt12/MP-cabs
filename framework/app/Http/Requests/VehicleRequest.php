@@ -27,15 +27,15 @@ class VehicleRequest extends FormRequest
             'make_id' => 'required',
             'model_id' => 'required',
             'color_id' => 'required',
-            'year' => 'required|numeric',
-            'engine_type' => 'required',
-            'horse_power' => 'integer',
-            'lic_exp_date' => 'required',
-            'reg_exp_date' => 'required',
+            // 'year' => 'required|numeric',
+            // 'engine_type' => 'required',
+            // 'horse_power' => 'integer',
+            // 'lic_exp_date' => 'required',
+            // 'reg_exp_date' => 'required',
             'license_plate' => 'required|unique:vehicles,license_plate,' . \Request::get("id") . ',id,deleted_at,NULL',
-            'int_mileage' => 'required|alpha_num',
+            // 'int_mileage' => 'required|alpha_num',
             'vehicle_image' => 'nullable|image|mimes:jpg,png,jpeg',
-            'average' => 'numeric',
+            // 'average' => 'numeric',
         ];
     }
 }

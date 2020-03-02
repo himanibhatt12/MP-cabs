@@ -94,9 +94,9 @@
         <div class="nav-tabs-custom">
           <ul class="nav nav-pills custom">
             <li class="nav-item"><a class="nav-link active" href="#info-tab" data-toggle="tab"> @lang('fleet.general_info') <i class="fa"></i></a></li>
-            <li class="nav-item"><a class="nav-link" href="#insurance" data-toggle="tab"> @lang('fleet.insurance') <i class="fa"></i></a></li>
+            {{-- <li class="nav-item"><a class="nav-link" href="#insurance" data-toggle="tab"> @lang('fleet.insurance') <i class="fa"></i></a></li>
             <li class="nav-item"><a class="nav-link" href="#acq-tab" data-toggle="tab"> @lang('fleet.purchase_info') <i class="fa"></i></a></li>
-            <li class="nav-item"><a class="nav-link" href="#driver" data-toggle="tab"> @lang('fleet.assign_driver') <i class="fa"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="#driver" data-toggle="tab"> @lang('fleet.assign_driver') <i class="fa"></i></a></li> --}}
           </ul>
         </div>
         <div class="tab-content">
@@ -113,7 +113,7 @@
                    <select name="make_id" class="form-control" required id="make_id">
                      <option></option>
                      @foreach($makes as $make)
-                      <option value="{{$make->id}}" @if($make->id == $vehicle->make_id) selected @endif>{{$make->make}}</option>
+                     <option value="{{$make->id}}" @if($make->id == $vehicle->make_id) selected @endif>{{$make->make}}</option>                     
                      @endforeach
                    </select>
                   </div>
@@ -123,93 +123,54 @@
                   <div class="col-xs-6">
                    <select name="model_id" class="form-control" required id="model_id">
                     @foreach($models as $model)
-                      <option value="{{ $model->id }}" @if($model->id == $vehicle->model_id) selected @endif>{{ $model->model }}</option>  
-                    @endforeach                 
+                    <option value="{{ $model->id }}" @if($model->id == $vehicle->model_id) selected @endif>{{ $model->model }}</option>  
+                    @endforeach
                    </select>
                   </div>
                 </div>
-
                 <div class="form-group">
-                  {!! Form::label('type', __('fleet.type'), ['class' => 'col-xs-5 control-label']) !!}
+                  {!! Form::label('type_id', __('fleet.type'), ['class' => 'col-xs-5 control-label']) !!}
+  
                   <div class="col-xs-6">
-                    <select name="type_id" class="form-control" required id="type_id">
-                      <option></option>
-                      @foreach($types as $type)
-                      <option value="{{$type->id}}" @if($vehicle->type_id == $type->id) selected @endif>{{$type->displayname}}</option>
-                      @endforeach
-                    </select>
+                   <select name="type_id" class="form-control" required id="type_id">
+                     <option></option>
+                     @foreach($types as $type)
+                     <option value="{{$type->id}}" @if($vehicle->type_id == $type->id) selected @endif>{{$type->displayname}}</option>
+                     @endforeach
+                   </select>
                   </div>
                 </div>
-
-                <div class="form-group">
-                  {!! Form::label('year', __('fleet.year'), ['class' => 'col-xs-5 control-label']) !!}
-                  <div class="col-xs-6">
-                  {!! Form::number('year', $vehicle->year,['class' => 'form-control','required']) !!}
-                  </div>
-                </div>
-
-              <div class="form-group">
-                {!! Form::label('average', __('fleet.average')." (".__('fleet.mpg').")", ['class' => 'col-xs-5 control-label']) !!}
-                <div class="col-xs-6">
-                {!! Form::number('average', $vehicle->average,['class' => 'form-control','required','step'=>'any']) !!}
-                </div>
-              </div>
-
-                <div class="form-group">
-                  {!! Form::label('int_mileage', __('fleet.intMileage'), ['class' => 'col-xs-5 control-label']) !!}
-                  <div class="col-xs-6">
-                  {!! Form::text('int_mileage', $vehicle->int_mileage,['class' => 'form-control','required']) !!}
-                  </div>
-                </div>
+  
                 <div class="form-group">
                   {!! Form::label('vehicle_image', __('fleet.vehicleImage'), ['class' => 'col-xs-5 control-label']) !!}
                   @if($vehicle->vehicle_image != null)
                   <a href="{{ asset('uploads/'.$vehicle->vehicle_image) }}" target="_blank" class="col-xs-3 control-label">View</a>
                   @endif
-                  <br>
-                  {!! Form::file('vehicle_image',null,['class' => 'form-control']) !!}
-                </div>
-
-                <div class="form-group">
-                  {!! Form::label('reg_exp_date',__('fleet.reg_exp_date'), ['class' => 'col-xs-5 control-label required']) !!}
                   <div class="col-xs-6">
-                    <div class="input-group date">
-                      <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
-                      {!! Form::text('reg_exp_date', $vehicle->reg_exp_date,['class' => 'form-control','required']) !!}
-                    </div>
+                  {!! Form::file('vehicle_image',null,['class' => 'form-control']) !!}
                   </div>
                 </div>
-
                 <div class="form-group">
-                  <div class="row">
-                    <div class="col-md-6">
-                      {!! Form::label('in_service', __('fleet.service'), ['class' => 'col-xs-5 control-label']) !!}
-                    </div>
-                    <div class="col-ms-6" style="margin-left: -140px">
-                      <label class="switch">
-                      <input type="checkbox" name="in_service" value="1" @if($vehicle->in_service == '1') checked @endif>
-                      <span class="slider round"></span>
-                      </label>
-                    </div>
+                  {!! Form::label('permit', __('fleet.permit'), ['class' => 'col-xs-5 control-label']) !!}
+                  @if($vehicle->permit != null)
+                  <a href="{{ asset('uploads/'.$vehicle->permit) }}" target="_blank" class="col-xs-3 control-label">View</a>
+                  @endif
+                  <div class="col-xs-6">
+                  {!! Form::file('permit',null,['class' => 'form-control']) !!}
+                  </div>
+                </div>
+                <div class="form-group">
+                  {!! Form::label('vehicle_fitness', __('fleet.vehicle_fitness'), ['class' => 'col-xs-5 control-label']) !!}
+                  @if($vehicle->vehicle_fitness != null)
+                  <a href="{{ asset('uploads/'.$vehicle->vehicle_fitness) }}" target="_blank" class="col-xs-3 control-label">View</a>
+                  @endif
+                  <div class="col-xs-6">
+                  {!! Form::file('vehicle_fitness',null,['class' => 'form-control']) !!}
                   </div>
                 </div>
               </div>
-
+              
               <div class="col-md-6">
-                <div class="form-group" >
-                  {!! Form::label('engine_type', __('fleet.engine'), ['class' => 'col-xs-5 control-label']) !!}
-                  <div class="col-xs-6">
-                  {!! Form::select('engine_type',["Petrol"=>"Petrol","Diesel"=>"Diesel"],$vehicle->engine_type,['class' => 'form-control','required']) !!}
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  {!! Form::label('horse_power', __('fleet.horsePower'), ['class' => 'col-xs-5 control-label']) !!}
-                  <div class="col-xs-6">
-                    {!! Form::text('horse_power', $vehicle->horse_power,['class' => 'form-control','required']) !!}
-                  </div>
-                </div>
-
                 <div class="form-group">
                   {!! Form::label('color_id', __('fleet.SelectVehicleColor'), ['class' => 'col-xs-5 control-label']) !!}
   
@@ -217,71 +178,53 @@
                    <select name="color_id" class="form-control" required id="color_id">
                      <option></option>
                      @foreach($colors as $color)
-                      <option value="{{$color->id}}" @if($color->id == $vehicle->color_id)selected @endif>{{$color->color}}</option>
+                     <option value="{{$color->id}}" @if($color->id == $vehicle->color_id)selected @endif>{{$color->color}}</option>
                      @endforeach
                    </select>
                   </div>
                 </div>
-
-                <div class="form-group">
-                  {!! Form::label('vin', __('fleet.vin'), ['class' => 'col-xs-5 control-label']) !!}
-                  <div class="col-xs-6">
-                    {!! Form::text('vin', $vehicle->vin,['class' => 'form-control','required']) !!}
-                  </div>
-                </div>
-
                 <div class="form-group">
                   {!! Form::label('license_plate', __('fleet.licensePlate'), ['class' => 'col-xs-5 control-label']) !!}
                   <div class="col-xs-6">
-                    {!! Form::text('license_plate', $vehicle->license_plate,['class' => 'form-control','required']) !!}
+                   {!! Form::text('license_plate', $vehicle->license_plate,['class' => 'form-control','required']) !!}
                   </div>
                 </div>
-
-                <div class="form-group">
-                  {!! Form::label('lic_exp_date',__('fleet.lic_exp_date'), ['class' => 'col-xs-5 control-label required']) !!}
-                  <div class="col-xs-6">
-                    <div class="input-group date">
-                      <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
-                      {!! Form::text('lic_exp_date', $vehicle->lic_exp_date,['class' => 'form-control','required']) !!}
-                    </div>
-                  </div>
-                </div>
-
+  
                 <div class="form-group">
                   {!! Form::label('group_id',__('fleet.selectGroup'), ['class' => 'col-xs-5 control-label']) !!}
                   <div class="col-xs-6">
                     <select id="group_id" name="group_id" class="form-control">
                       <option value="">@lang('fleet.vehicleGroup')</option>
-                      @foreach($groups as $group)
-                        <option value="{{$group->id}}" @if($group->id == $vehicle->group_id) selected @endif>{{$group->name}}</option>
+                      @foreach($groups as $group)                    
+                      <option value="{{$group->id}}" @if($group->id == $vehicle->group_id) selected @endif>{{$group->name}}</option>
                       @endforeach
                     </select>
                   </div>
                 </div>
-                <hr>
                 <div class="form-group">
-                  {!! Form::label('udf1',__('fleet.add_udf'), ['class' => 'col-xs-5 control-label']) !!}
-                  <div class="row">
-                    <div class="col-md-8">
-                      {!! Form::text('udf1', null,['class' => 'form-control']) !!}
-                    </div>
-                    <div class="col-md-4">
-                      <button type="button" class="btn btn-info add_udf"> @lang('fleet.add')</button>
-                    </div>
+                  {!! Form::label('insurance', __('fleet.insurance'), ['class' => 'col-xs-5 control-label']) !!}
+                  @if($vehicle->insurance != null)
+                  <a href="{{ asset('uploads/'.$vehicle->insurance) }}" target="_blank" class="col-xs-3 control-label">View</a>
+                  @endif
+                  <div class="col-xs-6">
+                  {!! Form::file('insurance',null,['class' => 'form-control']) !!}
                   </div>
                 </div>
-                <div class="blank"></div>
-                @if($udfs != null)
-                @foreach($udfs as $key => $value)
-                <div class="row"><div class="col-md-8">  <div class="form-group"> <label class="form-label text-uppercase">{{$key}}</label> <input type="text" name="udf[{{$key}}]" class="form-control" required value="{{$value}}"></div></div><div class="col-md-4"> <div class="form-group" style="margin-top: 30px"><button class="btn btn-danger" type="button" onclick="this.parentElement.parentElement.parentElement.remove();">Remove</button> </div></div></div>
-                @endforeach
-                @endif
+                <div class="form-group">
+                  {!! Form::label('rc_book', __('fleet.rc_book'), ['class' => 'col-xs-5 control-label']) !!}
+                  @if($vehicle->rc_book != null)
+                  <a href="{{ asset('uploads/'.$vehicle->rc_book) }}" target="_blank" class="col-xs-3 control-label">View</a>
+                  @endif
+                  <div class="col-xs-6">
+                  {!! Form::file('rc_book',null,['class' => 'form-control']) !!}
+                  </div>
+                </div>
               </div>
             </div>
             <div style=" margin-bottom: 20px;">
               <div class="form-group" style="margin-top: 15px;">
                 <div class="col-xs-6 col-xs-offset-3">
-                {!! Form::submit(__('fleet.submit'), ['class' => 'btn btn-warning']) !!}
+                  {!! Form::submit(__('fleet.submit'), ['class' => 'btn btn-warning']) !!}
                 </div>
               </div>
             </div>

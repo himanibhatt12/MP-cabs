@@ -1,6 +1,16 @@
 <?php
 use App\Model\BookingPaymentsModel;
+// use Hyvikk;
 Route::get('/', 'FrontendController@index')->middleware('IsInstalled');
+
+// if (Hyvikk::frontend('enable') == 1) {
+//     Route::get('/', 'FrontendController@index')->middleware('IsInstalled');
+// } else {
+//     Route::get('/', function () {
+//         return redirect('admin');
+//     });
+// }
+
 Route::get('installation', 'LaravelWebInstaller@index');
 Route::post('installed', 'LaravelWebInstaller@install');
 Route::get('installed', 'LaravelWebInstaller@index');
@@ -25,18 +35,18 @@ Route::get('razorpay-failed', 'PaymentController@razorpay_failed');
 Route::get('cash/{booking_id}', 'PaymentController@cash');
 
 Route::get('sample-payment', function () {
-	return view('payments.test_pay');
+    return view('payments.test_pay');
 });
 
 // Route::post('redirect-payment', 'PaymentController@redirect_payment');
 
 Route::get('all-data', function () {
-	$bookings = BookingPaymentsModel::latest()->get();
-	foreach ($bookings as $booking) {
-		if ($booking->payment_details != null) {
-			echo "<pre>";
-			print_r(json_decode($booking->payment_details));
-			echo "---------------------------------------------<br>";
-		}
-	}
+    $bookings = BookingPaymentsModel::latest()->get();
+    foreach ($bookings as $booking) {
+        if ($booking->payment_details != null) {
+            echo "<pre>";
+            print_r(json_decode($booking->payment_details));
+            echo "---------------------------------------------<br>";
+        }
+    }
 });

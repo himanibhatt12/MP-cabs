@@ -35,7 +35,7 @@
               <img src="{{ asset('assets/images/'. Hyvikk::get('icon_img') ) }}" class="navbar-brand" style="margin-top: -15px">
               {{  Hyvikk::get('app_name')  }}
             </span>
-              <small class="pull-right"> <b>@lang('fleet.date') : </b>{{ $i->booking_income->date }}</small>
+              <small class="pull-right"> <b>@lang('fleet.date') : </b>{{ $booking->date }}</small>
           </h2>
         </div>
       </div>
@@ -63,7 +63,7 @@
 
         <div class="col-sm-4 invoice-col">
           <b>Invoice#</b>
-               {{ $i['income_id'] }}
+               {{ $booking->id }}
           <br>
           <b>{{ $booking->customer->name }}</b>
         </div>
@@ -117,7 +117,7 @@
               @endif
               <tr>
                 <th>@lang('fleet.mileage'):</th>
-                <td>{{ $i->booking_income->mileage }} {{ Hyvikk::get('dis_format') }}</td>
+                <td>{{ $booking->total_kms }} {{ Hyvikk::get('dis_format') }}</td>
               </tr>
               <tr>
                 <th>@lang('fleet.waitingtime'):</th>
@@ -139,7 +139,7 @@
               </tr>
               <tr>
                 <th>@lang('fleet.total'):</th>
-                <td>{{ Hyvikk::get('currency') }} {{ $i->booking_income->amount }}</td>
+                <td>{{ Hyvikk::get('currency') }} {{ $booking->tax_total }}</td>
               </tr>
             </table>
           </div>

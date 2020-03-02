@@ -1,5 +1,11 @@
 <?php
 return [
+    'rc_book' => 'RC Book',
+    'vehicle_fitness' => 'Vehicle Fitness',
+    'permit' => 'Permit',
+    'id_proof' => 'ID Proof',
+    'alt_mobile' => 'Alt. Mobile Number',
+    ///////////////////
     'journeyDateTime' => 'Journey Date & Time',
     'bookingOption' => 'Booking Option',
     'booking_type' => 'Booking Type',
@@ -551,7 +557,7 @@ return [
     'address' => 'Address',
     'driverImage' => 'Driver Image',
     'licenseNumber' => 'License Number',
-    'licenseImage' => 'License Image',
+    'licenseImage' => 'Driving License',
     'issueDate' => 'Issue Date',
     'expirationDate' => 'Expiration Date',
     'saveDriver' => 'Save Driver',

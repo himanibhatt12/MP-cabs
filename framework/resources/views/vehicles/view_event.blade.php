@@ -4,11 +4,11 @@
         <li class="nav-item"><a href="#info-tab" data-toggle="tab" class="nav-link custom_padding active"> @lang('fleet.general_info') <i class="fa"></i></a>
         </li>
 
-        <li class="nav-item"><a href="#address-tab" data-toggle="tab" class="nav-link custom_padding"> @lang('fleet.insurance') <i class="fa"></i></a>
+        {{-- <li class="nav-item"><a href="#address-tab" data-toggle="tab" class="nav-link custom_padding"> @lang('fleet.insurance') <i class="fa"></i></a>
         </li>
 
         <li class="nav-item"><a href="#acq-tab" data-toggle="tab" class="nav-link custom_padding"> @lang('fleet.purchase_info') <i class="fa"></i></a>
-        </li>
+        </li> --}}
 
         <li class="nav-item"><a href="#reviews" data-toggle="tab" class="nav-link custom_padding"> @lang('fleet.vehicle_inspection') <i class="fa"></i></a>
         </li>
@@ -41,7 +41,7 @@
 					</td>
 				</tr>
 
-				<tr>
+				{{-- <tr>
 					<th>@lang('fleet.year')</th>
 					<td>
 						{{$vehicle->year}}
@@ -60,7 +60,7 @@
 					<td>
 						{{$vehicle->int_mileage}}
 					</td>
-				</tr>
+				</tr> --}}
 
 				<tr>
 					<th>@lang('fleet.vehicleImage')</th>
@@ -71,7 +71,7 @@
 					</td>
 				</tr>
 
-				<tr>
+				{{-- <tr>
 					<th>@lang('fleet.engine')</th>
 					<td>
 						{{$vehicle->engine_type}}
@@ -83,7 +83,7 @@
 					<td>
 						{{$vehicle->horse_power}}
 					</td>
-				</tr>
+				</tr> --}}
 
 				<tr>
 					<th>@lang('fleet.color')</th>
@@ -94,12 +94,12 @@
 					</td>
 				</tr>
 
-				<tr>
+				{{-- <tr>
 					<th>@lang('fleet.vin')</th>
 					<td>
 						{{$vehicle->vin}}
 					</td>
-				</tr>
+				</tr> --}}
 
 				<tr>
 					<th>@lang('fleet.licensePlate')</th>
@@ -108,7 +108,7 @@
 					</td>
 				</tr>
 
-				<tr>
+				{{-- <tr>
 					<th>@lang('fleet.lic_exp_date')</th>
 					<td>
 						{{$vehicle->lic_exp_date}}
@@ -120,7 +120,7 @@
 					<td>
 						{{$vehicle->reg_exp_date}}
 					</td>
-				</tr>
+				</tr> --}}
 
 				<tr>
 					<th>@lang('fleet.assigned_driver')</th>

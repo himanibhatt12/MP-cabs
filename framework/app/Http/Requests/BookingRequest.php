@@ -24,6 +24,7 @@ class BookingRequest extends FormRequest
             'vehicle_id' => 'required',
             'pickup_addr' => 'required',
             'dest_addr' => 'required|different:pickup_addr',
+            'package_id' => 'required_if:booking_option,Rental',
 
         ];
     }

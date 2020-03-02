@@ -137,71 +137,26 @@ input:checked + .slider:before {
               </div>
 
               <div class="form-group">
-                {!! Form::label('year', __('fleet.year'), ['class' => 'col-xs-5 control-label']) !!}
-                <div class="col-xs-6">
-                {!! Form::number('year', null,['class' => 'form-control','required']) !!}
-                </div>
-              </div>
-
-              <div class="form-group">
-                {!! Form::label('average', __('fleet.average')." (".__('fleet.mpg').")", ['class' => 'col-xs-5 control-label']) !!}
-                <div class="col-xs-6">
-                {!! Form::number('average', null,['class' => 'form-control','required','step'=>'any']) !!}
-                </div>
-              </div>
-
-              <div class="form-group">
-                {!! Form::label('int_mileage', __('fleet.intMileage'), ['class' => 'col-xs-5 control-label']) !!}
-                <div class="col-xs-6">
-                {!! Form::number('int_mileage', null,['class' => 'form-control','required']) !!}
-                </div>
-              </div>
-              <div class="form-group">
                 {!! Form::label('vehicle_image', __('fleet.vehicleImage'), ['class' => 'col-xs-5 control-label']) !!}
                 <div class="col-xs-6">
                 {!! Form::file('vehicle_image',null,['class' => 'form-control']) !!}
                 </div>
               </div>
-
               <div class="form-group">
-                {!! Form::label('reg_exp_date',__('fleet.reg_exp_date'), ['class' => 'col-xs-5 control-label required']) !!}
+                {!! Form::label('permit', __('fleet.permit'), ['class' => 'col-xs-5 control-label']) !!}
                 <div class="col-xs-6">
-                  <div class="input-group date">
-                  <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
-                  {!! Form::text('reg_exp_date', null,['class' => 'form-control','required']) !!}
-                  </div>
+                {!! Form::file('permit',null,['class' => 'form-control']) !!}
                 </div>
               </div>
               <div class="form-group">
-                <div class="row">
-                  <div class="col-md-6">
-                    {!! Form::label('in_service', __('fleet.service'), ['class' => 'col-xs-5 control-label']) !!}
-                  </div>
-                  <div class="col-ms-6" style="margin-left: -140px">
-                    <label class="switch">
-                      <input type="checkbox" name="in_service" value="1">
-                      <span class="slider round"></span>
-                    </label>
-                  </div>
+                {!! Form::label('vehicle_fitness', __('fleet.vehicle_fitness'), ['class' => 'col-xs-5 control-label']) !!}
+                <div class="col-xs-6">
+                {!! Form::file('vehicle_fitness',null,['class' => 'form-control']) !!}
                 </div>
               </div>
             </div>
             
             <div class="col-md-6">
-              <div class="form-group" >
-                {!! Form::label('engine_type', __('fleet.engine'), ['class' => 'col-xs-5 control-label']) !!}
-                <div class="col-xs-6">
-                {!! Form::select('engine_type',["Petrol"=>"Petrol","Diesel"=>"Diesel"],null,['class' => 'form-control','required']) !!}
-                </div>
-              </div>
-
-              <div class="form-group">
-                {!! Form::label('horse_power', __('fleet.horsePower'), ['class' => 'col-xs-5 control-label']) !!}
-                <div class="col-xs-6">
-                {!! Form::number('horse_power', null,['class' => 'form-control','required']) !!}
-                </div>
-              </div>
-
               <div class="form-group">
                 {!! Form::label('color_id', __('fleet.SelectVehicleColor'), ['class' => 'col-xs-5 control-label']) !!}
 
@@ -214,28 +169,10 @@ input:checked + .slider:before {
                  </select>
                 </div>
               </div>
-
-              <div class="form-group">
-                {!! Form::label('vin', __('fleet.vin'), ['class' => 'col-xs-5 control-label']) !!}
-                <div class="col-xs-6">
-                 {!! Form::text('vin', null,['class' => 'form-control','required']) !!}
-                </div>
-              </div>
-
               <div class="form-group">
                 {!! Form::label('license_plate', __('fleet.licensePlate'), ['class' => 'col-xs-5 control-label']) !!}
                 <div class="col-xs-6">
                  {!! Form::text('license_plate', null,['class' => 'form-control','required']) !!}
-                </div>
-              </div>
-
-              <div class="form-group">
-                {!! Form::label('lic_exp_date',__('fleet.lic_exp_date'), ['class' => 'col-xs-5 control-label required']) !!}
-                <div class="col-xs-6">
-                  <div class="input-group date">
-                  <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
-                  {!! Form::text('lic_exp_date', null,['class' => 'form-control','required']) !!}
-                  </div>
                 </div>
               </div>
 
@@ -250,19 +187,18 @@ input:checked + .slider:before {
                   </select>
                 </div>
               </div>
-              <hr>
               <div class="form-group">
-                {!! Form::label('udf1',__('fleet.add_udf'), ['class' => 'col-xs-5 control-label']) !!}
-                <div class="row">
-                  <div class="col-md-8">
-                    {!! Form::text('udf1', null,['class' => 'form-control']) !!}
-                  </div>
-                  <div class="col-md-4">
-                    <button type="button" class="btn btn-info add_udf"> @lang('fleet.add')</button>
-                  </div>
+                {!! Form::label('insurance', __('fleet.insurance'), ['class' => 'col-xs-5 control-label']) !!}
+                <div class="col-xs-6">
+                {!! Form::file('insurance',null,['class' => 'form-control']) !!}
                 </div>
               </div>
-              <div class="blank"></div>
+              <div class="form-group">
+                {!! Form::label('rc_book', __('fleet.rc_book'), ['class' => 'col-xs-5 control-label']) !!}
+                <div class="col-xs-6">
+                {!! Form::file('rc_book',null,['class' => 'form-control']) !!}
+                </div>
+              </div>
             </div>
           </div>
           <div style=" margin-bottom: 20px;">

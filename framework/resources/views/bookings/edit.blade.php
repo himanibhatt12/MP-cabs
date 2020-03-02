@@ -73,6 +73,15 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-md-12 package">
+            @if($data->booking_option == "Rental")
+              <div class="form-group">
+                
+              </div>
+            @endif
+          </div>
+        </div>
+        <div class="row">
           <div class="col-md-4">
             <div class="form-group">
               {!! Form::label('vehicle_id',__('fleet.selectVehicle'), ['class' => 'form-label']) !!}
@@ -283,6 +292,17 @@
       get_driver(from_date,to_date);
       get_vehicle(from_date,to_date);
     });
+  });
+
+  $('#booking_option').on('change',function(){
+    if($(this).val()=="Rental"){
+      // alert($(this).val());
+      $('.package').append('<div class="form-group">{!! Form::label("package_id",__("fleet.packages"), ["class" => "form-label"]) !!} <select id="package_id" name="package_id" class="form-control" required><option value="">-</option>@foreach($packages as $package) <option value="{{ $package->id }}" @if($data->package_id == $package->id)selected @endif>{{$package->id}}</option> @endforeach</select></div>');
+      $('#package_id').select2({placeholder:"@lang('fleet.packages')"});
+    }
+    else{
+      $('.package').html("");
+    }    
   });
 </script>
 @if(Hyvikk::api('google_api') == "1")

@@ -366,5 +366,4 @@ class MPCabsDriversApi extends Controller
         $data['data'] = $details;
         return $data;
     }
-
 }

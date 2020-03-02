@@ -35,10 +35,10 @@ class VehicleModel extends Model
         return $this->hasMany("App\Model\Expense", "vehicle_id", "id")->withTrashed();
     }
 
-    public function insurance()
-    {
-        return $this->hasOne("App\Model\InsuranceModel", "vehicle_id", "id")->withTrashed();
-    }
+    // public function insurance()
+    // {
+    //     return $this->hasOne("App\Model\InsuranceModel", "vehicle_id", "id")->withTrashed();
+    // }
 
     public function acq()
     {

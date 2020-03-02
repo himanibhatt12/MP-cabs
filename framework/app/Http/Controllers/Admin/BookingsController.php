@@ -12,11 +12,12 @@ use App\Model\Bookings;
 use App\Model\Hyvikk;
 use App\Model\IncCats;
 use App\Model\IncomeModel;
+use App\Model\PackagesModel;
 use App\Model\ServiceReminderModel;
 use App\Model\User;
 use App\Model\VehicleModel;
-use Auth;
 // use Carbon\Carbon;
+use Auth;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -327,6 +328,7 @@ class BookingsController extends Controller
         $user = Auth::user()->group_id;
         $data['customers'] = User::where('user_type', 'C')->get();
         $data['addresses'] = Address::where('customer_id', Auth::user()->id)->get();
+        $data['packages'] = PackagesModel::get();
         if ($user == null || Auth::user()->user_type == 'S') {
             $data['drivers'] = User::whereUser_type("D")->get();
             $data['vehicles'] = VehicleModel::whereIn_service("1")->get();
@@ -366,6 +368,7 @@ class BookingsController extends Controller
         $index['vehicles'] = $vehicles;
         $index['data'] = $booking;
         $index['udfs'] = unserialize($booking->getMeta('udf'));
+        $index['packages'] = PackagesModel::get();
 
         return view("bookings.edit", $index);
     }
@@ -400,6 +403,7 @@ class BookingsController extends Controller
 
     public function store(BookingRequest $request)
     {
+        dd($request->all());
         // $xx = $this->check_booking($request->pickup, $request->dropoff, $request->vehicle_id);
         $xx = 1;
         if ($xx) {

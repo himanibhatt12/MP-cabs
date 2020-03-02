@@ -193,26 +193,41 @@ class VehiclesController extends Controller
         if ($request->file('vehicle_image') && $request->file('vehicle_image')->isValid()) {
             $this->upload_file($request->file('vehicle_image'), "vehicle_image", $vehicle);
         }
+        if ($request->file('insurance') && $request->file('insurance')->isValid()) {
+            $this->upload_doc($request->file('insurance'), 'insurance', $vehicle);
+        }
+        if ($request->file('rc_book') && $request->file('rc_book')->isValid()) {
+            $this->upload_doc($request->file('rc_book'), 'rc_book', $vehicle);
+        }
+        if ($request->file('permit') && $request->file('permit')->isValid()) {
+            $this->upload_doc($request->file('permit'), 'permit', $vehicle);
+        }
+        if ($request->file('vehicle_fitness') && $request->file('vehicle_fitness')->isValid()) {
+            $this->upload_doc($request->file('vehicle_fitness'), 'vehicle_fitness', $vehicle);
+        }
 
         $user = VehicleModel::find($request->get("id"));
         $form_data = $request->all();
         unset($form_data['vehicle_image']);
-        unset($form_data['documents']);
-        unset($form_data['udf']);
+        unset($form_data['vehicle_fitness']);
+        unset($form_data['permit']);
+        unset($form_data['rc_book']);
+        unset($form_data['insurance']);
+        // unset($form_data['udf']);
 
         $user->update($form_data);
 
-        if ($request->get("in_service")) {
-            $user->in_service = 1;
-        } else {
-            $user->in_service = 0;
-        }
-        $user->int_mileage = $request->get("int_mileage");
-        $user->lic_exp_date = $request->get('lic_exp_date');
-        $user->reg_exp_date = $request->get('reg_exp_date');
-        $user->udf = serialize($request->get('udf'));
-        $user->average = $request->average;
-        $user->save();
+        // if ($request->get("in_service")) {
+        //     $user->in_service = 1;
+        // } else {
+        //     $user->in_service = 0;
+        // }
+        // $user->int_mileage = $request->get("int_mileage");
+        // $user->lic_exp_date = $request->get('lic_exp_date');
+        // $user->reg_exp_date = $request->get('reg_exp_date');
+        // $user->udf = serialize($request->get('udf'));
+        // $user->average = $request->average;
+        // $user->save();
 
         return Redirect::route("vehicles.index");
 
@@ -225,36 +240,48 @@ class VehiclesController extends Controller
             'make_id' => $request->make_id,
             'model_id' => $request->model_id,
             'color_id' => $request->color_id,
-            'year' => $request->get("year"),
-            'engine_type' => $request->get("engine_type"),
-            'horse_power' => $request->get("horse_power"),
-            'vin' => $request->get("vin"),
+            // 'year' => $request->get("year"),
+            // 'engine_type' => $request->get("engine_type"),
+            // 'horse_power' => $request->get("horse_power"),
+            // 'vin' => $request->get("vin"),
             'license_plate' => $request->get("license_plate"),
-            'int_mileage' => $request->get("int_mileage"),
+            // 'int_mileage' => $request->get("int_mileage"),
             'group_id' => $request->get('group_id'),
             'user_id' => $request->get('user_id'),
-            'lic_exp_date' => $request->get('lic_exp_date'),
-            'reg_exp_date' => $request->get('reg_exp_date'),
-            'in_service' => $request->get("in_service"),
+            // 'lic_exp_date' => $request->get('lic_exp_date'),
+            // 'reg_exp_date' => $request->get('reg_exp_date'),
+            'in_service' => 1,
             'type_id' => $request->get('type_id'),
         ])->id;
         if ($request->file('vehicle_image') && $request->file('vehicle_image')->isValid()) {
             $this->upload_file($request->file('vehicle_image'), "vehicle_image", $vehicle);
         }
+        if ($request->file('insurance') && $request->file('insurance')->isValid()) {
+            $this->upload_doc($request->file('insurance'), 'insurance', $vehicle);
+        }
+        if ($request->file('rc_book') && $request->file('rc_book')->isValid()) {
+            $this->upload_doc($request->file('rc_book'), 'rc_book', $vehicle);
+        }
+        if ($request->file('permit') && $request->file('permit')->isValid()) {
+            $this->upload_doc($request->file('permit'), 'permit', $vehicle);
+        }
+        if ($request->file('vehicle_fitness') && $request->file('vehicle_fitness')->isValid()) {
+            $this->upload_doc($request->file('vehicle_fitness'), 'vehicle_fitness', $vehicle);
+        }
 
-        $meta = VehicleModel::find($vehicle);
-        $meta->setMeta([
-            'ins_number' => "",
-            'ins_exp_date' => "",
-            'documents' => "",
-        ]);
-        $meta->udf = serialize($request->get('udf'));
-        $meta->average = $request->average;
-        $meta->save();
+        // $meta = VehicleModel::find($vehicle);
+        // $meta->setMeta([
+        //     'ins_number' => "",
+        //     'ins_exp_date' => "",
+        //     'documents' => "",
+        // ]);
+        // $meta->udf = serialize($request->get('udf'));
+        // $meta->average = $request->average;
+        // $meta->save();
 
-        $vehicle_id = $vehicle;
-
-        return redirect("admin/vehicles/" . $vehicle_id . "/edit?tab=vehicle");
+        // $vehicle_id = $vehicle;
+        return redirect()->route('vehicles.index');
+        // return redirect("admin/vehicles/" . $vehicle_id . "/edit?tab=vehicle");
     }
 
     public function store_insurance(InsuranceRequest $request)
