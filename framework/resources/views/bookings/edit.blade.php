@@ -197,6 +197,7 @@
   $('#driver_id').select2({placeholder: "@lang('fleet.selectDriver')"});
   $('#vehicle_id').select2({placeholder: "@lang('fleet.selectVehicle')"});
   $('#booking_option').select2({placeholder: "@lang('fleet.bookingOption')"});
+  $('#package_id').select2({placeholder:"@lang('fleet.packages')"});
   function get_driver(from_date,to_date){
     var id=$("input:hidden[name=id]").val();
     $.ajaxSetup({

@@ -96,7 +96,7 @@
                     <a class="dropdown-item vtype" data-id="{{$row->id}}" data-toggle="modal" data-target="#myModal" > <span class="fa fa-trash" aria-hidden="true" style="color: #dd4b39"></span> @lang('fleet.delete')</a>
                     @if($row->vehicle_id != null)
                     @if($row->status==0 && $row->receipt != 1)
-                    @if(Auth::user()->user_type != "C" && $row->ride_status != "Cancelled")
+                    @if(Auth::user()->user_type != "C" && $row->ride_status != "Cancelled" && $row->booking_option != "Rental")
                     <a data-toggle="modal" data-target="#receiptModal" class="open-AddBookDialog dropdown-item" data-booking-id="{{$row->id}}" data-user-id="{{$row->user_id}}" data-customer-id="{{$row->customer_id}}" data-vehicle-id= "{{$row->vehicle_id}}" data-vehicle-type="{{strtolower(str_replace(' ','',$row->vehicle->types->vehicletype))}}" data-base-mileage="{{Hyvikk::fare(strtolower(str_replace(' ','',$row->vehicle->types->vehicletype)).'_base_km')}}" data-base-fare="{{Hyvikk::fare(strtolower(str_replace(' ','',$row->vehicle->types->vehicletype)).'_base_fare')}}"
                     data-base_km_1="{{Hyvikk::fare(strtolower(str_replace(' ','',$row->vehicle->types->vehicletype)).'_base_km')}}"
                     data-base_fare_1="{{Hyvikk::fare(strtolower(str_replace(' ','',$row->vehicle->types->vehicletype)).'_base_fare')}}"
@@ -114,6 +114,11 @@
                     data-std_fare_3="{{Hyvikk::fare(strtolower(str_replace(' ','',$row->vehicle->types->vehicletype)).'_night_std_fare')}}"
                     ><span aria-hidden="true" class="fa fa-file" style="color: #5cb85c;">
 
+                    </span> @lang('fleet.invoice')
+                    </a> 
+                    @endif
+                    @if(Auth::user()->user_type != "C" && $row->ride_status != "Cancelled" && $row->booking_option == "Rental")
+                    <a data-toggle="modal" data-target="#receiptModalRental" class="open-AddBookDialogRental dropdown-item" data-booking-id="{{$row->id}}" data-user-id="{{$row->user_id}}" data-customer-id="{{$row->customer_id}}" data-vehicle-id= "{{$row->vehicle_id}}" data-package-id="{{ $row->package_id }}" data-rate-km="{{$row->package->km_rate}}" data-rate-hour="{{$row->package->hourly_rate}}"><span aria-hidden="true" class="fa fa-file" style="color: #5cb85c;">
                     </span> @lang('fleet.invoice')
                     </a>
                     @endif
@@ -410,6 +415,156 @@
   </div>
 </div>
 <!-- generate invoice modal -->
+
+
+<!-- generate rental invoic Modal -->
+<div class="modal fade" id="receiptModalRental" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="card card-info">
+        <div class="modal-header">
+          <h3 class="modal-title">@lang('fleet.add_payment')</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+
+        <div class="fleet card-body">
+          {!! Form::open(['route' => 'bookings.complete','method'=>'post']) !!}
+          <input type="hidden" name="status" id="status1" value="1"/>
+          <input type="hidden" name="booking_id" id="bookingId1" value=""/>
+          <input type="hidden" name="userId" id="userId1" value=""/>
+          <input type="hidden" name="customerId" id="customerId1" value=""/>
+          <input type="hidden" name="vehicleId" id="vehicleId1" value=""/>
+          @php($no_of_tax = 0)
+          @if(Hyvikk::get('tax_charge') != "null")
+            @php($no_of_tax = sizeof(json_decode(Hyvikk::get('tax_charge'), true)))
+            @php($taxes = json_decode(Hyvikk::get('tax_charge'), true))
+            @php($i=0)
+            @foreach($taxes as $key => $val)
+              <input type="hidden" name="{{ 'tax_'.$i }}" value="{{ $val }}" class="{{ 'tax_'.$i }}">
+              @php($i++)
+            @endforeach
+          @endif
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.incomeType')</label>
+                <select id="income_type1" name="income_type" class="form-control vehicles" required>
+                  <option value="">@lang('fleet.incomeType')</option>
+                  @foreach($types as $type)
+                  <option value="{{ $type->id }}">{{$type->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.calculateBy')</label>
+                <select id="calculateBy" name="calculateby" class="form-control vehicles sum2" required>
+                  <option value=""></option>
+                  <option value="km">@lang('fleet.rate_per_km')</option>
+                  <option value="hour">@lang('fleet.rate_per_hour')</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.rate_per_hour') </label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend"> 
+                  <span class="input-group-text">{{ Hyvikk::get('currency') }}</span></div>
+                  {!! Form::number('rate_per_hour',0,['class'=>'form-control sum2','readonly','id'=>'rate_per_hour']) !!}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.rate_per_km')  </label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                  <span class="input-group-text">{{ Hyvikk::get('currency') }}</span></div>
+                  {!! Form::number('rate_per_km',0,['class'=>'form-control sum2','readonly','id'=>'rate_per_km']) !!}
+                </div>
+              </div>
+            </div>
+           
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.trip_mileage') ({{Hyvikk::get('dis_format')}}) or Trip Timing (hours)</label>
+                {!! Form::number('mileage',null,['class'=>'form-control sum2','min'=>1,'id'=>'mileage1']) !!}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.total_tax') (%) </label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                  <span class="input-group-text fa fa-percent"></span></div>
+                  {!! Form::number('total_tax_charge',0,['class'=>'form-control sum2','readonly','id'=>'total_tax_charge1']) !!}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.total') @lang('fleet.tax_charge')</label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                  <span class="input-group-text">{{ Hyvikk::get('currency') }}</span></div>
+                  {!! Form::number('total_tax_charge_rs',0,['class'=>'form-control sum2','readonly','id'=>'total_tax_charge_rs1']) !!}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.amount') </label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                  <span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+                  {!! Form::number('total',null,['class'=>'form-control','id'=>'total1','readonly']) !!}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.total') @lang('fleet.amount') </label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                  <span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+                  {!! Form::number('tax_total',null,['class'=>'form-control','id'=>'tax_total1','readonly']) !!}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.date')</label>
+                <div class='input-group'>
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> <span class="fa fa-calendar"></span></span>
+                  </div>
+                  {!! Form::text('date',date('Y-m-d'),['class'=>'form-control','id'=>'date1']) !!}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              {!! Form::submit(__('fleet.invoice'), ['class' => 'btn btn-info']) !!}
+            </div>
+          </div>
+          {!! Form::close() !!}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- generate rental invoice modal -->
 @endsection
 
 @section("script")
@@ -428,6 +583,10 @@
 
   $(document).ready(function() {
     $('#date').datepicker({
+      autoclose: true,
+      format: 'yyyy-mm-dd'
+    });
+    $('#date1').datepicker({
       autoclose: true,
       format: 'yyyy-mm-dd'
     });
@@ -480,6 +639,45 @@
     $('#total_tax_charge').val(total_tax_val);
     $('#total_tax_charge_rs').val((Number(total)*Number(total_tax_val))/100);
     $('#tax_total').val(Number(total) + (Number(total)*Number(total_tax_val))/100);
+
+  });
+
+  $(document).on("click", ".open-AddBookDialogRental", function () {
+    var booking_id = $(this).data('booking-id');
+
+     $(".fleet #bookingId1").val( booking_id );
+
+     var user_id = $(this).data('user-id');
+     $(".fleet #userId1").val( user_id );
+
+     var customer_id = $(this).data('customer-id');
+     $(".fleet #customerId1").val( customer_id );
+
+     var vehicle_id = $(this).data('vehicle-id');
+     $(".fleet #vehicleId1").val( vehicle_id );
+
+     var rate_km = $(this).data('rate-km');
+     $(".fleet #rate_per_km").val( rate_km );
+
+     var rate_hour = $(this).data('rate-hour');
+     $(".fleet #rate_per_hour").val( rate_hour );
+
+     $(".fleet #total1").val(0);
+     $(".fleet #mileage1").val(0);
+
+    var total = $("#total1").val();
+
+    var i;
+    var tax_size = '{{ $no_of_tax }}';
+    var total_tax_val = 0;
+    for (i = 0; i < tax_size; i++) {
+      total_tax_val = Number(total_tax_val) + Number($('.tax_'+i).val());
+      // console.log($('.tax_'+i).val());
+    }
+    // console.log(total_tax_val);
+    $('#total_tax_charge1').val(total_tax_val);
+    $('#total_tax_charge_rs1').val(0);
+    $('#tax_total1').val(0);
 
   });
 
@@ -635,5 +833,42 @@ $(".sum").change(function(){
         $('#chk_all').prop('checked', false);
     }
   }
+</script>
+<script>
+  $('.sum2').change(function(){
+    if($('#calculateBy').val() == "km"){
+      var rate = $('#rate_per_km').val();
+    }
+    if($('#calculateBy').val() == "hour"){
+      var rate = $('#rate_per_hour').val();
+    }
+   var total = Number($("#mileage1").val())*Number(rate);
+    var i;
+    var tax_size = '{{ $no_of_tax }}';
+    var total_tax_val = 0;
+    for (i = 0; i < tax_size; i++) {
+      total_tax_val = Number(total_tax_val) + Number($('.tax_'+i).val());
+      // console.log($('.tax_'+i).val());
+    }
+    $('#total_tax_charge1').val(total_tax_val);
+    $('#total_tax_charge_rs1').val((Number(total)*Number(total_tax_val))/100);
+    $('#total1').val(Number(rate)*Number($('#mileage1').val()));
+    $('#tax_total1').val(Number(rate)*Number($('#mileage1').val()) + Number($('#total_tax_charge_rs1').val()));
+    
+  });
+
+  // $("#total1").change(function(){
+  //   var total = $("#total1").val();
+  //   var i;
+  //   var tax_size = '{{ $no_of_tax }}';
+  //   var total_tax_val = 0;
+  //   for (i = 0; i < tax_size; i++) {
+  //     total_tax_val = Number(total_tax_val) + Number($('.tax_'+i).val());
+  //     // console.log($('.tax_'+i).val());
+  //   }
+  //   // console.log(total_tax_val);
+  //   $('#total_tax_charge_rs1').val((Number(total)*Number(total_tax_val))/100);
+  //   $('#tax_total1').val(Number(total) + (Number(total)*Number(total_tax_val))/100);
+  // });
 </script>
 @endsection

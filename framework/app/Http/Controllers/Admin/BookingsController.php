@@ -70,6 +70,7 @@ class BookingsController extends Controller
 
     public function complete_post(Request $request)
     {
+        // dd($request->all());
         $booking = Bookings::find($request->get("booking_id"));
         $booking->setMeta([
             'customerId' => $request->get('customerId'),
@@ -84,7 +85,18 @@ class BookingsController extends Controller
             'tax_total' => $request->get('tax_total'),
             'total_tax_percent' => $request->get('total_tax_charge'),
             'total_tax_charge_rs' => $request->total_tax_charge_rs,
+
         ]);
+        if ($booking->booking_option == "Rental") {
+            $booking->calculateby = $request->calculateBy;
+            if ($request->calculateby == "km") {
+                $booking->mileage = $request->mileage;
+                $booking->total_kms = $request->mileage;
+            } else {
+                $booking->driving_time = $request->mileage;
+                $booking->approx_timetoreach = $request->mileage;
+            }
+        }
         $booking->save();
 
         $id = IncomeModel::create([

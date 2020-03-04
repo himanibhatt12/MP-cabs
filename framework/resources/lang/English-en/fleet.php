@@ -1,5 +1,7 @@
 <?php
 return [
+    'calculateBy' => 'Calculate By',
+    /////////
     'rc_book' => 'RC Book',
     'vehicle_fitness' => 'Vehicle Fitness',
     'permit' => 'Permit',
