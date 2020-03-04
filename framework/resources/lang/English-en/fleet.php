@@ -5,7 +5,6 @@ return [
     'permit' => 'Permit',
     'id_proof' => 'ID Proof',
     'alt_mobile' => 'Alt. Mobile Number',
-    ///////////////////
     'journeyDateTime' => 'Journey Date & Time',
     'bookingOption' => 'Booking Option',
     'booking_type' => 'Booking Type',

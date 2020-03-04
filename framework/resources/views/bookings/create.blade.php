@@ -50,19 +50,7 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              {!! Form::label('booking_option',__('fleet.bookingOption'), ['class' => 'form-label']) !!}
-              <select id="booking_option" name="booking_option" class="form-control" required>
-                <option value="">-</option>
-                <option value="Local">Local</option>
-                <option value="RoundTrip">RoundTrip</option>
-                <option value="Rental">Rental</option>
-                <option value="oneway">One Way</option>                
-              </select>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('pickup',__('fleet.journeyDateTime'), ['class' => 'form-label']) !!}
+              {!! Form::label('pickup',__('fleet.pickup'), ['class' => 'form-label']) !!}
               <div class='input-group date'>
                 <div class="input-group-prepend">
                   <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -71,13 +59,32 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 package">
-
+          <div class="col-md-4">
+            <div class="form-group">
+              {!! Form::label('dropoff',__('fleet.dropoff'), ['class' => 'form-label']) !!}
+              <div class='input-group date'>
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                </div>
+                {!! Form::text('dropoff',date("Y-m-d H:i:s"),['class'=>'form-control','required']) !!}
+              </div>
+            </div>
           </div>
         </div>
+        
         <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              {!! Form::label('booking_option',__('fleet.bookingOption'), ['class' => 'form-label']) !!}
+              <select id="booking_option" name="booking_option" class="form-control" required>
+                <option value="">-</option>
+                <option value="Local">Local</option>
+                <option value="RoundTrip">RoundTrip</option>
+                <option value="Rental">Rental</option>
+                <option value="OneWay">One Way</option>                
+              </select>
+            </div>
+          </div>
           <div class="col-md-4">
             <div class="form-group">
               {!! Form::label('vehicle_id',__('fleet.selectVehicle'), ['class' => 'form-label']) !!}
@@ -102,10 +109,11 @@
               </select>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-             
-            </div>
+          
+        </div>
+        <div class="row">
+          <div class="col-md-12 package">
+
           </div>
         </div>
         @if(Auth::user()->user_type == "C")
@@ -379,13 +387,13 @@
       $("#dest_addr").val(address);
     });
 
-    // $("#pickup").on("dp.change", function (e) {
-    //   var to_date=$('#dropoff').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss");
-    //   var from_date=e.date.format("YYYY-MM-DD HH:mm:ss");
-    //   get_driver(from_date,to_date);
-    //   get_vehicle(from_date,to_date);
-    //   $('#dropoff').data("DateTimePicker").minDate(e.date);
-    // });
+    $("#pickup").on("dp.change", function (e) {
+      var to_date=$('#dropoff').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss");
+      var from_date=e.date.format("YYYY-MM-DD HH:mm:ss");
+      get_driver(from_date,to_date);
+      get_vehicle(from_date,to_date);
+      $('#dropoff').data("DateTimePicker").minDate(e.date);
+    });
 
     $("#dropoff").on("dp.change", function (e) {
       $('#pickup').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss")
@@ -424,14 +432,16 @@
 
   $('#booking_option').on('change',function(){
     if($(this).val()=="Rental"){
-      // alert($(this).val());
-      $('.package').append('<div class="form-group">{!! Form::label("package_id",__("fleet.packages"), ["class" => "form-label"]) !!} <select id="package_id" name="package_id" class="form-control" required><option value="">-</option>@foreach($packages as $package) <option value="{{ $package->id }}">{{$package->id}}</option> @endforeach</select></div>');
+      $('.package').append('<div class="form-group">{!! Form::label("package_id",__("fleet.packages"), ["class" => "form-label"]) !!} <select id="package_id" name="package_id" class="form-control pkg" required><option value="" data-vid="">-</option>@foreach($packages as $package) <option value="{{ $package->id }}" data-vid="{{ $package->vehicle_id }}">{{$package->vehicle->maker->make."-".$package->vehicle->vehiclemodel->model."-".$package->vehicle->license_plate." (".Hyvikk::get("currency")." ".$package->hourly_rate."/hour - ".Hyvikk::get("currency")." ".$package->km_rate."/km)"}}</option> @endforeach</select></div>');
       $('#package_id').select2({placeholder:"@lang('fleet.packages')"});
+      var vehicle = $('#package_id').find(":selected").data("vid");
+      $("#vehicle_id").val(vehicle).change();
+      $('#vehicle_id').prop("disabled", true);    
     }
     else{
       $('.package').html("");
-    }
-    
+      $('#vehicle_id').prop("disabled", false);
+    }    
   });
 
 </script>

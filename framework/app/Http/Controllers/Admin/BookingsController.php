@@ -36,10 +36,9 @@ class BookingsController extends Controller
             $data['data'] = Bookings::where('is_booked', 1)->orderBy('id', 'desc')->get();
         } else {
             $vehicle_ids = VehicleModel::where('group_id', Auth::user()->group_id)->pluck('id')->toArray();
-            $data['data'] = Bookings::where('user_id', Auth::user()->id)->whereIn('vehicle_id', $vehicle_ids)->where('is_booked', 1)->orderBy('id', 'desc')->get();
+            $data['data'] = Bookings::where('user_id', Auth::user()->id)->where('is_booked', 1)->orderBy('id', 'desc')->get();
         }
         $data['types'] = IncCats::get();
-
         return view("bookings.index", $data);
     }
 
@@ -71,9 +70,7 @@ class BookingsController extends Controller
 
     public function complete_post(Request $request)
     {
-        // dd($request->all());
         $booking = Bookings::find($request->get("booking_id"));
-
         $booking->setMeta([
             'customerId' => $request->get('customerId'),
             'vehicleId' => $request->get('vehicleId'),
@@ -110,12 +107,10 @@ class BookingsController extends Controller
         $xx->save();
 
         return redirect()->route("bookings.index");
-
     }
 
     public function complete($id)
     {
-
         $xx = Bookings::find($id);
         $xx->status = 1;
         $xx->ride_status = "Completed";
@@ -125,7 +120,6 @@ class BookingsController extends Controller
 
     public function get_driver(Request $request)
     {
-
         $from_date = $request->get("from_date");
         $to_date = $request->get("to_date");
         $req_type = $request->get("req");
@@ -135,9 +129,7 @@ class BookingsController extends Controller
             } else {
                 $q = "select id,name as text from users where user_id=" . Auth::id() . " and user_type='D' and deleted_at is null and id not in (select driver_id from bookings where  deleted_at is null   and ((dropoff between '" . $from_date . "' and '" . $to_date . "' or pickup between '" . $from_date . "' and '" . $to_date . "') or (DATE_ADD(dropoff, INTERVAL 10 MINUTE)>='" . $from_date . "' and DATE_SUB(pickup, INTERVAL 10 MINUTE)<='" . $to_date . "')))";
             }
-
             $d = collect(DB::select(DB::raw($q)));
-
             $r['data'] = $d;
         } else {
             $id = $request->get("id");
@@ -169,12 +161,10 @@ class BookingsController extends Controller
         }
 
         return $r;
-
     }
 
     public function get_vehicle(Request $request)
     {
-
         $from_date = $request->get("from_date");
         $to_date = $request->get("to_date");
         $req_type = $request->get("req");
@@ -199,9 +189,7 @@ class BookingsController extends Controller
 
             }
             // foreach ($d as $ro) {
-
             //     array_push($new, array("id" => $ro->id, "text" => $ro->text));
-
             // }
 
             $r['data'] = $new;
@@ -260,6 +248,7 @@ class BookingsController extends Controller
         return view("bookings.event", $data);
 
     }
+
     public function calendar_view()
     {
         $booking = Bookings::where('user_id', Auth::user()->id)->exists();
@@ -280,16 +269,16 @@ class BookingsController extends Controller
         $vehicle_ids = array(0);
         if (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
             $vehicle_ids = VehicleModel::pluck('id')->toArray();
-            $b = Bookings::where("pickup", ">=", $start)->where("dropoff", "<=", $end)->get();
+            $b = Bookings::where("pickup", ">=", $start)->where("pickup", "<=", $end)->get();
 
         } else {
             $vehicle_ids = VehicleModel::where('user_id', Auth::id())->where('group_id', Auth::user()->group_id)->pluck('id')->toArray();
-            $b = Bookings::whereIn('vehicle_id', $vehicle_ids)->where("pickup", ">=", $start)->where("dropoff", "<=", $end)->get();
+            $b = Bookings::whereIn('vehicle_id', $vehicle_ids)->where("pickup", ">=", $start)->where("pickup", "<=", $end)->get();
         }
 
         foreach ($b as $booking) {
             $x['start'] = $booking->pickup;
-            $x['end'] = $booking->dropoff;
+            $x['end'] = $booking->pickup;
             if ($booking->status == 1) {
                 $color = "grey";
             } else {
@@ -328,20 +317,23 @@ class BookingsController extends Controller
         $user = Auth::user()->group_id;
         $data['customers'] = User::where('user_type', 'C')->get();
         $data['addresses'] = Address::where('customer_id', Auth::user()->id)->get();
-        $data['packages'] = PackagesModel::get();
         if ($user == null || Auth::user()->user_type == 'S') {
+            $data['packages'] = PackagesModel::get();
             $data['drivers'] = User::whereUser_type("D")->get();
             $data['vehicles'] = VehicleModel::whereIn_service("1")->get();
         } else {
             $data['drivers'] = User::where('user_id', Auth::id())->whereUser_type("D")->get();
-            $data['vehicles'] = VehicleModel::where([['group_id', $user], ['in_service', '1'], ['user_id', Auth::id()]])->get();}
+            $data['vehicles'] = VehicleModel::where([['group_id', $user], ['in_service', '1'], ['user_id', Auth::id()]])->get();
+            $vehicle_ids = VehicleModel::where('group_id', Auth::user()->group_id)->pluck('id')->toArray();
+            $data['packages'] = PackagesModel::whereIn('vehicle_id', $vehicle_ids)->get();
+
+        }
         return view("bookings.create", $data);
     }
 
     public function edit($id)
     {
         $booking = Bookings::whereId($id)->get()->first();
-        // dd($booking->vehicle_typeid);
         if ($booking->vehicle_typeid != null) {
             $condition = " and type_id = '" . $booking->vehicle_typeid . "'";
         } else {
@@ -352,10 +344,13 @@ class BookingsController extends Controller
         if (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
             $q1 = "select * from vehicles where in_service=1" . $condition . " and deleted_at is null and id not in (select vehicle_id from bookings where status=0 and  id!=" . $id . " and deleted_at is null and  (DATE_SUB(pickup, INTERVAL 15 MINUTE) between '" . $booking->pickup . "' and '" . $booking->dropoff . "' or DATE_ADD(dropoff, INTERVAL 15 MINUTE) between '" . $booking->pickup . "' and '" . $booking->dropoff . "'  or dropoff between '" . $booking->pickup . "' and '" . $booking->dropoff . "'))";
             $index['drivers'] = User::whereUser_type("D")->get();
+            $index['packages'] = PackagesModel::get();
 
         } else {
             $q1 = "select * from vehicles where user_id=" . Auth::id() . " and in_service=1" . $condition . " and deleted_at is null and group_id=" . Auth::user()->group_id . " and id not in (select vehicle_id from bookings where status=0 and  id!=" . $id . " and deleted_at is null and  (DATE_SUB(pickup, INTERVAL 15 MINUTE) between '" . $booking->pickup . "' and '" . $booking->dropoff . "' or DATE_ADD(dropoff, INTERVAL 15 MINUTE) between '" . $booking->pickup . "' and '" . $booking->dropoff . "'  or dropoff between '" . $booking->pickup . "' and '" . $booking->dropoff . "'))";
             $index['drivers'] = User::where('user_id', Auth::id())->whereUser_type("D")->get();
+            $vehicle_ids = VehicleModel::where('group_id', Auth::user()->group_id)->pluck('id')->toArray();
+            $index['packages'] = PackagesModel::whereIn('vehicle_id', $vehicle_ids)->get();
 
         }
         $v_ids = array();
@@ -368,23 +363,19 @@ class BookingsController extends Controller
         $index['vehicles'] = $vehicles;
         $index['data'] = $booking;
         $index['udfs'] = unserialize($booking->getMeta('udf'));
-        $index['packages'] = PackagesModel::get();
 
         return view("bookings.edit", $index);
     }
 
     public function destroy(Request $request)
     {
-        // dd($request->get('id'));
         Bookings::find($request->get('id'))->delete();
         IncomeModel::where('income_id', $request->get('id'))->where('income_cat', 1)->delete();
-
         return redirect()->route('bookings.index');
     }
 
     protected function check_booking($pickup, $dropoff, $vehicle)
     {
-
         $chk = DB::table("bookings")
             ->where("status", 0)
             ->where("vehicle_id", $vehicle)
@@ -398,14 +389,11 @@ class BookingsController extends Controller
         } else {
             return true;
         }
-
     }
 
     public function store(BookingRequest $request)
     {
-        dd($request->all());
-        // $xx = $this->check_booking($request->pickup, $request->dropoff, $request->vehicle_id);
-        $xx = 1;
+        $xx = $this->check_booking($request->pickup, $request->dropoff, $request->vehicle_id);
         if ($xx) {
             $id = Bookings::create($request->all())->id;
 
@@ -415,6 +403,13 @@ class BookingsController extends Controller
 
             $booking = Bookings::find($id);
             $booking->booking_option = $request->booking_option;
+            $booking->package_id = $request->package_id;
+            if ($request->package_id) {
+                $package = PackagesModel::find($request->package_id);
+                $booking->vehicle_id = $package->vehicle_id;
+            } else {
+                $booking->vehicle_id = $request->vehicle_id;
+            }
             $booking->user_id = $request->user_id;
             $booking->driver_id = $request->driver_id;
             // $dropoff = Carbon::parse($booking->dropoff);
@@ -484,30 +479,32 @@ class BookingsController extends Controller
                 $test = $webPush->sendNotification($sub, $object);
             }
             foreach ($webPush->flush() as $report) {
-
                 $endpoint = $report->getRequest()->getUri()->__toString();
-
             }
-
         }
-
     }
+
     public function update(Request $request)
     {
         $booking = Bookings::find($request->id);
         $booking->booking_option = $request->booking_option;
-        $booking->vehicle_id = $request->vehicle_id;
+        $booking->package_id = $request->package_id;
+        if ($request->package_id) {
+            $package = PackagesModel::find($request->package_id);
+            $booking->vehicle_id = $package->vehicle_id;
+        } else {
+            $booking->vehicle_id = $request->vehicle_id;
+        }
         $booking->user_id = $request->user_id;
         $booking->driver_id = $request->driver_id;
-        $booking->travellers = $request->travellers;
+        // $booking->travellers = $request->travellers;
         $booking->pickup = $request->pickup;
-        // $booking->dropoff = $request->dropoff;
+        $booking->dropoff = $request->dropoff;
         $booking->pickup_addr = $request->pickup_addr;
         $booking->dest_addr = $request->dest_addr;
         if ($booking->ride_status == null) {
             $booking->ride_status = "Upcoming";
         }
-
         // $dropoff = Carbon::parse($request->dropoff);
         // $pickup = Carbon::parse($request->pickup);
         // $diff = $pickup->diffInMinutes($dropoff);
@@ -517,9 +514,7 @@ class BookingsController extends Controller
         $booking->journey_time = date('H:i:s', strtotime($request->pickup));
         $booking->udf = serialize($request->udf);
         $booking->save();
-
         return redirect()->route('bookings.index');
-
     }
 
     public function prev_address(Request $request)
@@ -530,10 +525,10 @@ class BookingsController extends Controller
         } else {
             $r = array('pickup_addr' => "", 'dest_addr' => "");
         }
-
         return $r;
     }
 
+    // unused
     public function print_bookings()
     {
         if (Auth::user()->user_type == "C") {
@@ -541,13 +536,11 @@ class BookingsController extends Controller
         } else {
             $data['data'] = Bookings::orderBy('id', 'desc')->get();
         }
-
         return view('bookings.print_bookings', $data);
     }
 
     public function booking_notification($id)
     {
-
         $booking = Bookings::find($id);
         $data['success'] = 1;
         $data['key'] = "upcoming_ride_notification";
@@ -556,7 +549,6 @@ class BookingsController extends Controller
         $data['description'] = $booking->pickup_addr . " - " . $booking->dest_addr . " on " . date('d-m-Y', strtotime($booking->pickup));
         $data['timestamp'] = date('Y-m-d H:i:s');
         $data['data'] = array('rideinfo' => array(
-
             'booking_id' => $booking->id,
             'source_address' => $booking->pickup_addr,
             'dest_address' => $booking->dest_addr,
@@ -567,7 +559,7 @@ class BookingsController extends Controller
             'ride_status' => "Upcoming"),
             'user_details' => array('user_id' => $booking->customer_id, 'user_name' => $booking->customer->name, 'mobno' => $booking->customer->getMeta('mobno'), 'profile_pic' => $booking->customer->getMeta('profile_pic')),
         );
-        // dd($data);
+
         $driver = User::find($booking->driver_id);
 
         if ($driver->getMeta('fcm_id') != null && $driver->getMeta('is_available') == 1) {

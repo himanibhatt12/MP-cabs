@@ -321,7 +321,7 @@ class MPCabsCustomersApi extends Controller
             $booking->journey_time = $request->journey_time;
             $booking->total = $request->amount;
             $booking->package_id = $request->package_id;
-            $booking->booking_option = "rental package";
+            $booking->booking_option = "Rental";
             $booking->save();
             $data['success'] = "1";
             $data['message'] = "Package booked successfully!";

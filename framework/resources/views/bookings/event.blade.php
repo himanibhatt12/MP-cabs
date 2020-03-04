@@ -10,12 +10,8 @@
 		@endif
 	</tr>
 	<tr>
-		<th>@lang('fleet.travellers')</th>
-		<td>{{ $booking->travellers}}</td>
-	</tr>
-	<tr>
-		<th>@lang('fleet.note')</th>
-		<td>{{ $booking->note}}</td>
+		<th>@lang('fleet.bookingOption')</th>
+		<td>{{ $booking->booking_option}}</td>
 	</tr>
 	<tr>
 		<th>@lang('fleet.pickup')</th>
@@ -32,5 +28,9 @@
 	<tr>
 		<th>@lang('fleet.dest_addr')</th>
 		<td>{{ $booking->dest_addr}}</td>
+	</tr>
+	<tr>
+		<th>@lang('fleet.note')</th>
+		<td>{{ $booking->note}}</td>
 	</tr>
 </table>

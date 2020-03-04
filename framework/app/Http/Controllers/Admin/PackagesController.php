@@ -6,19 +6,30 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PackageRequest;
 use App\Model\PackagesModel;
 use App\Model\VehicleModel;
+use Auth;
 use Illuminate\Http\Request;
 
 class PackagesController extends Controller
 {
     public function index()
     {
-        $index['data'] = PackagesModel::get();
+        if (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
+            $vehicle_ids = VehicleModel::pluck('id')->toArray();
+        } else {
+            $vehicle_ids = VehicleModel::where('group_id', Auth::user()->group_id)->pluck('id')->toArray();
+        }
+
+        $index['data'] = PackagesModel::whereIn('vehicle_id', $vehicle_ids)->get();
         return view('packages.index', $index);
     }
 
     public function create()
     {
-        $vehicles = VehicleModel::get();
+        if (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
+            $vehicles = VehicleModel::get();
+        } else {
+            $vehicles = VehicleModel::where('user_id', Auth::id())->where('group_id', Auth::user()->group_id)->get();
+        }
         return view('packages.create', compact('vehicles'));
     }
 
@@ -36,7 +47,11 @@ class PackagesController extends Controller
     public function edit($id)
     {
         $data['data'] = PackagesModel::find($id);
-        $data['vehicles'] = VehicleModel::get();
+        if (Auth::user()->group_id == null || Auth::user()->user_type == "S") {
+            $data['vehicles'] = VehicleModel::get();
+        } else {
+            $data['vehicles'] = VehicleModel::where('user_id', Auth::id())->where('group_id', Auth::user()->group_id)->get();
+        }
         return view('packages.edit', $data);
     }
 

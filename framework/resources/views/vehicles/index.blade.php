@@ -41,7 +41,6 @@
               <th>@lang('fleet.color')</th>
               <th>@lang('fleet.licensePlate')</th>
               <th>@lang('fleet.group')</th>
-              <th>@lang('fleet.service')</th>
               <th>@lang('fleet.assigned_driver')</th>
               <th>@lang('fleet.action')</th>
             </tr>
@@ -67,7 +66,7 @@
               <td>
                @if($row->group_id){{$row->group->name}}@endif
               </td>
-              <td>{{($row->in_service)?"YES":"NO"}}</td>
+           
               <td>{{ ($row->getMeta('driver_id')) ? $row->driver->assigned_driver->name : "" }}</td>
               <td>
                 <div class="btn-group">
@@ -107,7 +106,6 @@
               <th>@lang('fleet.color')</th>
               <th>@lang('fleet.licensePlate')</th>
               <th>@lang('fleet.group')</th>
-              <th>@lang('fleet.service')</th>
               <th>@lang('fleet.assigned_driver')</th>
               <th>@lang('fleet.action')</th>
             </tr>

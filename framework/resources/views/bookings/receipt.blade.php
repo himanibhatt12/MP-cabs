@@ -60,7 +60,7 @@
         {{$booking->dest_addr}}
         <br>
         @lang('fleet.dropoff'):
-        <b>{{date('d/m/Y g:i A',strtotime($booking->dropoff))}}</b>
+        <b>@if($booking->dropoff){{date('d/m/Y g:i A',strtotime($booking->dropoff))}}@endif</b>
       </address>
     </div>
   </div>
@@ -70,6 +70,10 @@
       <p class="lead"></p>
       <div class="table-responsive">
         <table class="table">
+          <tr>
+            <th>@lang('fleet.bookingOption'):</th>
+            <td>{{ $booking->booking_option }}</td>
+          </tr>
           @if($booking->vehicle_id != null)
           <tr>
             <th style="width:50%">@lang('fleet.vehicle'):</th>

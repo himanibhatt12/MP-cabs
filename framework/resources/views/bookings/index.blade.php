@@ -35,8 +35,8 @@
                 <th style="width: 10% !important">@lang('fleet.vehicle')</th>
                 <th style="width: 10% !important">@lang('fleet.pickup_addr')</th>
                 <th style="width: 10% !important">@lang('fleet.dropoff_addr')</th>
-                <th style="width: 10% !important">@lang('fleet.journeyDateTime')</th>
-                <th style="width: 10% !important">@lang('fleet.booking_type')</th>
+                <th style="width: 10% !important">@lang('fleet.pickup')</th>
+                <th style="width: 10% !important">@lang('fleet.bookingOption')</th>
                 <th style="width: 10% !important">@lang('fleet.journey_status')</th>
                 <th>@lang('fleet.booking_status')</th>
                 <th style="width: 10% !important">@lang('fleet.amount')</th>
@@ -156,8 +156,8 @@
                 <th>@lang('fleet.vehicle')</th>
                 <th>@lang('fleet.pickup_addr')</th>
                 <th>@lang('fleet.dropoff_addr')</th>
-                <th>@lang('fleet.journeyDateTime')</th>
-                <th>@lang('fleet.booking_type')</th>
+                <th>@lang('fleet.pickup')</th>
+                <th>@lang('fleet.bookingOption')</th>
                 <th>@lang('fleet.journey_status')</th>
                 <th>@lang('fleet.booking_status')</th>
                 <th>@lang('fleet.amount')</th>
@@ -435,15 +435,7 @@
 </script>
 <script type="text/javascript">
   $(document).on("click", ".open-AddBookDialog", function () {
-    // alert($(this).data('base_km_1'));
-    // window.open("route('bookings.index')/?type="+$(this).data('vehicle-type'));
-
-    // const query = new URLSearchParams(window.location.search);
-    // query.append("type", "true");
-
-    // window.location.search = 'type='+$(".fleet #type").val( type );
-
-     var booking_id = $(this).data('booking-id');
+    var booking_id = $(this).data('booking-id');
 
      $(".fleet #bookingId").val( booking_id );
 
@@ -512,13 +504,10 @@
   });
 </script>
 
-<!-- testing total-->
+<!--total-->
 <script type="text/javascript" language="javascript">
 $(".sum").change(function(){
-  // alert($("#base_km_1").val());
-  // alert($('.vtype').data('base_km_1'));
-  // console.log($("#type").val());
-
+  
     var day = $("#day").find(":selected").val();
     if(day == 1){
       var base_km = $("#base_km_1").val();
@@ -639,7 +628,6 @@ $(".sum").change(function(){
             totalchecked+=1;
         }
     });
-    // console.log(length+" "+totalchecked);
     // Checked unchecked checkbox
     if(totalchecked == length){
         $("#chk_all").prop('checked', true);

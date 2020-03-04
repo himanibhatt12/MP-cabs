@@ -21,7 +21,7 @@ class BookingRequest extends FormRequest
     {
         return [
             'customer_id' => 'required',
-            'vehicle_id' => 'required',
+            'vehicle_id' => 'required_if:package_id,',
             'pickup_addr' => 'required',
             'dest_addr' => 'required|different:pickup_addr',
             'package_id' => 'required_if:booking_option,Rental',
@@ -33,6 +33,7 @@ class BookingRequest extends FormRequest
     {
         return [
             'dest_addr.different' => 'Pickup address and drop-off address must be different',
+            'package_id.required_if' => 'You must have to select package, if selected booking option is Rental',
         ];
     }
 }
