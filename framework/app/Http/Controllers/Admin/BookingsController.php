@@ -88,7 +88,7 @@ class BookingsController extends Controller
 
         ]);
         if ($booking->booking_option == "Rental") {
-            $booking->calculateby = $request->calculateBy;
+            $booking->calculateby = $request->calculateby;
             if ($request->calculateby == "km") {
                 $booking->mileage = $request->mileage;
                 $booking->total_kms = $request->mileage;

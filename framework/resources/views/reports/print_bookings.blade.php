@@ -65,7 +65,6 @@
                 <th style="width:10% !important">@lang('fleet.dropoff_addr')</th>
                 <th>@lang('fleet.from_date')</th>
                 <th>@lang('fleet.to_date')</th>
-                <th>@lang('fleet.passengers')</th>
                 <th>@lang('fleet.status')</th>
               </tr>
             </thead>
@@ -82,7 +81,6 @@
                 <td style="width:10% !important">{!! str_replace(",", ",<br>", $row->dest_addr) !!}</td>
                 <td>{{date('d/m/Y g:i A',strtotime($row->pickup))}}</td>
                 <td>{{date('d/m/Y g:i A',strtotime($row->dropoff))}}</td>
-                <td>{{$row->travellers}}</td>
                 <td>@if($row->status == 0)<span style="color:orange;">@lang('fleet.journey_not_ended')</span> @else <span style="color:green;">@lang('fleet.journey_ended')</span> @endif</td>
               </tr>
             @endforeach
