@@ -94,6 +94,7 @@
               <td>{{ $booking->driving_time }} hours</td>
             </tr>
           @else
+            @if($booking->booking_option != "Route")
             <tr>
               <th>@lang('fleet.mileage'):</th>
               <td>{{ $booking->total_kms }} {{ Hyvikk::get('dis_format') }}</td>
@@ -104,6 +105,7 @@
                 {{ ($booking->getMeta('waiting_time'))?$booking->getMeta('waiting_time'):0 }}
               </td>
             </tr>
+            @endif
           @endif
           <tr>
             <th>@lang('fleet.amount'):</th>

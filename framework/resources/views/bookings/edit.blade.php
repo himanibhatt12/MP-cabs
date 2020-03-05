@@ -82,7 +82,8 @@
                 <option value="Local" @if($data->booking_option == "Local")selected @endif>Local</option>
                 <option value="RoundTrip" @if($data->booking_option == "RoundTrip")selected @endif>RoundTrip</option>
                 <option value="Rental" @if($data->booking_option == "Rental") selected @endif>Rental</option>
-                <option value="oneway" @if($data->booking_option == "oneway") selected @endif>One Way</option>                
+                <option value="OneWay" @if($data->booking_option == "OneWay") selected @endif>One Way</option>     
+                <option value="Route" @if($data->booking_option == "Route") selected @endif>Route</option>           
               </select>
             </div>
           </div>
@@ -118,6 +119,19 @@
                 {!! Form::label("package_id",__("fleet.packages"), ["class" => "form-label"]) !!} <select id="package_id" name="package_id" class="form-control" required><option value="" data-vid="">-</option>
                 @foreach ($packages as $package)
                 <option value="{{ $package->id }}" @if($data->package_id == $package->id)selected @endif data-vid="{{ $package->vehicle_id }}">{{$package->vehicle->maker->make."-".$package->vehicle->vehiclemodel->model."-".$package->vehicle->license_plate." (".Hyvikk::get('currency')." ".$package->hourly_rate."/hour - ".Hyvikk::get('currency')." ".$package->km_rate."/km)"}}</option>
+                @endforeach
+                </select>
+              </div>
+            @endif
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 route">
+            @if($data->booking_option == "Route")
+              <div class="form-group">
+                {!! Form::label("route_id",__("fleet.routes"), ["class" => "form-label"]) !!} <select id="route_id" name="route_id" class="form-control" required><option value="">-</option>
+                @foreach ($routes as $route)
+                <option value="{{ $route->id }}" @if($data->route_id == $route->id)selected @endif data-src="{{$route->source}}" data-dest="{{$route->destination}}">{{$route->name}}</option>
                 @endforeach
                 </select>
               </div>
@@ -198,6 +212,7 @@
   $('#vehicle_id').select2({placeholder: "@lang('fleet.selectVehicle')"});
   $('#booking_option').select2({placeholder: "@lang('fleet.bookingOption')"});
   $('#package_id').select2({placeholder:"@lang('fleet.packages')"});
+  $('#route_id').select2({placeholder:"@lang('fleet.routes')"});
   function get_driver(from_date,to_date){
     var id=$("input:hidden[name=id]").val();
     $.ajaxSetup({
@@ -314,11 +329,30 @@
       var vehicle = $('#package_id').find(":selected").data("vid");
       $("#vehicle_id").val(vehicle).change();
       $('#vehicle_id').prop("disabled", true);
+      $('.route').html(""); 
+      $('#pickup_addr').attr("readonly",false);
+      $('#dest_addr').attr("readonly",false);
+    }
+    else if($(this).val() == "Route"){
+      $('.route').append('<div class="form-group">{!! Form::label("route_id",__("fleet.routes"), ["class" => "form-label"]) !!} <select id="route_id" name="route_id" class="form-control" required><option value="">-</option>@foreach($routes as $route) <option value="{{ $route->id }}" @if($data->route_id == $route->id) selected @endif data-src="{{$route->source}}" data-dest="{{$route->destination}}">{{$route->name}}</option> @endforeach</select></div>');
+      $('#route_id').select2({placeholder:"@lang('fleet.routes')"});
+      $('#vehicle_id').prop("disabled", false);    
+      $('.package').html("");
+      $('#pickup_addr').attr("readonly",true);
+      $('#dest_addr').attr("readonly",true);
     }
     else{
       $('.package').html("");
+      $('.route').html("");
       $('#vehicle_id').prop("disabled", false);
+      $('#pickup_addr').attr("readonly",false);
+      $('#dest_addr').attr("readonly",false);
     }    
+  });
+
+  $(document).on('change', '#route_id', function (e) {
+    $('#pickup_addr').val($('#route_id').find(":selected").data("src"));
+    $('#dest_addr').val($('#route_id').find(":selected").data("dest"));
   });
 </script>
 @if(Hyvikk::api('google_api') == "1")

@@ -82,6 +82,7 @@
                 <option value="RoundTrip">RoundTrip</option>
                 <option value="Rental">Rental</option>
                 <option value="OneWay">One Way</option>                
+                <option value="Route">Route</option>                
               </select>
             </div>
           </div>
@@ -113,6 +114,11 @@
         </div>
         <div class="row">
           <div class="col-md-12 package">
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 route">
 
           </div>
         </div>
@@ -436,12 +442,33 @@
       $('#package_id').select2({placeholder:"@lang('fleet.packages')"});
       var vehicle = $('#package_id').find(":selected").data("vid");
       $("#vehicle_id").val(vehicle).change();
-      $('#vehicle_id').prop("disabled", true);    
+      $('#vehicle_id').prop("disabled", true);   
+      $('#pickup_addr').attr("readonly",false);
+      $('#dest_addr').attr("readonly",false);
+      $('.route').html(""); 
+    }
+    else if($(this).val() == "Route"){
+      $('.route').append('<div class="form-group">{!! Form::label("route_id",__("fleet.routes"), ["class" => "form-label"]) !!} <select id="route_id" name="route_id" class="form-control route_id" required><option value="">-</option>@foreach($routes as $route) <option value="{{ $route->id }}" data-src="{{$route->source}}" data-dest="{{$route->destination}}">{{$route->name}}</option> @endforeach</select></div>');
+      $('#route_id').select2({placeholder:"@lang('fleet.routes')"});
+      $('#vehicle_id').prop("disabled", false);    
+      $('.package').html("");
+      $('#pickup_addr').val($('#route_id').find(":selected").data("src"));
+      $('#dest_addr').val($('#route_id').find(":selected").data("dest"));
+      $('#pickup_addr').attr("readonly",true);
+      $('#dest_addr').attr("readonly",true);
     }
     else{
       $('.package').html("");
+      $('.route').html("");
       $('#vehicle_id').prop("disabled", false);
+      $('#pickup_addr').attr("readonly",false);
+      $('#dest_addr').attr("readonly",false);
     }    
+  });
+
+  $(document).on('change', '#route_id', function (e) {
+    $('#pickup_addr').val($('#route_id').find(":selected").data("src"));
+    $('#dest_addr').val($('#route_id').find(":selected").data("dest"));
   });
 
 </script>

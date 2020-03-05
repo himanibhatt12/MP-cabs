@@ -13,10 +13,11 @@ use App\Model\Hyvikk;
 use App\Model\IncCats;
 use App\Model\IncomeModel;
 use App\Model\PackagesModel;
+use App\Model\RouteModel;
 use App\Model\ServiceReminderModel;
 use App\Model\User;
-use App\Model\VehicleModel;
 // use Carbon\Carbon;
+use App\Model\VehicleModel;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -329,6 +330,7 @@ class BookingsController extends Controller
         $user = Auth::user()->group_id;
         $data['customers'] = User::where('user_type', 'C')->get();
         $data['addresses'] = Address::where('customer_id', Auth::user()->id)->get();
+        $data['routes'] = RouteModel::get();
         if ($user == null || Auth::user()->user_type == 'S') {
             $data['packages'] = PackagesModel::get();
             $data['drivers'] = User::whereUser_type("D")->get();
@@ -375,6 +377,7 @@ class BookingsController extends Controller
         $index['vehicles'] = $vehicles;
         $index['data'] = $booking;
         $index['udfs'] = unserialize($booking->getMeta('udf'));
+        $index['routes'] = RouteModel::get();
 
         return view("bookings.edit", $index);
     }
@@ -416,6 +419,7 @@ class BookingsController extends Controller
             $booking = Bookings::find($id);
             $booking->booking_option = $request->booking_option;
             $booking->package_id = $request->package_id;
+            $booking->route_id = $request->route_id;
             if ($request->package_id) {
                 $package = PackagesModel::find($request->package_id);
                 $booking->vehicle_id = $package->vehicle_id;
@@ -501,6 +505,7 @@ class BookingsController extends Controller
         $booking = Bookings::find($request->id);
         $booking->booking_option = $request->booking_option;
         $booking->package_id = $request->package_id;
+        $booking->route_id = $request->route_id;
         if ($request->package_id) {
             $package = PackagesModel::find($request->package_id);
             $booking->vehicle_id = $package->vehicle_id;
