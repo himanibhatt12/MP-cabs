@@ -2,7 +2,7 @@
 
 return [
 
-    'name' => str_replace("_", " ", env('APP_NAME', 'Fleet Manager')),
+    'name' => str_replace("_", " ", env('APP_NAME', 'MP Cabs')),
     'env' => "local",
     'debug' => true,
     'url' => env('APP_URL'),

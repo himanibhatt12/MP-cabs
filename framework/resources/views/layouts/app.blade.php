@@ -1343,11 +1343,11 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>@lang('fleet.copyright') &copy; 2017-{{date("Y")}} <a href="https://hyvikk.com">Hyvikk Solutions</a>.</strong>
-    @lang('fleet.all_rights_reserved')
+    <strong> &copy; {{date("Y")}} All Right Reserved By MP Cab. Powered By <a href="https://hyvikk.com">Hyvikk Solutions</a></strong>
+    {{-- @lang('fleet.all_rights_reserved')
     <div class="float-right d-none d-sm-inline-block">
       <b>@lang('fleet.version')</b> 4.0.1
-    </div>
+    </div> --}}
   </footer>
 
   <!-- Control Sidebar -->

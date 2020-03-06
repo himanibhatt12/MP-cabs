@@ -216,14 +216,14 @@
 <script type="text/javascript">
   $('.view1').click(function(){
     $('#myModal3 .modal-body .myimg').attr( "src","{{ asset('assets/images/'. Hyvikk::get('icon_img') ) }}");
-    $('#myModal3 .modal-body .myimg').removeAttr( "height");
-    $('#myModal3 .modal-body .myimg').removeAttr( "width");
+    // $('#myModal3 .modal-body .myimg').removeAttr( "height");
+    // $('#myModal3 .modal-body .myimg').removeAttr( "width");
   });
 
   $('.view2').click(function(){
     $('#myModal3 .modal-body .myimg').attr( "src","{{ asset('assets/images/'. Hyvikk::get('logo_img') ) }}");
-    $('#myModal3 .modal-body .myimg').attr( "height","140px");
-    $('#myModal3 .modal-body .myimg').attr( "width","300px");
+    // $('#myModal3 .modal-body .myimg').attr( "height","140px");
+    // $('#myModal3 .modal-body .myimg').attr( "width","300px");
   });
 
   $(".add_udf").click(function () {
