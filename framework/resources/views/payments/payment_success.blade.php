@@ -10,7 +10,7 @@
 
 <title>{{ Hyvikk::get('app_name') }}</title>
 
-<link rel="icon" href="{{ asset('favicon.ico') }}" type="image/png">
+<link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/cdn/bootstrap.min.css')}}" />
 <link href="{{ asset('assets/css/cdn/ionicons.min.css')}}" rel="stylesheet">

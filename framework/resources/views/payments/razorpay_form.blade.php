@@ -7,7 +7,7 @@
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{{ Hyvikk::get('app_name') }}</title>
-  <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/png">
+  <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <!-- Ionicons -->
