@@ -1,5 +1,7 @@
 <?php
 return [
+    'package_hours' => 'Package Hours',
+    'package_rate' => 'Package Rate',
     'calculateBy' => 'Calculate By',
     /////////
     'rc_book' => 'RC Book',
@@ -10,8 +12,8 @@ return [
     'journeyDateTime' => 'Journey Date & Time',
     'bookingOption' => 'Booking Option',
     'booking_type' => 'Booking Type',
-    'rate_per_hour' => 'Rate per Hour',
-    'rate_per_km' => 'Rate per km',
+    'rate_per_hour' => 'Extra Rate per Hour',
+    'rate_per_km' => 'Extra Rate per km',
     'packages' => 'Rental Packages',
     'add_package' => 'Add Package',
     'edit_package' => 'Edit Package',

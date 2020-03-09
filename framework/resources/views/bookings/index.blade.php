@@ -118,7 +118,7 @@
                     </a> 
                     @endif
                     @if(Auth::user()->user_type != "C" && $row->ride_status != "Cancelled" && $row->booking_option == "Rental")
-                    <a data-toggle="modal" data-target="#receiptModalRental" class="open-AddBookDialogRental dropdown-item" data-booking-id="{{$row->id}}" data-user-id="{{$row->user_id}}" data-customer-id="{{$row->customer_id}}" data-vehicle-id= "{{$row->vehicle_id}}" data-package-id="{{ $row->package_id }}" data-rate-km="{{$row->package->km_rate}}" data-rate-hour="{{$row->package->hourly_rate}}"><span aria-hidden="true" class="fa fa-file" style="color: #5cb85c;">
+                    <a data-toggle="modal" data-target="#receiptModalRental" class="open-AddBookDialogRental dropdown-item" data-booking-id="{{$row->id}}" data-user-id="{{$row->user_id}}" data-customer-id="{{$row->customer_id}}" data-vehicle-id= "{{$row->vehicle_id}}" data-package-id="{{ $row->package_id }}" data-rate-km="{{$row->package->km_rate}}" data-rate-hour="{{$row->package->hourly_rate}}" data-package-rate="{{$row->package->package_rate}}" data-package-hours="{{$row->package->package_hours}}"><span aria-hidden="true" class="fa fa-file" style="color: #5cb85c;">
                     </span> @lang('fleet.invoice')
                     </a>
                     @endif
@@ -495,13 +495,34 @@
                 </div>
               </div>
             </div>
-           
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.package_hours')  </label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-clock-o"></i></span></div>
+                  {!! Form::number('package_hours',0,['class'=>'form-control','readonly','id'=>'package_hours']) !!}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label">@lang('fleet.package_rate')  </label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                  <span class="input-group-text">{{ Hyvikk::get('currency') }}</span></div>
+                  {!! Form::number('package_rate',0,['class'=>'form-control','readonly','id'=>'package_rate']) !!}
+                </div>
+              </div>
+            </div>           
           </div>
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label class="form-label">@lang('fleet.trip_mileage') ({{Hyvikk::get('dis_format')}}) or Trip Timing (hours)</label>
-                {!! Form::number('mileage',null,['class'=>'form-control sum2','min'=>1,'id'=>'mileage1']) !!}
+                <label class="form-label">Extra @lang('fleet.trip_mileage') ({{Hyvikk::get('dis_format')}}) or Extra Trip Timing (hours)</label>
+                {!! Form::number('mileage',null,['class'=>'form-control sum2','min'=>0,'id'=>'mileage1']) !!}
               </div>
             </div>
           </div>
@@ -602,7 +623,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="form-label">@lang('fleet.incomeType')</label>
-                <select id="income_type1" name="income_type" class="form-control vehicles" required>
+                <select id="income_type2" name="income_type" class="form-control vehicles" required>
                   <option value="">@lang('fleet.incomeType')</option>
                   @foreach($types as $type)
                   <option value="{{ $type->id }}">{{$type->name}}</option>
@@ -707,35 +728,35 @@
   $(document).on("click", ".open-AddBookDialog", function () {
     var booking_id = $(this).data('booking-id');
 
-     $(".fleet #bookingId").val( booking_id );
+    $(".fleet #bookingId").val( booking_id );
 
-     var user_id = $(this).data('user-id');
-     $(".fleet #userId").val( user_id );
+    var user_id = $(this).data('user-id');
+    $(".fleet #userId").val( user_id );
 
-     var customer_id = $(this).data('customer-id');
-     $(".fleet #customerId").val( customer_id );
+    var customer_id = $(this).data('customer-id');
+    $(".fleet #customerId").val( customer_id );
 
-     var vehicle_id = $(this).data('vehicle-id');
-     $(".fleet #vehicleId").val( vehicle_id );
+    var vehicle_id = $(this).data('vehicle-id');
+    $(".fleet #vehicleId").val( vehicle_id );
 
-     var type = $(this).data('vehicle-type');
-     $(".fleet #type").val( type );
+    var type = $(this).data('vehicle-type');
+    $(".fleet #type").val( type );
 
-     $(".fleet #mileage").val($(this).data('base-mileage'));
-     $(".fleet #total").val($(this).data('base-fare'));
+    $(".fleet #mileage").val($(this).data('base-mileage'));
+    $(".fleet #total").val($(this).data('base-fare'));
 
-     $(".fleet #base_km_1").val($(this).data('base_km_1'));
-     $(".fleet #base_fare_1").val($(this).data('base_fare_1'));
-     $(".fleet #wait_time_1").val($(this).data('wait_time_1'));
-     $(".fleet #std_fare_1").val($(this).data('std_fare_1'));
-     $(".fleet #base_km_2").val($(this).data('base_km_2'));
-     $(".fleet #base_fare_2").val($(this).data('base_fare_2'));
-     $(".fleet #wait_time_2").val($(this).data('wait_time_2'));
-     $(".fleet #std_fare_2").val($(this).data('std_fare_2'));
-     $(".fleet #base_km_3").val($(this).data('base_km_3'));
-     $(".fleet #base_fare_3").val($(this).data('base_fare_3'));
-     $(".fleet #wait_time_3").val($(this).data('wait_time_3'));
-     $(".fleet #std_fare_3").val($(this).data('std_fare_3'));
+    $(".fleet #base_km_1").val($(this).data('base_km_1'));
+    $(".fleet #base_fare_1").val($(this).data('base_fare_1'));
+    $(".fleet #wait_time_1").val($(this).data('wait_time_1'));
+    $(".fleet #std_fare_1").val($(this).data('std_fare_1'));
+    $(".fleet #base_km_2").val($(this).data('base_km_2'));
+    $(".fleet #base_fare_2").val($(this).data('base_fare_2'));
+    $(".fleet #wait_time_2").val($(this).data('wait_time_2'));
+    $(".fleet #std_fare_2").val($(this).data('std_fare_2'));
+    $(".fleet #base_km_3").val($(this).data('base_km_3'));
+    $(".fleet #base_fare_3").val($(this).data('base_fare_3'));
+    $(".fleet #wait_time_3").val($(this).data('wait_time_3'));
+    $(".fleet #std_fare_3").val($(this).data('std_fare_3'));
 
     var total = $("#total").val();
 
@@ -754,27 +775,34 @@
   });
 
   $(document).on("click", ".open-AddBookDialogRental", function () {
+    $(".fleet #mileage1").attr('readonly',true);
+
     var booking_id = $(this).data('booking-id');
+    $(".fleet #bookingId1").val( booking_id );
 
-     $(".fleet #bookingId1").val( booking_id );
+    var user_id = $(this).data('user-id');
+    $(".fleet #userId1").val( user_id );
 
-     var user_id = $(this).data('user-id');
-     $(".fleet #userId1").val( user_id );
+    var customer_id = $(this).data('customer-id');
+    $(".fleet #customerId1").val( customer_id );
+ 
+    var vehicle_id = $(this).data('vehicle-id');
+    $(".fleet #vehicleId1").val( vehicle_id );
 
-     var customer_id = $(this).data('customer-id');
-     $(".fleet #customerId1").val( customer_id );
+    var rate_km = $(this).data('rate-km');
+    $(".fleet #rate_per_km").val( rate_km );
 
-     var vehicle_id = $(this).data('vehicle-id');
-     $(".fleet #vehicleId1").val( vehicle_id );
+    var rate_hour = $(this).data('rate-hour');
+    $(".fleet #rate_per_hour").val( rate_hour );
 
-     var rate_km = $(this).data('rate-km');
-     $(".fleet #rate_per_km").val( rate_km );
+    var package_hours = $(this).data('package-hours');
+    $(".fleet #package_hours").val( package_hours );
 
-     var rate_hour = $(this).data('rate-hour');
-     $(".fleet #rate_per_hour").val( rate_hour );
+    var package_rate = $(this).data('package-rate');
+    $(".fleet #package_rate").val( package_rate );
 
-     $(".fleet #total1").val(0);
-     $(".fleet #mileage1").val(0);
+    $(".fleet #total1").val(package_rate);
+    $(".fleet #mileage1").val(0);
 
     var total = $("#total1").val();
 
@@ -787,26 +815,25 @@
     }
     // console.log(total_tax_val);
     $('#total_tax_charge1').val(total_tax_val);
-    $('#total_tax_charge_rs1').val(0);
-    $('#tax_total1').val(0);
-
+    $('#total_tax_charge_rs1').val((Number(total)*Number(total_tax_val))/100);
+    $('#tax_total1').val(Number(total) + (Number(total)*Number(total_tax_val))/100);
   });
 
   $(document).on("click", ".open-AddBookDialogRoute", function () {
     var booking_id = $(this).data('booking-id');
 
-     $(".fleet #bookingId2").val( booking_id );
+    $(".fleet #bookingId2").val( booking_id );
 
-     var user_id = $(this).data('user-id');
-     $(".fleet #userId2").val( user_id );
+    var user_id = $(this).data('user-id');
+    $(".fleet #userId2").val( user_id );
 
-     var customer_id = $(this).data('customer-id');
-     $(".fleet #customerId2").val( customer_id );
+    var customer_id = $(this).data('customer-id');
+    $(".fleet #customerId2").val( customer_id );
 
-     var vehicle_id = $(this).data('vehicle-id');
-     $(".fleet #vehicleId2").val( vehicle_id );
+    var vehicle_id = $(this).data('vehicle-id');
+    $(".fleet #vehicleId2").val( vehicle_id );
 
-     $(".fleet #total2").val($(this).data('cost'));
+    $(".fleet #total2").val($(this).data('cost'));
 
     var total = $("#total2").val();
 
@@ -839,7 +866,7 @@
     $("#journey_btn").attr("href","{{ url('admin/bookings/complete/') }}/"+id);
   });
 
-    $('#cancelBooking').on('show.bs.modal', function(e) {
+  $('#cancelBooking').on('show.bs.modal', function(e) {
     var id = e.relatedTarget.dataset.id;
     $("#cancel_id").val(id);
   });
@@ -847,63 +874,62 @@
 
 <!--total-->
 <script type="text/javascript" language="javascript">
-$(".sum").change(function(){
-  
-    var day = $("#day").find(":selected").val();
-    if(day == 1){
-      var base_km = $("#base_km_1").val();
-      var base_fare = $("#base_fare_1").val();
-      var wait_time = $("#wait_time_1").val();
-      var std_fare = $("#std_fare_1").val();
-        if(parseInt($("#mileage").val()) <= parseInt(base_km)){
-          var total = parseInt(base_fare) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
+  $(".sum").change(function(){    
+      var day = $("#day").find(":selected").val();
+      if(day == 1){
+        var base_km = $("#base_km_1").val();
+        var base_fare = $("#base_fare_1").val();
+        var wait_time = $("#wait_time_1").val();
+        var std_fare = $("#std_fare_1").val();
+          if(parseInt($("#mileage").val()) <= parseInt(base_km)){
+            var total = parseInt(base_fare) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
+          }
+          else{
+            var sum = parseInt($("#mileage").val() - base_km) * parseInt(std_fare);
+            var total = parseInt(base_fare) + parseInt(sum) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
         }
-        else{
-          var sum = parseInt($("#mileage").val() - base_km) * parseInt(std_fare);
-      var total = parseInt(base_fare) + parseInt(sum) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
       }
-    }
 
-    if(day == 2){
-      var base_km = $("#base_km_2").val();
-      var base_fare = $("#base_fare_2").val();
-      var wait_time = $("#wait_time_2").val();
-      var std_fare = $("#std_fare_2").val();
-        if(parseInt($("#mileage").val()) <= parseInt(base_km)){
-          var total = parseInt(base_fare) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
+      if(day == 2){
+        var base_km = $("#base_km_2").val();
+        var base_fare = $("#base_fare_2").val();
+        var wait_time = $("#wait_time_2").val();
+        var std_fare = $("#std_fare_2").val();
+          if(parseInt($("#mileage").val()) <= parseInt(base_km)){
+            var total = parseInt(base_fare) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
+          }
+          else{
+            var sum = parseInt($("#mileage").val() - base_km) * parseInt(std_fare);
+            var total = parseInt(base_fare) + parseInt(sum) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
         }
-        else{
-          var sum = parseInt($("#mileage").val() - base_km) * parseInt(std_fare);
-      var total = parseInt(base_fare) + parseInt(sum) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
       }
-    }
 
-    if(day == 3){
-      var base_km = $("#base_km_3").val();
-      var base_fare = $("#base_fare_3").val();
-      var wait_time =$("#wait_time_3").val();
-      var std_fare = $("#std_fare_3").val();
-        if(parseInt($("#mileage").val()) <= parseInt(base_km)){
-          var total = parseInt(base_fare) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
+      if(day == 3){
+        var base_km = $("#base_km_3").val();
+        var base_fare = $("#base_fare_3").val();
+        var wait_time =$("#wait_time_3").val();
+        var std_fare = $("#std_fare_3").val();
+          if(parseInt($("#mileage").val()) <= parseInt(base_km)){
+            var total = parseInt(base_fare) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
+          }
+          else{
+            var sum = parseInt($("#mileage").val() - base_km) * parseInt(std_fare);
+            var total = parseInt(base_fare) + parseInt(sum) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
         }
-        else{
-          var sum = parseInt($("#mileage").val() - base_km) * parseInt(std_fare);
-      var total = parseInt(base_fare) + parseInt(sum) + (parseInt($("#waiting_time").val()) * parseInt(wait_time));
       }
-    }
-    $("#total").val(total);
-    var i;
-    var tax_size = '{{ $no_of_tax }}';
-    var total_tax_val = 0;
-    for (i = 0; i < tax_size; i++) {
-      total_tax_val = Number(total_tax_val) + Number($('.tax_'+i).val());
-      // console.log($('.tax_'+i).val());
-    }
-    // console.log(total_tax_val);
-    $('#total_tax_charge').val(total_tax_val);
-    $('#total_tax_charge_rs').val((Number(total)*Number(total_tax_val))/100);
-    $('#tax_total').val(Number(total) + (Number(total)*Number(total_tax_val))/100);
-});
+      $("#total").val(total);
+      var i;
+      var tax_size = '{{ $no_of_tax }}';
+      var total_tax_val = 0;
+      for (i = 0; i < tax_size; i++) {
+        total_tax_val = Number(total_tax_val) + Number($('.tax_'+i).val());
+        // console.log($('.tax_'+i).val());
+      }
+      // console.log(total_tax_val);
+      $('#total_tax_charge').val(total_tax_val);
+      $('#total_tax_charge_rs').val((Number(total)*Number(total_tax_val))/100);
+      $('#tax_total').val(Number(total) + (Number(total)*Number(total_tax_val))/100);
+  });
 
   $("#total").change(function(){
     var total = $("#total").val();
@@ -979,13 +1005,15 @@ $(".sum").change(function(){
 </script>
 <script>
   $('.sum2').change(function(){
+    // console.log($('#total1').val());
+    $(".fleet #mileage1").attr('readonly',false);
     if($('#calculateBy').val() == "km"){
       var rate = $('#rate_per_km').val();
     }
     if($('#calculateBy').val() == "hour"){
       var rate = $('#rate_per_hour').val();
     }
-   var total = Number($("#mileage1").val())*Number(rate);
+   var total = Number($("#package_rate").val())+ (Number($("#mileage1").val())*Number(rate));
     var i;
     var tax_size = '{{ $no_of_tax }}';
     var total_tax_val = 0;
@@ -995,8 +1023,8 @@ $(".sum").change(function(){
     }
     $('#total_tax_charge1').val(total_tax_val);
     $('#total_tax_charge_rs1').val((Number(total)*Number(total_tax_val))/100);
-    $('#total1').val(Number(rate)*Number($('#mileage1').val()));
-    $('#tax_total1').val(Number(rate)*Number($('#mileage1').val()) + Number($('#total_tax_charge_rs1').val()));
+    $('#total1').val(Number($("#package_rate").val()) + (Number(rate)*Number($('#mileage1').val())));
+    $('#tax_total1').val(Number(total) + Number($('#total_tax_charge_rs1').val()));
     
   });
 

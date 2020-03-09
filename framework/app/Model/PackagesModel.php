@@ -10,7 +10,7 @@ class PackagesModel extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $table = 'packages';
-    protected $fillable = ['vehicle_id', 'hourly_rate', 'km_rate'];
+    protected $fillable = ['vehicle_id', 'hourly_rate', 'km_rate', 'package_hours', 'package_rate'];
 
     public function vehicle()
     {

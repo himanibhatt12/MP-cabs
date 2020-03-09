@@ -8,10 +8,10 @@
         </li>
 
         <li class="nav-item"><a href="#acq-tab" data-toggle="tab" class="nav-link custom_padding"> @lang('fleet.purchase_info') <i class="fa"></i></a>
-        </li> --}}
+        </li> 
 
         <li class="nav-item"><a href="#reviews" data-toggle="tab" class="nav-link custom_padding"> @lang('fleet.vehicle_inspection') <i class="fa"></i></a>
-        </li>
+        </li> --}}
     </ul>
 
 	<div class="tab-content">

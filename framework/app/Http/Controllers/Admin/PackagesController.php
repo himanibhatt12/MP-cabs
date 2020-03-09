@@ -39,6 +39,8 @@ class PackagesController extends Controller
             'vehicle_id' => $request->vehicle_id,
             'hourly_rate' => $request->hourly_rate,
             'km_rate' => $request->km_rate,
+            'package_hours' => $request->package_hours,
+            'package_rate' => $request->package_rate,
         ]);
 
         return redirect()->route('packages.index');
@@ -62,8 +64,9 @@ class PackagesController extends Controller
             'vehicle_id' => $request->vehicle_id,
             'hourly_rate' => $request->hourly_rate,
             'km_rate' => $request->km_rate,
+            'package_hours' => $request->package_hours,
+            'package_rate' => $request->package_rate,
         ]);
-
         return redirect()->route('packages.index');
     }
 

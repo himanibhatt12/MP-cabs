@@ -34,7 +34,32 @@
                 @endforeach
               </select>
             </div>
-         
+          </div>  
+        </div>
+        <div class="row">  
+          <div class="col-md-6">
+            <div class="form-group">
+              {!! Form::label('package_hours', __('fleet.package_hours'), ['class' => 'form-label']) !!}              
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-clock-o"></i></span></div>
+                {!! Form::number('package_hours', null,['class' => 'form-control','required','step'=>'0.01']) !!}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              {!! Form::label('package_rate', __('fleet.package_rate'), ['class' => 'form-label']) !!}              
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <span class="input-group-text">{{Hyvikk::get('currency')}}</span></div>
+                {!! Form::number('package_rate', null,['class' => 'form-control','required','step'=>'0.01']) !!}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">  
+          <div class="col-md-6">
             <div class="form-group">
               {!! Form::label('hourly_rate', __('fleet.rate_per_hour'), ['class' => 'form-label']) !!}              
               <div class="input-group mb-3">
@@ -43,7 +68,8 @@
                 {!! Form::number('hourly_rate', null,['class' => 'form-control','required','step'=>'0.01']) !!}
               </div>
             </div>
-          
+          </div>
+          <div class="col-md-6">
             <div class="form-group">
               {!! Form::label('km_rate', __('fleet.rate_per_km'), ['class' => 'form-label']) !!}              
               <div class="input-group mb-3">

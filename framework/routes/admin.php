@@ -148,7 +148,7 @@ Route::namespace ('Admin')->group(function () {
         Route::get('vehicle/event/{id}', 'VehiclesController@view_event')->middleware('userpermission:1');
         Route::post('assignDriver', 'VehiclesController@assign_driver');
         Route::resource('/work_order', 'WorkOrdersController')->middleware('userpermission:7');
-        Route::resource('/vendors', 'VendorController')->middleware('userpermission:6');
+        Route::resource('/vendors', 'VendorController');
         Route::resource('/fuel', 'FuelController')->middleware('userpermission:5');
         Route::resource('/drivers', 'DriversController')->middleware('userpermission:0');
         Route::resource('/parts', 'PartsController')->middleware('userpermission:14');

@@ -119,26 +119,25 @@
                 <td>{{ $booking->driver->name }}</td>
               </tr>
               @endif
-              @if($booking->booking_option == "Rental" && $booking->calculateby == "hour")
-                <tr>
-                  <th>@lang('fleet.travel_time'):</th>
-                  <td>{{ $booking->driving_time }} hours</td>
-                </tr>
-              @else
-                @if($booking->booking_option != "Route")
-                <tr>
-                  <th>@lang('fleet.mileage'):</th>
-                  <td>{{ $booking->total_kms }} {{ Hyvikk::get('dis_format') }}</td>
-                </tr>
-                <tr>
-                  <th>@lang('fleet.waitingtime'):</th>
-                  <td>
-                    {{ ($booking->getMeta('waiting_time'))?$booking->getMeta('waiting_time'):0 }}
-                  </td>
-                </tr>
-                @endif
+              <tr>
+                <th>@lang('fleet.travel_time'):</th>
+                <td>@if($booking->driving_time) {{ $booking->driving_time }} hours @endif</td>
+              </tr>
+              
+              @if($booking->booking_option != "Route")
+              <tr>
+                <th>@lang('fleet.mileage'):</th>
+                <td>{{ $booking->total_kms }} {{ Hyvikk::get('dis_format') }}</td>
+              </tr>
+              <tr>
+                <th>@lang('fleet.waitingtime'):</th>
+                <td>
+                  {{ ($booking->getMeta('waiting_time'))?$booking->getMeta('waiting_time'):0 }}
+                </td>
+              </tr>
               @endif
-                <tr>
+              
+              <tr>
                 <th>@lang('fleet.amount'):</th>
                 <td>{{ Hyvikk::get('currency') }} {{ $booking->total }} </td>
               </tr>

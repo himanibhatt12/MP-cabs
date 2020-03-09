@@ -1,6 +1,4 @@
 <?php
-use App\Model\BookingPaymentsModel;
-// use Hyvikk;
 Route::get('/', 'FrontendController@index')->middleware('IsInstalled');
 
 // if (Hyvikk::frontend('enable') == 1) {
@@ -40,13 +38,13 @@ Route::get('sample-payment', function () {
 
 // Route::post('redirect-payment', 'PaymentController@redirect_payment');
 
-Route::get('all-data', function () {
-    $bookings = BookingPaymentsModel::latest()->get();
-    foreach ($bookings as $booking) {
-        if ($booking->payment_details != null) {
-            echo "<pre>";
-            print_r(json_decode($booking->payment_details));
-            echo "---------------------------------------------<br>";
-        }
-    }
-});
+// Route::get('all-data', function () {
+//     $bookings = BookingPaymentsModel::latest()->get();
+//     foreach ($bookings as $booking) {
+//         if ($booking->payment_details != null) {
+//             echo "<pre>";
+//             print_r(json_decode($booking->payment_details));
+//             echo "---------------------------------------------<br>";
+//         }
+//     }
+// });

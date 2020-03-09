@@ -32,6 +32,8 @@ class PackageRequest extends FormRequest
             'vehicle_id' => 'required',
             'hourly_rate' => 'required|numeric',
             'km_rate' => 'required|numeric',
+            'package_hours' => 'required|numeric',
+            'package_rate' => 'required|numeric',
         ];
     }
 }

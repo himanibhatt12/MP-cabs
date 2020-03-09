@@ -86,16 +86,19 @@ class BookingsController extends Controller
             'tax_total' => $request->get('tax_total'),
             'total_tax_percent' => $request->get('total_tax_charge'),
             'total_tax_charge_rs' => $request->total_tax_charge_rs,
-
         ]);
         if ($booking->booking_option == "Rental") {
             $booking->calculateby = $request->calculateby;
             if ($request->calculateby == "km") {
                 $booking->mileage = $request->mileage;
                 $booking->total_kms = $request->mileage;
+                $booking->driving_time = $request->package_hours;
+                $booking->approx_timetoreach = $request->package_hours;
             } else {
-                $booking->driving_time = $request->mileage;
-                $booking->approx_timetoreach = $request->mileage;
+                $booking->mileage = 0;
+                $booking->total_kms = 0;
+                $booking->driving_time = $request->package_hours + $request->mileage;
+                $booking->approx_timetoreach = $request->package_hours + $request->mileage;
             }
         }
         $booking->save();
@@ -106,7 +109,7 @@ class BookingsController extends Controller
             "amount" => $request->get('tax_total'),
             "user_id" => $request->get("customerId"),
             "date" => $request->get('date'),
-            "mileage" => $request->get("mileage"),
+            "mileage" => $booking->mileage,
             "income_cat" => $request->get("income_type"),
             "income_id" => $booking->id,
             "tax_percent" => $request->get('total_tax_charge'),

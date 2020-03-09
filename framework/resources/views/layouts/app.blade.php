@@ -72,7 +72,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Notifications Dropdown Menu -->
-          @if(Auth::user()->user_type=="S")
+          {{-- @if(Auth::user()->user_type=="S")
             @php($r = 0)
             @php($i = 0)
             @php($l = 0)
@@ -92,42 +92,42 @@
               @php($s++)
               @endif
             @endforeach
-          @php($n = $r + $i +$l + $d + $s)
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fa fa-bell-o"></i>
-          <span class="badge badge-warning navbar-badge">@if($n>0) {{$n}} @endif</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          @if($n>0)<span class="dropdown-item dropdown-header"> {{$n}} Notifications </span>
-          <div class="dropdown-divider"></div>@endif
-          <a href="{{url('admin/vehicle_notification',['type'=>'renew-registrations'])}}" class="dropdown-item">
-            <i class="fa fa-id-card-o mr-2"></i> @lang('fleet.renew_registration')
-            <span class="float-right text-muted text-sm">@if($r>0) {{$r}} @endif</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="{{url('admin/vehicle_notification',['type'=>'renew-insurance'])}}" class="dropdown-item">
-            <i class="fa fa-file-text mr-2"></i> @lang('fleet.renew_insurance')
-            <span class="float-right text-muted text-sm">@if($i>0) {{$i}} @endif</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="{{url('admin/vehicle_notification',['type'=>'renew-licence'])}}" class="dropdown-item">
-            <i class="fa fa-file-o mr-2"></i> @lang('fleet.renew_licence')
-            <span class="float-right text-muted text-sm">@if($l>0) {{$l}} @endif</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="{{url('admin/driver_notification',['type'=>'renew-driving-licence'])}}" class="dropdown-item">
-            <i class="fa fa-file-text-o mr-2"></i> @lang('fleet.renew_driving_licence')
-            <span class="float-right text-muted text-sm">@if($d>0) {{$d}} @endif</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="{{url('admin/reminder',['type'=>'service-reminder'])}}" class="dropdown-item">
-            <i class="fa fa-clock-o mr-2"></i> @lang('fleet.serviceReminders')
-            <span class="float-right text-muted text-sm">@if($s>0) {{$s}} @endif</span>
-          </a>
-        </div>
-      </li>
-      @endif
+            @php($n = $r + $i +$l + $d + $s)
+            <li class="nav-item dropdown">
+              <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fa fa-bell-o"></i>
+                <span class="badge badge-warning navbar-badge">@if($n>0) {{$n}} @endif</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                @if($n>0)<span class="dropdown-item dropdown-header"> {{$n}} Notifications </span>
+                <div class="dropdown-divider"></div>@endif
+                <a href="{{url('admin/vehicle_notification',['type'=>'renew-registrations'])}}" class="dropdown-item">
+                  <i class="fa fa-id-card-o mr-2"></i> @lang('fleet.renew_registration')
+                  <span class="float-right text-muted text-sm">@if($r>0) {{$r}} @endif</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{{url('admin/vehicle_notification',['type'=>'renew-insurance'])}}" class="dropdown-item">
+                  <i class="fa fa-file-text mr-2"></i> @lang('fleet.renew_insurance')
+                  <span class="float-right text-muted text-sm">@if($i>0) {{$i}} @endif</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{{url('admin/vehicle_notification',['type'=>'renew-licence'])}}" class="dropdown-item">
+                  <i class="fa fa-file-o mr-2"></i> @lang('fleet.renew_licence')
+                  <span class="float-right text-muted text-sm">@if($l>0) {{$l}} @endif</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{{url('admin/driver_notification',['type'=>'renew-driving-licence'])}}" class="dropdown-item">
+                  <i class="fa fa-file-text-o mr-2"></i> @lang('fleet.renew_driving_licence')
+                  <span class="float-right text-muted text-sm">@if($d>0) {{$d}} @endif</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{{url('admin/reminder',['type'=>'service-reminder'])}}" class="dropdown-item">
+                  <i class="fa fa-clock-o mr-2"></i> @lang('fleet.serviceReminders')
+                  <span class="float-right text-muted text-sm">@if($s>0) {{$s}} @endif</span>
+                </a>
+              </div>
+            </li>
+          @endif --}}
     <!-- logout -->
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -366,7 +366,7 @@
             @php($class="")
             @php($active="")
             @endif
-          <li class="nav-item has-treeview {{$class}}">
+          {{-- <li class="nav-item has-treeview {{$class}}">
             <a href="#" class="nav-link {{$active}}">
               <i class="nav-icon fa fa-sticky-note"></i>
               <p>
@@ -388,7 +388,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> --}}
             @if(Request::is('admin/driver-reports*'))
             @php($class="menu-open")
             @php($active="active")
@@ -670,12 +670,12 @@
                   <p>@lang('fleet.manageGroup')</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ url('admin/vehicle-reviews')}}" class="nav-link @if((Request::is('admin/vehicle-reviews*')) || (Request::is('admin/view-vehicle-review*')) || (Request::is('admin/vehicle-review*'))) active @endif">
                   <i class="fa fa-briefcase nav-icon"></i>
                   <p>@lang('fleet.vehicle_inspection')</p>
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li> @endif
 
@@ -702,12 +702,12 @@
                   <p>@lang('fleet.manage_income')</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ route('expense.index')}}" class="nav-link @if((Request::is('admin/expense')) || (Request::is('admin/expense_records'))) active @endif">
                   <i class="fa fa-newspaper-o nav-icon"></i>
                   <p>@lang('fleet.manage_expense')</p>
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li> @endif
 
@@ -743,13 +743,13 @@
                   @lang('menu.manage_bookings')</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ route('booking-quotation.index')}}" class="nav-link @if(Request::is('admin/booking-quotation*')) active @endif">
                   <i class="fa fa-quote-left nav-icon"></i>
                   <p>
                   @lang('fleet.booking_quotes')</p>
                 </a>
-              </li>
+              </li> --}}
               <li class="nav-item">
                 <a href="{{ route('bookings.calendar')}}" class="nav-link @if(Request::is('admin/bookings_calendar')) active @endif">
                   <i class="fa fa-calendar nav-icon"></i>
@@ -778,24 +778,24 @@
             </a>
             <ul class="nav nav-treeview">
               @if(in_array(2,$modules))
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ url('admin/reports/income') }}" class="nav-link @if(Request::is('admin/reports/income')) active @endif">
                   <i class="fa fa-credit-card nav-icon"></i>
                   <p> @lang('fleet.income') @lang('fleet.report')</p>
                 </a>
-              </li>
+              </li> --}}
               <li class="nav-item">
                 <a href="{{ url('admin/reports/expense') }}" class="nav-link @if(Request::is('admin/reports/expense')) active @endif">
                   <i class="fa fa-money nav-icon"></i>
                   <p> @lang('fleet.expense') @lang('fleet.report')</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ route('reports.delinquent') }}" class="nav-link @if(Request::is('admin/reports/delinquent')) active @endif">
                   <i class="fa fa-file-text nav-icon"></i>
                   <p> @lang('menu.deliquentReport')</p>
                 </a>
-              </li>
+              </li> --}}
               <li class="nav-item">
                 <a href="{{ route('reports.monthly') }}" class="nav-link @if(Request::is('admin/reports/monthly')) active @endif">
                   <i class="fa fa-calendar nav-icon"></i>
@@ -820,12 +820,12 @@
               </li>
               @endif
               @if(in_array(5,$modules))
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ route('reports.fuel') }}" class="nav-link @if(Request::is('admin/reports/fuel')) active @endif">
                   <i class="fa fa-truck nav-icon"></i>
                   <p>@lang('fleet.fuelReport')</p>
                 </a>
-              </li>
+              </li> --}}
               @endif
               @if(in_array(0,$modules))
               <li class="nav-item">
@@ -868,7 +868,7 @@
             @php($class="")
             @php($active="")
             @endif
-          @if(in_array(5,$modules)) <li class="nav-item has-treeview {{$class}}">
+          {{-- @if(in_array(5,$modules)) <li class="nav-item has-treeview {{$class}}">
             <a href="#" class="nav-link {{$active}}">
               <i class="nav-icon fa fa-filter"></i>
               <p>
@@ -890,7 +890,7 @@
                 </a>
               </li>
             </ul>
-          </li> @endif
+          </li> @endif --}}
 
             @if(Request::is('admin/vendors*'))
             @php($class="menu-open")
@@ -933,7 +933,7 @@
             @php($class="")
             @php($active="")
             @endif
-           @if(in_array(14,$modules))<li class="nav-item has-treeview {{$class}}">
+           {{-- @if(in_array(14,$modules))<li class="nav-item has-treeview {{$class}}">
             <a href="#" class="nav-link {{$active}}">
               <i class="nav-icon fa fa-gears"></i>
               <p>
@@ -961,7 +961,7 @@
                 </a>
               </li>
             </ul>
-          </li>@endif
+          </li>@endif --}}
 
             @if(Request::is('admin/work_order*') || Request::is('admin/parts-used*'))
             @php($class="menu-open")
@@ -971,7 +971,7 @@
             @php($class="")
             @php($active="")
             @endif
-          @if(in_array(7,$modules)) <li class="nav-item has-treeview {{$class}}">
+          {{-- @if(in_array(7,$modules)) <li class="nav-item has-treeview {{$class}}">
             <a href="#" class="nav-link {{$active}}">
               <i class="nav-icon fa fa-shopping-cart"></i>
               <p>
@@ -999,7 +999,7 @@
                 </a>
               </li>
             </ul>
-          </li> @endif
+          </li> @endif --}}
 
             @if(Request::is('admin/notes*'))
             @php($class="menu-open")
@@ -1009,7 +1009,7 @@
             @php($class="")
             @php($active="")
             @endif
-          @if(in_array(8,$modules)) <li class="nav-item has-treeview {{$class}}">
+          {{-- @if(in_array(8,$modules)) <li class="nav-item has-treeview {{$class}}">
             <a href="#" class="nav-link {{$active}}">
               <i class="nav-icon fa fa-sticky-note"></i>
               <p>
@@ -1031,7 +1031,7 @@
                 </a>
               </li>
             </ul>
-          </li> @endif
+          </li> @endif --}}
 
             @if((Request::is('admin/service-reminder*')) || (Request::is('admin/service-item*')))
             @php($class="menu-open")
@@ -1041,7 +1041,7 @@
             @php($class="")
             @php($active="")
             @endif
-          @if(in_array(9,$modules)) <li class="nav-item has-treeview {{$class}}">
+          {{-- @if(in_array(9,$modules)) <li class="nav-item has-treeview {{$class}}">
             <a href="#" class="nav-link {{$active}}">
               <i class="nav-icon fa fa-clock-o"></i>
               <p>
@@ -1069,7 +1069,7 @@
                 </a>
               </li>
             </ul>
-          </li> @endif
+          </li> @endif --}}
             @if(Request::is('admin/testimonials*'))
             @php($class="menu-open")
             @php($active="active")
@@ -1231,12 +1231,12 @@
                   <p>@lang('menu.expenseCategories')</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ route('incomecategories.index') }}" class="nav-link @if(Request::is('admin/incomecategories*')) active @endif">
                   <i class="fa fa-tasks nav-icon"></i>
                   <p>@lang('menu.incomeCategories')</p>
                 </a>
-              </li>
+              </li> --}}
               <li class="nav-item">
                 <a href="{{ url('admin/frontend-settings')}}" class="nav-link @if(Request::is('admin/frontend-settings')) active @endif">
                   <i class="fa fa-address-card nav-icon"></i>
@@ -1293,7 +1293,7 @@
           </li>
           @endif
 
-          @if(in_array(13,$modules)) <li class="nav-item">
+          {{-- @if(in_array(13,$modules)) <li class="nav-item">
             <a href="https://goo.gl/forms/PtzIirmT3ap8m5dY2" target="_blank" class="nav-link">
               <i class="nav-icon fa fa-comment"></i>
               <p>
@@ -1301,7 +1301,7 @@
                 <span class="right badge badge-danger"></span>
               </p>
             </a>
-          </li> @endif
+          </li> @endif --}}
           <!-- sidebar menus for office-admin and super-admin -->
         </ul>
       </nav>

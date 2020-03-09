@@ -30,6 +30,8 @@
               </th>
               <th>#</th>
               <th>@lang('fleet.vehicle')</th>
+              <th>@lang('fleet.package_hours')</th>
+              <th>@lang('fleet.package_rate')</th>
               <th>@lang('fleet.rate_per_hour')</th>
               <th>@lang('fleet.rate_per_km')</th>
               <th>@lang('fleet.action')</th>
@@ -44,6 +46,12 @@
               <td>{{$row->id}}</td>
               <td>
                 {{$row->vehicle->maker->make}} - {{$row->vehicle->vehiclemodel->model}} - {{$row->vehicle->license_plate}}
+              </td>
+              <td>
+                {{ $row->package_hours }} hours
+              </td>
+              <td>
+                {{Hyvikk::get('currency')." ". $row->package_rate }}
               </td>
               <td>
                 {{ Hyvikk::get('currency') ." ". $row->hourly_rate  }}
@@ -82,6 +90,8 @@
               </th>
               <th>#</th>
               <th>@lang('fleet.vehicle')</th>
+              <th>@lang('fleet.package_hours')</th>
+              <th>@lang('fleet.package_rate')</th>
               <th>@lang('fleet.rate_per_hour')</th>
               <th>@lang('fleet.rate_per_km')</th>
               <th>@lang('fleet.action')</th>
