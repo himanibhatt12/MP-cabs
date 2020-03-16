@@ -90,14 +90,14 @@
           @endif          
           <tr>
             <th>@lang('fleet.travel_time'):</th>
-            <td>@if($booking->driving_time) {{ $booking->driving_time }} hours @endif</td>
+            <td>@if($booking->driving_time) {{ $booking->driving_time }} @endif</td>
           </tr>
         
-          @if($booking->booking_option != "Route")
           <tr>
             <th>@lang('fleet.mileage'):</th>
             <td>{{ $booking->total_kms }} {{ Hyvikk::get('dis_format') }}</td>
           </tr>
+          @if($booking->booking_option != "Route")
           <tr>
             <th>@lang('fleet.waitingtime'):</th>
             <td>

@@ -33,6 +33,8 @@
               <th>@lang('fleet.source')</th>
               <th>@lang('fleet.destination')</th>
               <th>@lang('fleet.cost')</th>
+              <th>@lang('fleet.timing')</th>
+              <th>@lang('fleet.distance')</th>
               <th>@lang('fleet.service_ratings')</th>
               <th>@lang('fleet.action')</th>
             </tr>
@@ -54,6 +56,8 @@
               <td>{{ $row->source }}</td>
               <td>{{$row->destination}}</td>
               <td>{{Hyvikk::get('currency')." ". $row->cost}}</td>
+              <td>{{ $row->timing }}</td>
+              <td>{{ $row->distance }} km</td>
               <td> {{ $row->ratings }} </td>
               <td>
               <div class="btn-group">
@@ -87,6 +91,8 @@
               <th>@lang('fleet.source')</th>
               <th>@lang('fleet.destination')</th>
               <th>@lang('fleet.cost')</th>
+              <th>@lang('fleet.timing')</th>
+              <th>@lang('fleet.distance')</th>
               <th>@lang('fleet.service_ratings')</th>
               <th>@lang('fleet.action')</th>
             </tr>

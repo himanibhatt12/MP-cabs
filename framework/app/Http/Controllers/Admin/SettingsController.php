@@ -78,7 +78,7 @@ class SettingsController extends Controller
         FrontendModel::where('key_name', 'facebook')->update(['key_value' => $request->facebook]);
         FrontendModel::where('key_name', 'twitter')->update(['key_value' => $request->twitter]);
         FrontendModel::where('key_name', 'instagram')->update(['key_value' => $request->instagram]);
-        FrontendModel::where('key_name', 'linkedin')->update(['key_value' => $request->linkedin]);
+        FrontendModel::where('key_name', 'pinterest')->update(['key_value' => $request->pinterest]);
         FrontendModel::where('key_name', 'faq_link')->update(['key_value' => $request->faq_link]);
         FrontendModel::where('key_name', 'cities')->update(['key_value' => $request->cities]);
         FrontendModel::where('key_name', 'vehicles')->update(['key_value' => $request->vehicles]);

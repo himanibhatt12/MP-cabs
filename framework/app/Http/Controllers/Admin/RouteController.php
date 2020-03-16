@@ -29,6 +29,8 @@ class RouteController extends Controller
             'destination' => $request->destination,
             'cost' => $request->cost,
             'ratings' => $request->ratings,
+            'timing' => $request->timing,
+            'distance' => $request->distance,
         ]);
         $file = $request->file('image');
 
@@ -57,6 +59,8 @@ class RouteController extends Controller
         $data->destination = $request->destination;
         $data->cost = $request->cost;
         $data->ratings = $request->ratings;
+        $data->timing = $request->timing;
+        $data->distance = $request->distance;
         $data->save();
         $file = $request->file('image');
 

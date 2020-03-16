@@ -8,6 +8,7 @@ Route::namespace ('Api')->middleware(['throttle'])->group(function () {
     Route::post('/forgot-password', 'UsersApi@forgot_password');
     Route::post('/get-settings', 'DriversApi@get_settings');
     Route::get('/codes', 'DriversApi@get_code');
+    Route::post('register-driver', 'MPCabsDriversApi@register_driver');
 });
 
 Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function () {
@@ -40,24 +41,24 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('apply-coupon', 'MPCabsCustomersApi@apply_coupon');
     Route::post('packages', 'MPCabsCustomersApi@packages');
     Route::post('fare-calculation', 'MPCabsCustomersApi@fare_calculation');
-    Route::post('booking-history/{id}', 'MPCabsCustomersApi@booking_history');
+    Route::post('booking-history', 'MPCabsCustomersApi@booking_history');
     Route::post('routes', 'MPCabsCustomersApi@routes');
     Route::post('new-booking', 'MPCabsCustomersApi@new_booking'); // incomplete
     Route::post('send-ride-request', 'MPCabsCustomersApi@request_offer'); // incomplete
     Route::post('book-package', 'MPCabsCustomersApi@book_package'); // incomplete
     Route::post('book-route', 'MPCabsCustomersApi@book_route'); // incomplete
-    Route::post('booking-details/{id}', 'MPCabsCustomersApi@booking_details');
+    Route::post('booking-details', 'MPCabsCustomersApi@booking_details');
 
     // drivers APIs
     Route::post('add-offer', 'MPCabsDriversApi@add_offer'); // with new vehicle incomplete
     Route::post('edit-offer', 'MPCabsDriversApi@edit_offer'); //
     Route::post('customer-offer-requests', 'MPCabsDriversApi@customer_offer_requests');
-    Route::post('my-offers/{id}', 'MPCabsDriversApi@my_offers');
+    Route::post('my-offers', 'MPCabsDriversApi@my_offers');
     Route::post('vehicle-make', 'MPCabsDriversApi@make');
     Route::post('vehicle-colors', 'MPCabsDriversApi@colors');
-    Route::post('vehicle-model/{id}', 'MPCabsDriversApi@models');
+    Route::post('vehicle-model', 'MPCabsDriversApi@models');
     Route::post('vehicle-types', 'MPCabsDriversApi@types');
-    Route::post('register-driver', 'MPCabsDriversApi@register_driver'); //**
-    Route::post('delete-ride-offer/{id}', 'MPCabsDriversApi@delete_offer');
+    Route::post('delete-ride-offer', 'MPCabsDriversApi@delete_offer');
     Route::post('vehicles', 'MPCabsDriversApi@vehicles');
+    Route::post('register-vehicle', 'MPCabsDriversApi@register_vehicle');
 });

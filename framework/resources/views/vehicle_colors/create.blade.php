@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('extra_css')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css" rel="stylesheet"> --}}
+<link rel="stylesheet" href="{{ asset('assets/colorpicker/la_color_picker.css') }}">
+<style>
+  .inp {
+    border: 1px solid #949494;
+    border-radius: 3px;
+    padding: 10px;
+    font-size: 110%;
+  }
+</style>
 @endsection
 @section("breadcrumb")
 <li class="breadcrumb-item">{{ link_to_route('vehicle-color.index', __('fleet.vehicle_colors'))}}</li>
@@ -28,13 +37,17 @@
         {!! Form::open(['route' => 'vehicle-color.store','method'=>'post']) !!}
         <div class="row">
           <div class="form-group col-md-6">
-            {!! Form::label('color', __('fleet.color'), ['class' => 'form-label']) !!}
+            {!! Form::label('color', "Color Name", ['class' => 'form-label']) !!}
             {!! Form::text('color', null,['class' => 'form-control','required','id'=>'color1']) !!}
           </div>
-          {{-- <div class="form-group col-md-6">
-            {!! Form::label('color', __('fleet.color'), ['class' => 'form-label']) !!}
-            {!! Form::text('color', null,['class' => 'form-control colorpicker','required','id'=>'color2']) !!}
-          </div> --}}
+        </div>
+        <div class="row">  
+          <div class="form-group col-md-6">
+            {!! Form::label('color', "Color Code", ['class' => 'form-label']) !!}
+            <br>
+            <input type="text" class="inp" id="colorPicker" name="code">
+            <div class="palette" id="colorPalette"></div>
+          </div>
         </div>
       </div>
       <div class="card-footer">
@@ -51,13 +64,17 @@
 @endsection
 
 @section('script')
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.min.js"></script>
+<script src="{{ asset('assets/colorpicker/la_color_picker.js') }}"></script>
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.min.js"></script> --}}
   <script>
-    // $('#color1').on('keyup',function(){
+    // $('.colorpicker').colorpicker({
+    //   format: 'hex'
+    // });
+    // console.log($('.colorpicker').colorpicker());
+    // $('#color1').on('change',function(){
       // alert($('#color1').val());
       // $('#color2').val($('#color1').val());
       // $('.colorpicker').colorpicker();
-      // console.log($('.colorpicker').colorpicker());
     // });
   </script>
 @endsection

@@ -68,6 +68,26 @@
               {!! Form::text('ratings', $data->ratings,['class' => 'form-control','required']) !!}
             </div>
           </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              {!! Form::label('timing', __('fleet.timing'), ['class' => 'form-label']) !!}              
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-clock-o"></i></span></div>
+                {!! Form::text('timing', $data->timing,['class' => 'form-control','required']) !!}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              {!! Form::label('distance', __('fleet.distance'), ['class' => 'form-label']) !!}
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <span class="input-group-text">km</span></div>
+              {!! Form::text('distance', $data->distance,['class' => 'form-control','required']) !!}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="card-footer">

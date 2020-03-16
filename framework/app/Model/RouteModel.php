@@ -10,5 +10,5 @@ class RouteModel extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $table = 'routes';
-    protected $fillable = ['name', 'source', 'destination', 'image', 'cost', 'ratings'];
+    protected $fillable = ['name', 'source', 'destination', 'image', 'cost', 'ratings', 'timing', 'distance'];
 }

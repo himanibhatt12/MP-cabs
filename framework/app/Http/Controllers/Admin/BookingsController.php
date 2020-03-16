@@ -92,14 +92,20 @@ class BookingsController extends Controller
             if ($request->calculateby == "km") {
                 $booking->mileage = $request->mileage;
                 $booking->total_kms = $request->mileage;
-                $booking->driving_time = $request->package_hours;
-                $booking->approx_timetoreach = $request->package_hours;
+                $booking->driving_time = $request->package_hours . "hr";
+                $booking->approx_timetoreach = $request->package_hours . "hr";
             } else {
                 $booking->mileage = 0;
                 $booking->total_kms = 0;
-                $booking->driving_time = $request->package_hours + $request->mileage;
-                $booking->approx_timetoreach = $request->package_hours + $request->mileage;
+                $booking->driving_time = $request->package_hours + $request->mileage . "hr";
+                $booking->approx_timetoreach = $request->package_hours + $request->mileage . "hr";
             }
+        }
+        if ($booking->booking_option == "Route") {
+            $booking->mileage = $booking->route->distance;
+            $booking->total_kms = $booking->route->distance;
+            $booking->driving_time = $booking->route->timing;
+            $booking->approx_timetoreach = $booking->route->timing;
         }
         $booking->save();
 

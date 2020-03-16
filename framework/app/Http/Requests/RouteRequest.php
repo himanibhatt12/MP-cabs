@@ -29,7 +29,13 @@ class RouteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'source' => 'required',
+            'destination' => 'required',
+            'cost' => 'required|numeric',
+            'ratings' => 'required|numeric',
+            'timing' => 'required',
+            'distance' => 'required|numeric',
         ];
     }
 }

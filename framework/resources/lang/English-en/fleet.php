@@ -1,5 +1,8 @@
 <?php
 return [
+    'pinterest' => 'Pinterest',
+    'timing' => 'Timing',
+    'distance' => 'Distance',
     'package_hours' => 'Package Hours',
     'package_rate' => 'Package Rate',
     'calculateBy' => 'Calculate By',

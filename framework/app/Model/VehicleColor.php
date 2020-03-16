@@ -10,5 +10,5 @@ class VehicleColor extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $table = 'vehicle_colors';
-    protected $fillable = ['color'];
+    protected $fillable = ['color', 'code'];
 }

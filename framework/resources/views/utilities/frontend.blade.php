@@ -238,12 +238,12 @@ input:checked + .slider:before {
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              {!! Form::label('linkedin',__('fleet.linkedin'), ['class' => 'form-label']) !!}
+              {!! Form::label('pinterest',__('fleet.pinterest'), ['class' => 'form-label']) !!}
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-linkedin"></i></span>
+                  <span class="input-group-text"><i class="fa fa-pinterest"></i></span>
                 </div>
-                {!! Form::text('linkedin', Hyvikk::frontend('linkedin') ,['class' => 'form-control']) !!}
+                {!! Form::text('pinterest', Hyvikk::frontend('pinterest') ,['class' => 'form-control']) !!}
               </div>
             </div>
           </div>

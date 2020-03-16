@@ -1,0 +1,1699 @@
+@extends('frontend.layouts.app')
+@section('between_css')
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/theme.css') }}" /> 
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/slick-slider.css') }}" /> 
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/revolutionslider/settings.css') }}" /> 
+@endsection
+@section('css')
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/components/classic_datepicker.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/custom.css') }}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+@endsection
+@section('content')
+    <!-- HOME SECTION -->
+    <!-- CONTENT -->
+    <section id="home">
+      <div
+        id="rev_slider_348_1_wrapper"
+        class="rev_slider_wrapper fullscreen-container"
+        data-alias="overexposure"
+        data-source="gallery"
+        style="background:transparent;padding:0px;"
+      >
+        <!-- START REVOLUTION SLIDER 5.4.3.3 fullscreen mode -->
+        <div
+          id="rev_slider_348_1"
+          class="rev_slider fullscreenbanner"
+          style="display:none;"
+          data-version="5.4.3.3"
+        >
+          <ul>
+            <!-- SLIDE -->
+            <li
+              data-index="rs-968"
+              data-transition="brightnesscross"
+              data-slotamount="default"
+              data-hideafterloop="0"
+              data-hideslideonmobile="off"
+              data-easein="default"
+              data-easeout="default"
+              data-masterspeed="default"
+              data-thumb="images/rs/img/exp_bg1-100x50.jpg"
+              data-rotate="0"
+              data-saveperformance="off"
+              data-title="Slide"
+              data-param1=""
+              data-param2=""
+              data-param3=""
+              data-param4=""
+              data-param5=""
+              data-param6=""
+              data-param7=""
+              data-param8=""
+              data-param9=""
+              data-param10=""
+              data-description=""
+            >
+              <!-- MAIN IMAGE -->
+              <img
+                src="{{ asset('assets/frontend/images/mpcabs-home.jpg') }}"
+                alt=""
+                data-lazyload="{{ asset('assets/frontend/images/rs/img/exp_bg1.jpg') }}"
+                data-bgposition="center center"
+                data-bgfit="cover"
+                data-bgrepeat="no-repeat"
+                data-bgparallax="6"
+                class="rev-slidebg"
+                data-no-retina
+              />
+              <!-- LAYERS -->
+              <div
+                id="rrzm_968"
+                class="rev_row_zone rev_row_zone_middle"
+                style="z-index: 11;"
+              >
+                <!-- LAYER NR. 1 -->
+                <div
+                  class="tp-caption rs-parallaxlevel-4"
+                  id="slide-968-layer-7"
+                  data-x="['left','left','left','left']"
+                  data-hoffset="['100','100','100','100']"
+                  data-y="['middle','middle','middle','middle']"
+                  data-voffset="['0','0','0','0']"
+                  data-width="none"
+                  data-height="none"
+                  data-whitespace="nowrap"
+                  data-type="row"
+                  data-columnbreak="2"
+                  data-responsive_offset="on"
+                  data-responsive="off"
+                  data-frames='[{"delay":10,"speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                  data-margintop="[0,0,0,0]"
+                  data-marginright="[0,0,0,0]"
+                  data-marginbottom="[0,0,0,0]"
+                  data-marginleft="[0,0,0,0]"
+                  data-textAlign="['inherit','inherit','inherit','inherit']"
+                  data-paddingtop="[0,0,0,0]"
+                  data-paddingright="[50,50,30,30]"
+                  data-paddingbottom="[200,200,200,200]"
+                  data-paddingleft="[50,50,30,30]"
+                  style="z-index: 5; white-space: nowrap; font-size: 20px; line-height: 22px; font-weight: 400; color: #ffffff; letter-spacing: 0px;"
+                >
+                  <!-- LAYER NR. 2 -->
+                  <div
+                    class="tp-caption  "
+                    id="slide-968-layer-8"
+                    data-x="['left','left','left','left']"
+                    data-hoffset="['100','100','100','100']"
+                    data-y="['top','top','top','top']"
+                    data-voffset="['100','100','100','100']"
+                    data-width="none"
+                    data-height="none"
+                    data-whitespace="nowrap"
+                    data-type="column"
+                    data-responsive_offset="on"
+                    data-responsive="off"
+                    data-frames='[{"delay":"+0","speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                    data-columnwidth="50%"
+                    data-verticalalign="top"
+                    data-margintop="[0,0,0,0]"
+                    data-marginright="[0,0,0,0]"
+                    data-marginbottom="[0,0,0,0]"
+                    data-marginleft="[0,0,0,0]"
+                    data-textAlign="['inherit','inherit','inherit','inherit']"
+                    data-paddingtop="[0,0,0,0]"
+                    data-paddingright="[20,20,0,0]"
+                    data-paddingbottom="[0,0,0,0]"
+                    data-paddingleft="[0,0,0,0]"
+                    style="z-index: 6; width: 100%;"
+                  >
+                    <!-- LAYER NR. 3 -->
+                    <div
+                      class="tp-caption tp-resizeme"
+                      id="slide-968-layer-2"
+                      data-x="['left','left','left','left']"
+                      data-hoffset="['0','53','53','42']"
+                      data-y="['top','top','top','top']"
+                      data-voffset="['0','123','123','122']"
+                      data-letterspacing="['5','5','5','3']"
+                      data-width="none"
+                      data-height="none"
+                      data-whitespace="['normal','nowrap','nowrap','nowrap']"
+                      data-type="text"
+                      data-responsive_offset="on"
+                      data-frames='[{"delay":"+990","speed":2000,"frame":"0","from":"opacity:0;","color":"#e5452b","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","color":"transparent","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                      data-margintop="[0,0,0,0]"
+                      data-marginright="[0,0,0,0]"
+                      data-marginbottom="[24,28,21,21]"
+                      data-marginleft="[0,0,0,0]"
+                      data-textAlign="['inherit','inherit','inherit','inherit']"
+                      data-paddingtop="[0,0,0,0]"
+                      data-paddingright="[0,0,0,0]"
+                      data-paddingbottom="[0,0,0,0]"
+                      data-paddingleft="[0,0,0,0]"
+                      style="z-index: 7; white-space: normal; font-size: 17px; line-height: 24px; font-weight: 400; color: #ffffff; letter-spacing: 5px; display: block;;text-transform:uppercase;text-shadow:0px 0px 3px rgba(0,0,0,0.5)"
+                    >
+                      Welcome to
+                    </div>
+
+                    <!-- LAYER NR. 4 -->
+                    <div
+                      class="tp-caption   tp-resizeme"
+                      id="slide-968-layer-1"
+                      data-x="['left','left','left','left']"
+                      data-hoffset="['0','50','50','40']"
+                      data-y="['top','top','top','top']"
+                      data-voffset="['0','170','170','167']"
+                      data-fontsize="['60','50','40','40']"
+                      data-lineheight="['90','75','60','60']"
+                      data-letterspacing="['15','15','10','7']"
+                      data-width="['100%','100%','561','401']"
+                      data-height="none"
+                      data-whitespace="normal"
+                      data-type="text"
+                      data-responsive_offset="on"
+                      data-frames='[{"delay":"+290","split":"chars","splitdelay":0.05000000000000000277555756156289135105907917022705078125,"speed":2000,"split_direction":"forward","frame":"0","from":"opacity:0;","color":"#000000","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","color":"transparent","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                      data-margintop="[0,0,0,0]"
+                      data-marginright="[0,0,0,0]"
+                      data-marginbottom="[30,31,26,26]"
+                      data-marginleft="[0,0,0,0]"
+                      data-textAlign="['inherit','inherit','inherit','inherit']"
+                      data-paddingtop="[0,0,0,0]"
+                      data-paddingright="[0,0,0,0]"
+                      data-paddingbottom="[0,0,0,0]"
+                      data-paddingleft="[0,0,0,0]"
+                      style="z-index: 8; min-width: 100%px; max-width: 100%px; white-space: normal; font-size: 60px; line-height: 90px; font-weight: 400; color: #ffffff; letter-spacing: 15px; display: block;;text-transform:uppercase;text-shadow:0px 0px 5px rgba(0,0,0,0.5)"
+                    >
+                      MP CAB
+                    </div>
+
+                    <!-- LAYER NR. 4 -->
+                    <div
+                      class="tp-caption   tp-resizeme"
+                      id="slide-968-layer-1"
+                      data-x="['left','left','left','left']"
+                      data-hoffset="['0','50','50','40']"
+                      data-y="['top','top','top','top']"
+                      data-voffset="['0','170','170','167']"
+                      data-fontsize="['60','50','40','40']"
+                      data-lineheight="['90','75','60','60']"
+                      data-letterspacing="['15','15','10','7']"
+                      data-width="['100%','100%','561','401']"
+                      data-height="none"
+                      data-whitespace="normal"
+                      data-type="text"
+                      data-responsive_offset="on"
+                      data-frames='[{"delay":"+290","split":"chars","splitdelay":0.05000000000000000277555756156289135105907917022705078125,"speed":2000,"split_direction":"forward","frame":"0","from":"opacity:0;","color":"#000000","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","color":"transparent","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                      data-margintop="[0,0,0,0]"
+                      data-marginright="[0,0,0,0]"
+                      data-marginbottom="[30,31,26,26]"
+                      data-marginleft="[0,0,0,0]"
+                      data-textAlign="['inherit','inherit','inherit','inherit']"
+                      data-paddingtop="[0,0,0,0]"
+                      data-paddingright="[0,0,0,0]"
+                      data-paddingbottom="[0,0,0,0]"
+                      data-paddingleft="[0,0,0,0]"
+                      style="z-index: 8; min-width: 100%px; max-width: 100%px; white-space: normal; font-size: 60px; line-height: 90px; font-weight: 400; color: #FFC108; letter-spacing: 15px; display: block;;text-transform:uppercase;text-shadow:0px 0px 5px rgba(0,0,0,0.5)"
+                    >
+                      Your Travel Partner
+                    </div>
+
+                    <!-- LAYER NR. 5 -->
+                    <div
+                      class="tp-caption tp-shape tp-shapewrapper  tp-resizeme"
+                      id="slide-968-layer-3"
+                      data-x="['left','left','left','left']"
+                      data-hoffset="['0','53','53','42']"
+                      data-y="['top','top','top','top']"
+                      data-voffset="['0','440','498','373']"
+                      data-width="50"
+                      data-height="1"
+                      data-whitespace="['normal','nowrap','nowrap','nowrap']"
+                      data-type="shape"
+                      data-responsive_offset="on"
+                      data-frames='[{"delay":"+1490","speed":2000,"frame":"0","from":"sX:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                      data-margintop="[0,0,0,0]"
+                      data-marginright="[0,0,0,0]"
+                      data-marginbottom="[0,0,0,0]"
+                      data-marginleft="[0,0,0,0]"
+                      data-textAlign="['inherit','inherit','inherit','inherit']"
+                      data-paddingtop="[0,0,0,0]"
+                      data-paddingright="[0,0,0,0]"
+                      data-paddingbottom="[0,0,0,0]"
+                      data-paddingleft="[0,0,0,0]"
+                      style="z-index: 9; display: block;background-color:rgb(0,0,0);"
+                    ></div>
+                  </div>
+
+                  <!-- LAYER NR. 6 -->
+                  <div
+                    class="tp-caption  "
+                    id="slide-968-layer-9"
+                    data-x="['left','left','left','left']"
+                    data-hoffset="['100','100','100','100']"
+                    data-y="['top','top','top','top']"
+                    data-voffset="['100','100','100','100']"
+                    data-width="none"
+                    data-height="none"
+                    data-whitespace="nowrap"
+                    data-type="column"
+                    data-responsive_offset="on"
+                    data-responsive="off"
+                    data-frames='[{"delay":"+0","speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                    data-columnwidth="50%"
+                    data-verticalalign="top"
+                    data-margintop="[0,0,0,0]"
+                    data-marginright="[0,0,0,0]"
+                    data-marginbottom="[0,0,0,0]"
+                    data-marginleft="[0,0,0,0]"
+                    data-textAlign="['inherit','inherit','inherit','inherit']"
+                    data-paddingtop="[0,0,0,0]"
+                    data-paddingright="[0,0,0,0]"
+                    data-paddingbottom="[0,0,0,0]"
+                    data-paddingleft="[0,0,0,0]"
+                    style="z-index: 10; width: 100%;"
+                  ></div>
+                </div>
+
+                <!-- LAYER NR. 7 -->
+                <div
+                  class="tp-caption   rs-parallaxlevel-5"
+                  id="slide-968-layer-10"
+                  data-x="['left','left','left','left']"
+                  data-hoffset="['100','100','100','100']"
+                  data-y="['middle','middle','middle','middle']"
+                  data-voffset="['0','0','0','0']"
+                  data-width="none"
+                  data-height="none"
+                  data-whitespace="nowrap"
+                  data-type="row"
+                  data-columnbreak="2"
+                  data-responsive_offset="on"
+                  data-responsive="off"
+                  data-frames='[{"delay":10,"speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                  data-margintop="[0,0,0,0]"
+                  data-marginright="[0,0,0,0]"
+                  data-marginbottom="[0,0,0,0]"
+                  data-marginleft="[0,0,0,0]"
+                  data-textAlign="['inherit','inherit','inherit','inherit']"
+                  data-paddingtop="[0,0,0,0]"
+                  data-paddingright="[50,50,30,30]"
+                  data-paddingbottom="[0,0,0,0]"
+                  data-paddingleft="[50,50,30,30]"
+                  style="z-index: 11; white-space: nowrap; font-size: 20px; line-height: 22px; font-weight: 400; color: #ffffff; letter-spacing: 0px;"
+                >
+                  <!-- LAYER NR. 8 -->
+                  <div
+                    class="tp-caption  "
+                    id="slide-968-layer-11"
+                    data-x="['left','left','left','left']"
+                    data-hoffset="['100','100','100','100']"
+                    data-y="['top','top','top','top']"
+                    data-voffset="['100','100','100','100']"
+                    data-width="none"
+                    data-height="none"
+                    data-whitespace="nowrap"
+                    data-type="column"
+                    data-responsive_offset="on"
+                    data-responsive="off"
+                    data-frames='[{"delay":"+0","speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                    data-columnwidth="50%"
+                    data-verticalalign="top"
+                    data-margintop="[0,0,0,0]"
+                    data-marginright="[0,0,0,0]"
+                    data-marginbottom="[0,0,0,0]"
+                    data-marginleft="[0,0,0,0]"
+                    data-textAlign="['inherit','inherit','inherit','inherit']"
+                    data-paddingtop="[0,0,0,0]"
+                    data-paddingright="[0,0,0,0]"
+                    data-paddingbottom="[0,0,0,0]"
+                    data-paddingleft="[0,0,0,0]"
+                    style="z-index: 12; width: 100%;"
+                  ></div>
+
+                  <!-- LAYER NR. 9 -->
+                  <div
+                    class="tp-caption  "
+                    id="slide-968-layer-12"
+                    data-x="['left','left','left','left']"
+                    data-hoffset="['100','100','100','100']"
+                    data-y="['top','top','top','top']"
+                    data-voffset="['100','100','100','100']"
+                    data-width="none"
+                    data-height="none"
+                    data-whitespace="nowrap"
+                    data-type="column"
+                    data-responsive_offset="on"
+                    data-responsive="off"
+                    data-frames='[{"delay":"+0","speed":300,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                    data-columnwidth="50%"
+                    data-verticalalign="top"
+                    data-margintop="[0,0,0,0]"
+                    data-marginright="[0,0,0,0]"
+                    data-marginbottom="[0,0,0,0]"
+                    data-marginleft="[0,0,0,0]"
+                    data-textAlign="['inherit','inherit','inherit','inherit']"
+                    data-paddingtop="[0,0,0,0]"
+                    data-paddingright="[0,0,0,0]"
+                    data-paddingbottom="[0,0,0,0]"
+                    data-paddingleft="[20,20,0,0]"
+                    style="z-index: 13; width: 100%;"
+                  >
+                    <!-- LAYER NR. 10 -->
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div
+            class="tp-bannertimer tp-bottom"
+            style="height: 10px; background: rgb(229,69,43);"
+          ></div>
+        </div>
+      </div>
+      <!-- END REVOLUTION SLIDER -->
+    </section>
+    <!-- END CONTENT -->
+    <!-- END HOME SECTION -->
+
+    <!-- test -->
+    <!-- ABOUT -->
+    <section id="about" class="about">
+      <!-- Slider -->
+      <div class="container slider-for-boxes p-5">
+        <div class="row">
+          <h1 class="page-title w-100">
+            Book a Cab
+          </h1>
+          <div class="col-sm-12 xxs-mt"></div>
+          <!-- Divider -->
+
+          <div class="t-center">
+            <!-- Nav tabs -->
+            <ul
+              class="nav nav-tabs creative-tabs border-1 font-12 bold-title uppercase border-gray solid  clearfix"
+              style="border-width: 1px;"
+            >
+              <li>
+                <a
+                  href="#tab1m"
+                  aria-controls="tab1m"
+                  role="tab"
+                  data-toggle="tab"
+                  class="lg-btn slow click-effect bg-colored nav-link active show no-radius"
+                  aria-selected="false"
+                >
+                  Local
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#tab2m"
+                  aria-controls="tab2m"
+                  role="tab"
+                  data-toggle="tab"
+                  class="lg-btn slow click-effect bg-colored nav-link no-radius"
+                  aria-selected="true"
+                  ><span
+                    class="ink clicked"
+                    style="height: 118.524px; width: 118.524px; top: -50.3752px; left: 7.77427px;"
+                  ></span>
+                  One way
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#tab3m"
+                  aria-controls="tab3m"
+                  role="tab"
+                  data-toggle="tab"
+                  class="lg-btn slow click-effect  bg-colored nav-link no-radius"
+                >
+                  Round Trip
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#tab4m"
+                  aria-controls="tab4m"
+                  role="tab"
+                  data-toggle="tab"
+                  class="lg-btn slow click-effect bg-colored nav-link no-radius"
+                >
+                  Rental
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="container no-px">
+            <!-- Tab panes -->
+            <div class="tab-content slide-effect t-left xxs-mt">
+              <!-- Tab -->
+              <div id="tab1m" role="tabpanel" class="tab-pane active show">
+                <div class="tab-container pt-3">
+                  <div class="container no-px">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <input
+                          type="text"
+                          placeholder="Enter pickup address"
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="text"
+                          placeholder="Enter drop address"
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="number"
+                          placeholder="Enter no of persons"
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <select
+                          name="subject"
+                          form="contact_form"
+                          required=""
+                          class="classic_form big border-gray7-hover no-radius"
+                        >
+                          <option value="">Select a vehicle</option>
+                          <option value="Developer">Option 1</option>
+                          <option value="Designer">Option 2</option>
+                          <option value="Photographer">Option 3</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-8">
+                        <input
+                          placeholder="Other things we should know about. "
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <a
+                          href="#"
+                          class="stay lg-btn bg-colored white qdr-hover bold"
+                          ><span class="qdr-details"
+                            >Book cab Now !</span
+                          ></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Tab -->
+              <div id="tab2m" role="tabpanel" class="tab-pane">
+                <div class="tab-container pt-3">
+                  <div class="container no-px">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <input
+                          type="text"
+                          placeholder="Enter pickup address"
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="text"
+                          placeholder="Enter drop address"
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="number"
+                          placeholder="Enter no of persons"
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <select
+                          name="subject"
+                          form="contact_form"
+                          required=""
+                          class="classic_form big border-gray7-hover no-radius"
+                        >
+                          <option value="">Select a vehicle</option>
+                          <option value="Developer">Option 1</option>
+                          <option value="Designer">Option 2</option>
+                          <option value="Photographer">Option 3</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="date"
+                          name="example"
+                          id="example"
+                          required
+                          placeholder="Journey date"
+                          class="classic_form big border-gray7-hover no-radius datepicker"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="date"
+                          name="example"
+                          id="example"
+                          required
+                          placeholder="Journey time"
+                          class="classic_form big border-gray7-hover no-radius timepicker"
+                        />
+                      </div>
+                      <div class="col-sm-12">
+                        <input
+                          placeholder="Other things we should know about. "
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <a
+                          href="#"
+                          class="stay lg-btn bg-colored white qdr-hover bold"
+                          ><span class="qdr-details"
+                            >Book cab Now !</span
+                          ></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Tab -->
+              <div id="tab3m" role="tabpanel" class="tab-pane">
+                <div class="tab-container pt-3">
+                  <div class="container no-px">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <input
+                          type="text"
+                          placeholder="Enter pickup address"
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="text"
+                          placeholder="Enter drop address"
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="number"
+                          placeholder="Enter no of persons"
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <select
+                          name="subject"
+                          form="contact_form"
+                          required=""
+                          class="classic_form big border-gray7-hover no-radius"
+                        >
+                          <option value="">Select a vehicle</option>
+                          <option value="Developer">Option 1</option>
+                          <option value="Designer">Option 2</option>
+                          <option value="Photographer">Option 3</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="date"
+                          name="example"
+                          id="example"
+                          required
+                          placeholder="Journey date"
+                          class="classic_form big border-gray7-hover no-radius datepicker"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="date"
+                          name="example"
+                          id="example"
+                          required
+                          placeholder="Journey time"
+                          class="classic_form big border-gray7-hover no-radius timepicker"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="date"
+                          name="example"
+                          id="example"
+                          required
+                          placeholder="Return date"
+                          class="classic_form big border-gray7-hover no-radius datepicker"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <input
+                          type="date"
+                          name="example"
+                          id="example"
+                          required
+                          placeholder="Return time"
+                          class="classic_form big border-gray7-hover no-radius timepicker"
+                        />
+                      </div>
+                      <div class="col-sm-12">
+                        <input
+                          placeholder="Other things we should know about. "
+                          class="classic_form big border-gray7-hover"
+                        />
+                      </div>
+                      <div class="col-sm-4">
+                        <a
+                          href="#"
+                          class="stay lg-btn bg-colored white qdr-hover bold"
+                          ><span class="qdr-details"
+                            >Book cab Now !</span
+                          ></a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Tab -->
+              <div id="tab4m" role="tabpanel" class="tab-pane">
+                <div class="tab-container">
+                  <div
+                    class="container calculate-height custom-slider qdr-controls c-move"
+                    data-slick='{"dots": false, "arrows": false, "fade": false, "draggable":true, "slidesToShow": 3, "slidesToScroll": 1, "responsive":[{"breakpoint": 1200,"settings":{"slidesToShow": 2}}, {"breakpoint": 800,"settings":{"slidesToShow": 1}}] }'
+                  >
+                    <!-- Item -->
+                    <div class="box" style="padding:20px;">
+                      <div class="t-center">
+                        <img
+                          src="https://via.placeholder.com/150 "
+                          alt=""
+                          height="150"
+                          class="mx-auto mb-3 circle"
+                        />
+                      </div>
+                      <h3 class="mb-0">
+                        $
+                        <span class="text-lg1 extrabold page-title"
+                          >3000</span
+                        >
+                      </h3>
+                      <span class="merriweather italic light font-17"
+                        >5 Hours</span
+                      >
+                      <h2 class="box-title no-mb">Vittara - Brezza</h2>
+                      <span class="merriweather italic light font-17 no-pt"
+                        >Maruti Suzuki</span
+                      >
+                      <h5 class="extrabold xxs-mt">Hatchback</h5>
+                      <p class="box-description xxs-mt">
+                        Extra Drive Charges : 15INR per Km | 100INR per Hour
+                      </p>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="box" style="padding:20px;">
+                      <div class="t-center">
+                        <img
+                          src="https://via.placeholder.com/150 "
+                          alt=""
+                          height="150"
+                          class="mx-auto mb-3 circle"
+                        />
+                      </div>
+                      <h3 class="mb-0">
+                        $
+                        <span class="text-lg1 extrabold page-title"
+                          >3000</span
+                        >
+                      </h3>
+                      <span class="merriweather italic light font-17"
+                        >5 Hours</span
+                      >
+                      <h2 class="box-title no-mb">Vittara - Brezza</h2>
+                      <span class="merriweather italic light font-17 no-pt"
+                        >Maruti Suzuki</span
+                      >
+                      <h5 class="extrabold xxs-mt">Hatchback</h5>
+                      <p class="box-description xxs-mt">
+                        Extra Drive Charges : 15INR per Km | 100INR per Hour
+                      </p>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="box" style="padding:20px;">
+                      <div class="t-center">
+                        <img
+                          src="https://via.placeholder.com/150 "
+                          alt=""
+                          height="150"
+                          class="mx-auto mb-3 circle"
+                        />
+                      </div>
+                      <h3 class="mb-0">
+                        $
+                        <span class="text-lg1 extrabold page-title"
+                          >3000</span
+                        >
+                      </h3>
+                      <span class="merriweather italic light font-17"
+                        >5 Hours</span
+                      >
+                      <h2 class="box-title no-mb">Vittara - Brezza</h2>
+                      <span class="merriweather italic light font-17 no-pt"
+                        >Maruti Suzuki</span
+                      >
+                      <h5 class="extrabold xxs-mt">Hatchback</h5>
+                      <p class="box-description xxs-mt">
+                        Extra Drive Charges : 15INR per Km | 100INR per Hour
+                      </p>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="box" style="padding:20px;">
+                      <div class="t-center">
+                        <img
+                          src="https://via.placeholder.com/150 "
+                          alt=""
+                          height="150"
+                          class="mx-auto mb-3 circle"
+                        />
+                      </div>
+                      <h3 class="mb-0">
+                        $
+                        <span class="text-lg1 extrabold page-title"
+                          >3000</span
+                        >
+                      </h3>
+                      <span class="merriweather italic light font-17"
+                        >5 Hours</span
+                      >
+                      <h2 class="box-title no-mb">Vittara - Brezza</h2>
+                      <span class="merriweather italic light font-17 no-pt"
+                        >Maruti Suzuki</span
+                      >
+                      <h5 class="extrabold xxs-mt">Hatchback</h5>
+                      <p class="box-description xxs-mt">
+                        Extra Drive Charges : 15INR per Km | 100INR per Hour
+                      </p>
+                    </div>
+                  </div>
+                  <!-- End Slider -->
+                </div>
+              </div>
+            </div>
+            <!-- End Tab panes -->
+          </div>
+        </div>
+      </div>
+
+      <!-- End Slider -->
+    </section>
+    <!-- END ABOUT -->
+    <!-- /test -->
+
+    <!-- ABOUT SECTION -->
+    <section id="abouttext" class="pb">
+      <div class="t-center">
+        <h3 class="page-subtitle playfair italic gray6">
+          About us
+        </h3>
+        <h1 class="page-title">
+          The MPCab
+        </h1>
+        <div class="title-strips-over dark"></div>
+        <p class="page-description gray6">
+          “ There are many variations of passages of Lorem Ipsum available,
+          but the maj ority have words which don't look even
+          <br class="hidden-xs hidden-sm" />
+          slightly believable. ”
+        </p>
+      </div>
+    </section>
+    <!-- END ABOUT SECTION -->
+
+    <!-- Benefits section -->
+
+    <!-- CATEGORIES SECTION -->
+    <section id="categories" class="categories-parallax-type">
+      <!-- Item - You can select height value, it will be 200px minimum. -->
+      <div class="item height-220 fullwidth white parallax-container">
+        <!-- Parallax Background -->
+        <div
+          class="bg-parallax align-center skrollr"
+          data-anchor-target="#categories"
+          data-bottom-top="transform:translate3d(0, -100px, 0px);"
+          data-top-bottom="transform:translate3d(0px, 100px, 0px);"
+        >
+          <img
+            src="{{ asset('assets/frontend/images/mpcabs-book-ride-from-anywhere.jpg') }}"
+            alt="categories item image"
+          />
+        </div>
+        <!-- Container for elements -->
+        <a
+          href="#"
+          class="container qdr-modern-modal"
+          data-toggle="modal"
+          data-target="#modal-1"
+        >
+          <!-- Left button -->
+          <div class="ctg-button"></div>
+          <!-- Item Texts -->
+          <div class="ctg-texts">
+            <!-- Big title, this will be visible when hover on item -->
+            <h3 class="big-title  capitalize bold">
+              Our Drivers will Pick you up from anywhere
+            </h3>
+            <!-- Item Title -->
+            <h2 class="bold capitalize ctg-title ">
+              Book ride from anywhere
+            </h2>
+            <!-- Description -->
+          </div>
+        </a>
+      </div>
+
+      <!-- Item - You can select height value, it will be 200px minimum. -->
+      <div class="item height-200 fullwidth white parallax-container">
+        <!-- Parallax Background -->
+        <div
+          class="bg-parallax align-center skrollr"
+          data-anchor-target="#categories"
+          data-bottom-top="transform:translate3d(0, -350px, 0px);"
+          data-top-bottom="transform:translate3d(0px, 100px, 0px);"
+        >
+          <img
+            src="{{ asset('assets/frontend/images/mpcabs-online-payment.jpg') }}"
+            alt="categories item image"
+          />
+        </div>
+        <!-- Container for elements -->
+        <a
+          href="#"
+          class="container qdr-modern-modal"
+          data-toggle="modal"
+          data-target="#modal-2"
+        >
+          <!-- Left button -->
+          <div class="ctg-button"></div>
+          <!-- Item Texts -->
+          <div class="ctg-texts">
+            <!-- Big title, this will be visible when hover on item -->
+            <h3 class="big-title  capitalize bold">
+              Don't have cash ? Pay through Online Payment Modes
+            </h3>
+            <!-- Item Title -->
+            <h2 class="ctg-title capitalize bold">Online Payment</h2>
+            <!-- Description -->
+          </div>
+        </a>
+      </div>
+
+      <!-- Item - You can select height value, it will be 200px minimum. -->
+      <div
+        class="item height-200 fullwidth white parallax-container relative o-hidden"
+      >
+        <!-- Parallax Background -->
+        <div
+          class="bg-parallax align-center skrollr"
+          data-anchor-target="#categories"
+          data-bottom-top="transform:translate3d(0, -500px, 0px);"
+          data-top-bottom="transform:translate3d(0px, 0px, 0px);"
+        >
+          <img
+            src="{{ asset('assets/frontend/images/mpcabs-lots-of-offer.jpg') }}"
+            alt="categories item image"
+          />
+        </div>
+        <!-- Container for elements -->
+        <a
+          href="#"
+          class="container qdr-modern-modal"
+          data-toggle="modal"
+          data-target="#modal-3"
+        >
+          <!-- Left button -->
+          <div class="ctg-button"></div>
+          <!-- Item Texts -->
+          <div class="ctg-texts">
+            <!-- Big title, this will be visible when hover on item -->
+            <h3 class="big-title  capitalize bold">
+              Get Discounted Rides
+            </h3>
+            <!-- Item Title -->
+            <h2 class="ctg-title capitalize bold">Lots of Offers</h2>
+            <!-- Description -->
+          </div>
+        </a>
+      </div>
+
+      <!-- Item - You can select height value, it will be 200px minimum. -->
+      <div class="item height-200 fullwidth white parallax-container">
+        <!-- Parallax Background -->
+        <div
+          class="bg-parallax align-center skrollr"
+          data-anchor-target="#categories"
+          data-bottom-top="transform:translate3d(0, -350px, 0px);"
+          data-top-bottom="transform:translate3d(0px, 0px, 0px);"
+        >
+          <img
+            src="{{ asset('assets/frontend/images/mpcabs-book-online-support.jpg') }}"
+            alt="categories item image"
+          />
+        </div>
+        <!-- Container for elements -->
+        <a
+          href="#"
+          class="container qdr-modern-modal"
+          data-toggle="modal"
+          data-target="#modal-2"
+        >
+          <!-- Left button -->
+          <div class="ctg-button"></div>
+          <!-- Item Texts -->
+          <div class="ctg-texts">
+            <!-- Big title, this will be visible when hover on item -->
+            <h3 class="big-title  capitalize bold">
+              Call us from Anywhere Anytime
+            </h3>
+            <!-- Item Title -->
+            <h2 class="ctg-title capitalize bold">24x7 Online Support</h2>
+          </div>
+        </a>
+      </div>
+
+      <!-- End items -->
+    </section>
+    <!-- END CATEGORIES SECTION -->
+
+    <!-- MODALS FOR CATEGORIES SECTION -->
+
+    <!-- /Benefits section -->
+
+    <!-- Service availability section  -->
+    <!-- TEAM SECTION -->
+    <section id="team" class="container t-center py">
+      <!-- Top Title -->
+      <h3 class="page-subtitle playfair italic gray6">
+        Cities on which we provides services
+      </h3>
+
+      <!-- Title -->
+      <h1 class="page-title">
+        Service Availability
+      </h1>
+
+      <!-- Title Strips -->
+      <div class="title-strips-over dark"></div>
+
+      <!-- Team Container -->
+      <!-- Slider - If you copy boxes, container will be slider automatically -->
+      <div
+        class="custom-slider unset-slider image-boxes t-center container strip-dots dark-dots light pt-5"
+        data-slick='{"dots": true, "arrows": false, "fade": false, "slidesToShow": 3, "slidesToScroll": 1, "infinite" : false }'
+      >
+        <!-- Item - Strip button trigger -->
+        <div class="item">
+          <!-- Slider -->
+          <div class="image-slider qdr-controls-2">
+            <div class="qdr-hover-6">
+              <img src="{{ asset('assets/frontend/images/mpcabs-city-3.jpg') }}" alt="about quadra" />
+            </div>
+          </div>
+          <!-- Title -->
+          <h3 class="mt-2">
+            Sagar
+          </h3>
+          <!-- Description -->
+          <p>
+            Starts @ 2500INR per day
+          </p>
+        </div>
+        <!-- End Item -->
+
+        <!-- Item - Strip button trigger -->
+        <div class="item">
+          <!-- Slider -->
+          <div class="image-slider qdr-controls-2">
+            <div class="qdr-hover-6">
+              <img src="{{ asset('assets/frontend/images/mpcabs-city-1.jpg') }}" alt="about quadra" />
+            </div>
+          </div>
+          <!-- Title -->
+          <h3 class="mt-2">
+            Sagar
+          </h3>
+          <!-- Description -->
+          <p>
+            Starts @ 2500INR per day
+          </p>
+        </div>
+        <!-- End Item -->
+
+        <!-- Item - Strip button trigger -->
+        <div class="item">
+          <!-- Slider -->
+          <div class="image-slider qdr-controls-2">
+            <div class="qdr-hover-6">
+              <img src="{{ asset('assets/frontend/images/mpcabs-city-2.jpg') }}" alt="about quadra" />
+            </div>
+          </div>
+          <!-- Title -->
+          <h3 class="mt-2">
+            Sagar
+          </h3>
+          <!-- Description -->
+          <p>
+            Starts @ 2500INR per day
+          </p>
+        </div>
+        <!-- End Item -->
+
+        <!-- Item - Strip button trigger -->
+        <div class="item">
+          <!-- Slider -->
+          <div class="image-slider qdr-controls-2">
+            <div class="qdr-hover-6">
+              <img src="{{ asset('assets/frontend/images/mpcabs-city-3.jpg') }}" alt="about quadra" />
+            </div>
+          </div>
+          <!-- Title -->
+          <h3 class="mt-2">
+            Sagar
+          </h3>
+          <!-- Description -->
+          <p>
+            Starts @ 2500INR per day
+          </p>
+        </div>
+        <!-- End Item -->
+      </div>
+      <!-- End Slider -->
+    </section>
+    <!-- END TEAM SECTION -->
+    <!-- /Service availability section -->
+
+    <!-- Pricing package section -->
+    <section
+      class="t-center py bg-soft-gradient1 bg-soft o-hidden relative z-index-1"
+      data-background="{{ asset('assets/frontend/images/mpcabs-popular-routes.jpg') }}"
+    >
+      <h3 class="page-subtitle  ">
+        Most Travelled Destinations
+      </h3>
+      <h1 class="page-title text-white">
+        Popular routes
+      </h1>
+      <div class="title-strips-over "></div>
+
+      <div class="qdr-col-3 container t-center gray8 clearfix mt-5">
+        <!-- Box -->
+        <div>
+          <!-- Box Border -->
+          <div
+            class="border-1 border-gray8 no-border-bottom price-box radius o-hidden slow white bs-light-hover relative"
+          >
+            <div class="xs-pb">
+              <img
+                src="{{ asset('assets/frontend/images/mpcabs-popular-routes-2.jpg') }}"
+                alt=""
+                class="w-100"
+              />
+              <h4 class="extrabold no-pm xs-mt">Sagar - Bhopal</h4>
+              <!-- <h5></h5> -->
+              <!-- Price -->
+              <h3>
+                $
+                <span class="text-lg2 extrabold">3500</span
+                ><span class="merriweather italic light font-17"
+                  >per day</span
+                >
+              </h3>
+            </div>
+
+            <!-- Button -->
+            <div>
+              <!-- Button -->
+              <a
+                href="#"
+                class="xxs-py block font-11 uppercase white bold bg-dark3 slow bg-colored-hover"
+                >View Details</a
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Box end -->
+        <!-- Box -->
+        <div>
+          <!-- Box Border -->
+          <div
+            class="border-1 border-gray8 no-border-bottom price-box radius o-hidden slow white bs-light-hover relative"
+          >
+            <div class="xs-pb">
+              <img
+                src="{{ asset('assets/frontend/images/mpcabs-popular-routes-2.jpg') }}"
+                alt=""
+                class="w-100"
+              />
+              <h4 class="extrabold no-pm xs-mt">Sagar - Bhopal</h4>
+              <!-- <h5></h5> -->
+              <!-- Price -->
+              <h3>
+                $
+                <span class="text-lg2 extrabold">3500</span
+                ><span class="merriweather italic light font-17"
+                  >per day</span
+                >
+              </h3>
+            </div>
+
+            <!-- Button -->
+            <div>
+              <!-- Button -->
+              <a
+                href="#"
+                class="xxs-py block font-11 uppercase white bold bg-dark3 slow bg-colored-hover"
+                >View Details</a
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Box end -->
+        <!-- Box -->
+        <div>
+          <!-- Box Border -->
+          <div
+            class="border-1 border-gray8 no-border-bottom price-box radius o-hidden slow white bs-light-hover relative"
+          >
+            <div class="xs-pb">
+              <img
+                src="{{ asset('assets/frontend/images/mpcabs-popular-routes-2.jpg') }}"
+                alt=""
+                class="w-100"
+              />
+              <h4 class="extrabold no-pm xs-mt">Sagar - Bhopal</h4>
+              <!-- <h5></h5> -->
+              <!-- Price -->
+              <h3>
+                $
+                <span class="text-lg2 extrabold">3500</span
+                ><span class="merriweather italic light font-17"
+                  >per day</span
+                >
+              </h3>
+            </div>
+
+            <!-- Button -->
+            <div>
+              <!-- Button -->
+              <a
+                href="#"
+                class="xxs-py block font-11 uppercase white bold bg-dark3 slow bg-colored-hover"
+                >View Details</a
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Box end -->
+      </div>
+    </section>
+    <!-- /Pricing package section -->
+
+    <!-- Service availability section  -->
+    <!-- TEAM SECTION -->
+    <section id="team" class="container t-center py-5">
+      <!-- Top Title -->
+
+      <!-- Title -->
+      <h1 class="page-title brands-title ">
+        Brands of Cars We Have !
+      </h1>
+
+      <!-- Title Strips -->
+
+      <!-- Team Container -->
+      <!-- Slider - If you copy boxes, container will be slider automatically -->
+      <div
+        class="custom-slider image-boxes t-center container strip-dots dark-dots light pt-5"
+        data-slick='{"dots": true, "autoplay" : true , "arrows": false, "fade": false, "slidesToShow": 4, "slidesToScroll": 2}'
+      >
+        <!-- Item - Strip button trigger -->
+        <div class="item">
+          <!-- Slider -->
+          <!-- Title -->
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg"
+            alt=""
+            width="100"
+            class="mx-auto"
+          />
+          <h4 class="mt-3">
+            Honda
+          </h4>
+          <!-- Description -->
+        </div>
+        <!-- End Item -->
+
+        <!-- Item - Strip button trigger -->
+        <div class="item">
+          <!-- Slider -->
+          <!-- Title -->
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg"
+            alt=""
+            width="100"
+            class="mx-auto"
+          />
+          <h4 class="mt-3">
+            Honda
+          </h4>
+          <!-- Description -->
+        </div>
+        <!-- End Item -->
+
+        <!-- Item - Strip button trigger -->
+        <div class="item">
+          <!-- Slider -->
+          <!-- Title -->
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg"
+            alt=""
+            width="100"
+            class="mx-auto"
+          />
+          <h4 class="mt-3">
+            Honda
+          </h4>
+          <!-- Description -->
+        </div>
+        <!-- End Item -->
+
+        <!-- Item - Strip button trigger -->
+        <div class="item">
+          <!-- Slider -->
+          <!-- Title -->
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg"
+            alt=""
+            width="100"
+            class="mx-auto"
+          />
+          <h4 class="mt-3">
+            Honda
+          </h4>
+          <!-- Description -->
+        </div>
+        <!-- End Item -->
+
+        <!-- Item - Strip button trigger -->
+        <div class="item">
+          <!-- Slider -->
+          <!-- Title -->
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg"
+            alt=""
+            width="100"
+            class="mx-auto"
+          />
+          <h4 class=" mt-3">
+            Honda
+          </h4>
+          <!-- Description -->
+        </div>
+        <!-- End Item -->
+      </div>
+      <!-- End Slider -->
+    </section>
+    <!-- END TEAM SECTION -->
+    <!-- /Service availability section -->
+
+    <!-- SERVICES SECTION -->
+    <section
+      id="services"
+      class="calculate-height services-section no-padding clearfix"
+    >
+      <!-- Model Container - Left Positioned -->
+      <div
+        class="model cover"
+        data-background="{{ asset('assets/frontend/images/mpcabs-testimonials.jpg') }}"
+      >
+        <!-- Your image is here -->
+        <!-- <img
+          src="images/loader.gif"
+          data-original="http://quadra.goldeyestheme.com/content/modern/images/model_01.jpg"
+          alt="image"
+          style="object-fit:cover;"
+        /> -->
+        <!-- Hotpoints -->
+      </div>
+      <!-- End Left Area -->
+
+      <!-- Right, Services -->
+      <div class="services scrollbar-styled bt-1 border-1 border-gray1">
+        <div class="inner mt-0 mb-5">
+          <!-- Title -->
+          <h3 class="service-subtitle  antonio">
+            What client says
+          </h3>
+
+          <!-- Title -->
+          <h1 class="service-title antonio bold">
+            Testimonials
+          </h1>
+
+          <div class="title-strips-over dark strips-left mb-4"></div>
+
+          <div
+            class="custom-slider testimonial-slider mt-0 pt-3 image-boxes t-center container strip-dots dark-dots light"
+            data-slick='{"dots": true, "arrows": false, "fade": false, "slidesToShow": 2, "slidesToScroll": 2}'
+          >
+            <!-- Item - Strip button trigger -->
+            <div class="item">
+              <!-- Slider -->
+              <div class="image-slider qdr-controls-2">
+                <div>
+                  <img
+                    src="https://via.placeholder.com/120"
+                    alt="about quadra"
+                  />
+                </div>
+              </div>
+              <!-- Title -->
+              <h3 class="mt-3">
+                Client name
+              </h3>
+              <!-- Description -->
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Deleniti, nisi.
+              </p>
+            </div>
+            <!-- End Item -->
+
+            <!-- Item - Strip button trigger -->
+            <div class="item">
+              <!-- Slider -->
+              <div class="image-slider qdr-controls-2">
+                <div>
+                  <img
+                    src="https://via.placeholder.com/120"
+                    alt="about quadra"
+                  />
+                </div>
+              </div>
+              <!-- Title -->
+              <h3 class="mt-3">
+                Client name
+              </h3>
+              <!-- Description -->
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Deleniti, nisi.
+              </p>
+            </div>
+            <!-- End Item -->
+
+            <!-- Item - Strip button trigger -->
+            <div class="item">
+              <!-- Slider -->
+              <div class="image-slider qdr-controls-2">
+                <div>
+                  <img
+                    src="https://via.placeholder.com/120"
+                    alt="about quadra"
+                  />
+                </div>
+              </div>
+              <!-- Title -->
+              <h3 class="mt-3">
+                Client name
+              </h3>
+              <!-- Description -->
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Deleniti, nisi.
+              </p>
+            </div>
+            <!-- End Item -->
+
+            <!-- End Item -->
+          </div>
+        </div>
+        <!-- End Inner -->
+      </div>
+      <!-- End Services Area -->
+    </section>
+    <!-- END SERVICES SECTION -->
+
+    <!-- Analytics -->
+    <section class="py t-center bg-gray1 bb-1 border-gray1">
+      <h1 class="page-title">
+        Achievements so far
+      </h1>
+      <div class="container mt-5">
+        <div class="qdr-col-4 t-center clearfix">
+          <!-- Item -->
+          <div class="fact" data-source="100000">
+            <!-- Texts -->
+            <div class="texts">
+              <div>
+                <!-- Fact Tag -->
+                <h1 class="factor text-lg1 colored">1,000,00</h1>
+                <!-- Fact Texts -->
+                <h5 class="gray7">Happy customers</h5>
+              </div>
+            </div>
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="fact" data-source="2679">
+            <!-- Texts -->
+            <div class="texts">
+              <div>
+                <!-- Fact Tag -->
+                <h1 class="factor text-lg1 colored">` 2,679</h1>
+                <!-- Fact Texts -->
+                <h5 class="gray7">Cars in garage</h5>
+              </div>
+            </div>
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="fact" data-source="568980">
+            <!-- Texts -->
+            <div class="texts">
+              <div>
+                <!-- Fact Tag -->
+                <h1 class="factor text-lg1 colored">` 568,960</h1>
+                <!-- Fact Texts -->
+                <h5 class="gray7">Kms Driven</h5>
+              </div>
+            </div>
+          </div>
+          <!-- End Item -->
+          <!-- Item -->
+          <div class="fact" data-source="36">
+            <!-- Texts -->
+            <div class="texts">
+              <div>
+                <!-- Fact Tag -->
+                <h1 class="factor text-lg1 colored">` 36</h1>
+                <!-- Fact Texts -->
+                <h5 class="gray7">Agents</h5>
+              </div>
+            </div>
+          </div>
+          <!-- End Item -->
+        </div>
+      </div>
+    </section>
+
+    <!-- /Analytics -->
+@endsection    
+
+@section('between_scripts')
+    <!-- DatePickers -->
+    <script src="{{ asset('assets/frontend/js/components/picker.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/components/picker.time.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/components/picker.date.js') }}"></script>
+    <!-- REVOLUTION SLIDER -->
+    <script src="{{ asset('assets/frontend/js/revolutionslider/jquery.themepunch.revolution.min.js') }}"></script>
+    <script src="{{ asset('assets/frontend/js/revolutionslider/jquery.themepunch.tools.min.js') }}"></script>
+    <!-- PAGE OPTIONS - You can find special scripts for this version -->
+    <script src="{{ asset('assets/frontend/content/nyks/js/plugins.js') }}"></script>
+    <!-- <script src="content/antares/js/plugins.js"></script> -->
+@endsection
+
+@section('javascript')
+    <script>
+        //Classic
+        var revapi348,
+        tpj = jQuery;
+        tpj(document).ready(function() {
+        if (tpj("#rev_slider_348_1").revolution == undefined) {
+            revslider_showDoubleJqueryError("#rev_slider_348_1");
+        } else {
+            revapi348 = tpj("#rev_slider_348_1")
+            .show()
+            .revolution({
+                sliderType: "standard",
+                jsFileLocation:
+                "//server.local/revslider/wp-content/plugins/revslider/public/assets/js/",
+                sliderLayout: "fullscreen",
+                dottedOverlay: "none",
+                delay: 12000,
+                particles: {
+                startSlide: "first",
+                endSlide: "last",
+                zIndex: "1",
+                particles: {
+                    number: { value: 100 },
+                    color: { value: "#ffffff" },
+                    shape: {
+                    type: "circle",
+                    stroke: { width: 0, color: "#ffffff", opacity: 1 },
+                    image: { src: "" }
+                    },
+                    opacity: {
+                    value: 0.75,
+                    random: true,
+                    min: 0.25,
+                    anim: {
+                        enable: false,
+                        speed: 3,
+                        opacity_min: 0,
+                        sync: false
+                    }
+                    },
+                    size: {
+                    value: 2,
+                    random: true,
+                    min: 0.5,
+                    anim: { enable: false, speed: 40, size_min: 1, sync: false }
+                    },
+                    line_linked: {
+                    enable: false,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.4,
+                    width: 1
+                    },
+                    move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "top",
+                    random: true,
+                    min_speed: 3,
+                    straight: false,
+                    out_mode: "out"
+                    }
+                },
+                interactivity: {
+                    events: {
+                    onhover: { enable: false, mode: "repulse" },
+                    onclick: { enable: false, mode: "repulse" }
+                    },
+                    modes: {
+                    grab: { distance: 400, line_linked: { opacity: 0.5 } },
+                    bubble: { distance: 400, size: 40, opacity: 0.4 },
+                    repulse: { distance: 200 }
+                    }
+                }
+                },
+                navigation: {
+                keyboardNavigation: "off",
+                keyboard_direction: "horizontal",
+                mouseScrollNavigation: "off",
+                mouseScrollReverse: "default",
+                onHoverStop: "off",
+                arrows: {
+                    style: "uranus",
+                    enable: true,
+                    hide_onmobile: false,
+                    hide_onleave: false,
+                    tmp: "",
+                    left: {
+                    h_align: "right",
+                    v_align: "bottom",
+                    h_offset: 60,
+                    v_offset: 10
+                    },
+                    right: {
+                    h_align: "right",
+                    v_align: "bottom",
+                    h_offset: 10,
+                    v_offset: 10
+                    }
+                }
+                },
+                responsiveLevels: [1240, 1024, 778, 480],
+                visibilityLevels: [1240, 1024, 778, 480],
+                gridwidth: [1240, 1024, 778, 480],
+                gridheight: [868, 768, 960, 720],
+                lazyType: "smart",
+                parallax: {
+                type: "scroll",
+                origo: "slidercenter",
+                speed: 400,
+                speedbg: 1500,
+                speedls: 1000,
+                levels: [
+                    5,
+                    10,
+                    15,
+                    20,
+                    25,
+                    30,
+                    35,
+                    40,
+                    60,
+                    46,
+                    -10,
+                    -15,
+                    -20,
+                    -25,
+                    -30,
+                    55
+                ]
+                },
+                shadow: 0,
+                spinner: "off",
+                stopLoop: "off",
+                stopAfterLoops: -1,
+                stopAtSlide: -1,
+                shuffle: "off",
+                autoHeight: "off",
+                fullScreenAutoWidth: "off",
+                fullScreenAlignForce: "off",
+                fullScreenOffsetContainer: "",
+                fullScreenOffset: "",
+                hideThumbsOnMobile: "off",
+                hideSliderAtLimit: 0,
+                hideCaptionAtLimit: 0,
+                hideAllCaptionAtLilmit: 0,
+                debugMode: false,
+                fallbacks: {
+                simplifyAll: "off",
+                nextSlideOnWindowFocus: "off",
+                disableFocusListener: false
+                }
+            });
+        }
+
+        RsParticlesAddOn(revapi348);
+        try {
+            initSocialSharing("348");
+        } catch (e) {}
+        }); /*ready*/
+        $(".datepicker").pickadate();
+        $(".timepicker").pickatime();
+    </script>
+@endsection

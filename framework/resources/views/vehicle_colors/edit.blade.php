@@ -1,4 +1,15 @@
 @extends('layouts.app')
+@section('extra_css')
+<link rel="stylesheet" href="{{ asset('assets/colorpicker/la_color_picker.css') }}">
+<style>
+  .inp {
+    border: 1px solid #949494;
+    border-radius: 3px;
+    padding: 10px;
+    font-size: 110%;
+  }
+</style>
+@endsection
 @section("breadcrumb")
 <li class="breadcrumb-item">{{ link_to_route('vehicle-color.index', __('fleet.vehicle_colors'))}}</li>
 <li class="breadcrumb-item active">@lang('fleet.edit_vehicle_color')</li>
@@ -30,6 +41,14 @@
           {!! Form::label('color', __('fleet.color'), ['class' => 'form-label']) !!}
           {!! Form::text('color', $color->color,['class' => 'form-control','required']) !!}
         </div>
+      </div>
+      <div class="row">  
+        <div class="form-group col-md-6">
+          {!! Form::label('color', "Color Code", ['class' => 'form-label']) !!}
+          <br>
+          <input type="text" class="inp" id="colorPicker" name="code" value="{{ $color->code }}">
+          <div class="palette" id="colorPalette"></div>
+        </div>
      </div>
       <div class="form-group">
         {!! Form::submit(__('fleet.update'), ['class' => 'btn btn-warning']) !!}
@@ -39,4 +58,7 @@
     </div>
   </div>
 </div>
+@endsection
+@section('script')
+<script src="{{ asset('assets/colorpicker/la_color_picker.js') }}"></script>
 @endsection

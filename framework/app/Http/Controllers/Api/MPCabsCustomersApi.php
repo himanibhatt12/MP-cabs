@@ -17,6 +17,7 @@ class MPCabsCustomersApi extends Controller
 {
     public function packages()
     {
+
         $packages = PackagesModel::get();
         $details = array();
         foreach ($packages as $package) {
@@ -25,7 +26,12 @@ class MPCabsCustomersApi extends Controller
             } else {
                 $image = asset("assets/images/vehicle.jpeg");
             }
-
+            $color = "";
+            $code = "";
+            if ($package->vehicle->color_id) {
+                $color = $package->vehicle->vehiclecolor->color;
+                $code = $package->vehicle->vehiclecolor->code;
+            }
             $details[] = array(
                 'package_id' => $package->id,
                 'vehicle_make' => $package->vehicle->maker->make,
@@ -35,6 +41,10 @@ class MPCabsCustomersApi extends Controller
                 'km_rate' => $package->km_rate,
                 'image' => $image,
                 'vehicle_type' => $package->vehicle->types->displayname,
+                'vehicle_color' => $color,
+                'package_hours' => $package->package_hours,
+                'package_rate' => $package->package_rate,
+                'color_code' => $code,
             );
         }
         $data['success'] = "1";
@@ -57,6 +67,11 @@ class MPCabsCustomersApi extends Controller
                 'valid_till' => date('d-m-Y g:i A', strtotime($offer->valid_till)),
                 'vehicle_id' => $offer->vehicle_id,
                 'vehicle' => $offer->vehicle->maker->make . '-' . $offer->vehicle->vehiclemodel->model . '-' . $offer->vehicle->license_plate,
+                'base_fare' => Hyvikk::fare(strtolower(str_replace(' ', '', $offer->vehicle->types->vehicletype)) . '_base_fare'),
+                'total' => $offer->total,
+                'tax_total' => $offer->tax_total,
+                // 'total_tax_percent' => $offer->total_tax_percent,
+                'total_tax_charge_rs' => $offer->total_tax_charge_rs,
             );
         }
         $data['success'] = "1";
@@ -152,8 +167,9 @@ class MPCabsCustomersApi extends Controller
         return $data;
     }
 
-    public function booking_history($id)
+    public function booking_history(Request $request)
     {
+        $id = $request->id;
         $bookings = Bookings::where('customer_id', $id)->where('is_booked', 1)->get();
         $details = array();
         foreach ($bookings as $booking) {
@@ -177,6 +193,7 @@ class MPCabsCustomersApi extends Controller
 
     public function routes()
     {
+
         $routes = RouteModel::get();
         $details = array();
         foreach ($routes as $route) {
@@ -187,6 +204,8 @@ class MPCabsCustomersApi extends Controller
                 'destination' => $route->destination,
                 'cost' => $route->cost,
                 'ratings' => $route->ratings,
+                'timing' => $route->timing,
+                'distance' => $route->distance . " kms",
             );
         }
         $data['success'] = "1";
@@ -371,8 +390,9 @@ class MPCabsCustomersApi extends Controller
         return $data;
     }
 
-    public function booking_details($id)
+    public function booking_details(Request $request)
     {
+        $id = $request->id;
         $taxes = json_decode(Hyvikk::get('tax_charge'));
         $booking = Bookings::find($id);
         $tax_charge = array();

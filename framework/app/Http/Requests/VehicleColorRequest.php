@@ -29,7 +29,8 @@ class VehicleColorRequest extends FormRequest
     public function rules()
     {
         return [
-            'color' => 'required',
+            'color' => 'required|unique:vehicle_colors,color,' . \Request::get("id") . ',id,deleted_at,NULL',
+            'code' => 'required|unique:vehicle_colors,code,' . \Request::get("id") . ',id,deleted_at,NULL',
         ];
     }
 }

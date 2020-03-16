@@ -24,6 +24,7 @@ class VehicleColorsController extends Controller
     {
         $new = VehicleColor::create([
             'color' => $request->color,
+            'code' => $request->code,
         ]);
 
         return redirect()->route('vehicle-color.index');
@@ -40,6 +41,7 @@ class VehicleColorsController extends Controller
         $data = VehicleColor::find($request->get('id'));
         $data->update([
             'color' => $request->color,
+            'code' => $request->code,
         ]);
 
         return redirect()->route('vehicle-color.index');
