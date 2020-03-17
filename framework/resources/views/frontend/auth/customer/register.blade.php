@@ -57,26 +57,37 @@
           <div class="container-xs mxw-750 v-center">
             <div class="t-center white">
               <h1 class="bold-title">User Register</h1>
-
+              @if (count($errors) > 0)
+                <div class="alert alert-danger xs-mt">
+                  <ul>
+                  @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                  </ul>
+                </div>
+              @endif
               <div class="form dark xs-mt normal-title">
-                <form action="" method="post">
+                <form action="{{ url('user-register') }}" method="post">
+                  {!! csrf_field() !!}
                   <div class="row">
                     <div class="col-sm-6">
                       <input
                         type="text"
-                        name="email"
-                        id="email"
+                        name="first_name"
+                        id="first_name"
                         placeholder="First name"
                         class="classic_form bg-white radius"
+                        value="{{ old('first_name') }}"
                       />
                     </div>
                     <div class="col-sm-6">
                       <input
                         type="text"
-                        name="email"
-                        id="email"
+                        name="last_name"
+                        id="last_name"
                         placeholder="Last name"
                         class="classic_form bg-white radius"
+                        value="{{ old('last_name') }}"
                       />
                     </div>
                     <div class="col-sm-6">
@@ -86,6 +97,7 @@
                         id="email"
                         placeholder="Email address"
                         class="classic_form bg-white radius"
+                        value="{{ old('email') }}"
                       />
                     </div>
                     <div
@@ -94,9 +106,9 @@
                       <div class="classic_checkbox radio">
                         <input
                           type="radio"
-                          name="radio"
+                          name="gender"
                           id="radioOne"
-                          value="radioOne"
+                          value=1
                           checked=""
                         />
                         <label for="radioOne"> Male </label>
@@ -104,9 +116,9 @@
                       <div class="classic_checkbox radio">
                         <input
                           type="radio"
-                          name="radio"
+                          name="gender"
                           id="radioOne"
-                          value="radioOne"
+                          value=0
                           checked=""
                         />
                         <label for="radioOne">Female</label>
@@ -115,26 +127,28 @@
                     <div class="col-sm-6">
                       <input
                         type="text"
-                        name="email"
-                        id="email"
+                        name="address"
+                        id="address"
                         placeholder="Address ( optional )"
                         class="classic_form bg-white radius"
+                        value="{{ old('address') }}"
                       />
                     </div>
                     <div class="col-sm-6">
                       <input
                         type="text"
-                        name="email"
-                        id="email"
+                        name="phone"
+                        id="phone"
                         placeholder="Mobile number"
                         class="classic_form bg-white radius"
+                        value="{{ old('phone') }}"
                       />
                     </div>
                     <div class="col-sm-6">
                       <input
                         type="password"
-                        name="email"
-                        id="email"
+                        name="password"
+                        id="password"
                         placeholder="Password"
                         class="classic_form bg-white radius"
                       />
@@ -142,8 +156,8 @@
                     <div class="col-sm-6">
                       <input
                         type="password"
-                        name="email"
-                        id="email"
+                        name="confirm_password"
+                        id="confirm_password"
                         placeholder="Confirm Password"
                         class="classic_form bg-white radius"
                       />

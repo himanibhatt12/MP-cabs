@@ -50,6 +50,7 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('booking-details', 'MPCabsCustomersApi@booking_details');
 
     // drivers APIs
+    Route::post('single-ride-offer', 'MPCabsDriversApi@single_offer');
     Route::post('add-offer', 'MPCabsDriversApi@add_offer'); // with new vehicle incomplete
     Route::post('edit-offer', 'MPCabsDriversApi@edit_offer'); //
     Route::post('customer-offer-requests', 'MPCabsDriversApi@customer_offer_requests');
@@ -61,4 +62,5 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('delete-ride-offer', 'MPCabsDriversApi@delete_offer');
     Route::post('vehicles', 'MPCabsDriversApi@vehicles');
     Route::post('register-vehicle', 'MPCabsDriversApi@register_vehicle');
+    Route::post('vehicle-documents', 'MPCabsDriversApi@vehicle_document');
 });

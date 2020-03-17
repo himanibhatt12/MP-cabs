@@ -59,15 +59,26 @@
                   {{ session('success') }}
                 </div>
               @endif
+              @if (count($errors) > 0)
+                <div class="alert alert-danger xs-mt">
+                  <ul>
+                  @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                  </ul>
+                </div>
+              @endif
               <div class="form dark xs-mt normal-title">
-                <form action="" method="post">
+                <form action="{{ url('user-login') }}" method="post">
                   <!-- Email -->
+                  {!! csrf_field() !!}
                   <input
                     type="email"
                     name="email"
                     id="email"
                     placeholder="Email id"
                     class="classic_form bg-white radius"
+                    value="{{ old('email') }}"
                   />
                   <!-- Email -->
                   <input

@@ -482,9 +482,9 @@
                           class="classic_form big border-gray7-hover no-radius"
                         >
                           <option value="">Select a vehicle</option>
-                          <option value="Developer">Option 1</option>
-                          <option value="Designer">Option 2</option>
-                          <option value="Photographer">Option 3</option>
+                          @foreach($types as $type)
+                          <option value="{{ $type->id }}">{{ $type->displayname }}</option>
+                          @endforeach
                         </select>
                       </div>
                       <div class="col-sm-8">
@@ -540,9 +540,9 @@
                           class="classic_form big border-gray7-hover no-radius"
                         >
                           <option value="">Select a vehicle</option>
-                          <option value="Developer">Option 1</option>
-                          <option value="Designer">Option 2</option>
-                          <option value="Photographer">Option 3</option>
+                          @foreach($types as $type)
+                          <option value="{{ $type->id }}">{{ $type->displayname }}</option>
+                          @endforeach
                         </select>
                       </div>
                       <div class="col-sm-4">
@@ -618,9 +618,9 @@
                           class="classic_form big border-gray7-hover no-radius"
                         >
                           <option value="">Select a vehicle</option>
-                          <option value="Developer">Option 1</option>
-                          <option value="Designer">Option 2</option>
-                          <option value="Photographer">Option 3</option>
+                          @foreach($types as $type)
+                          <option value="{{ $type->id }}">{{ $type->displayname }}</option>
+                          @endforeach
                         </select>
                       </div>
                       <div class="col-sm-4">
@@ -689,121 +689,41 @@
                     class="container calculate-height custom-slider qdr-controls c-move"
                     data-slick='{"dots": false, "arrows": false, "fade": false, "draggable":true, "slidesToShow": 3, "slidesToScroll": 1, "responsive":[{"breakpoint": 1200,"settings":{"slidesToShow": 2}}, {"breakpoint": 800,"settings":{"slidesToShow": 1}}] }'
                   >
+                  @foreach($packages as $row)
+                  @php($src='assets/images/vehicle.jpeg');
+                  @if($row->vehicle->vehicle_image)
+                  @php($src='uploads/'.$row->vehicle->vehicle_image)
+                  @endif
                     <!-- Item -->
                     <div class="box" style="padding:20px;">
                       <div class="t-center">
                         <img
-                          src="https://via.placeholder.com/150 "
+                          src="{{ asset($src) }}"
                           alt=""
                           height="150"
+                          width="150"
                           class="mx-auto mb-3 circle"
                         />
                       </div>
                       <h3 class="mb-0">
-                        $
+                        {{ Hyvikk::get('currency') }}
                         <span class="text-lg1 extrabold page-title"
-                          >3000</span
+                          >{{ $row->package_rate }}</span
                         >
                       </h3>
                       <span class="merriweather italic light font-17"
-                        >5 Hours</span
+                        >{{ $row->package_hours }} Hours</span
                       >
-                      <h2 class="box-title no-mb">Vittara - Brezza</h2>
+                      <h2 class="box-title no-mb">{{ $row->vehicle->maker->make }}</h2>
                       <span class="merriweather italic light font-17 no-pt"
-                        >Maruti Suzuki</span
+                        >{{ $row->vehicle->vehiclemodel->model }}</span
                       >
-                      <h5 class="extrabold xxs-mt">Hatchback</h5>
+                      <h5 class="extrabold xxs-mt">{{ $row->vehicle->types->displayname }}</h5>
                       <p class="box-description xxs-mt">
-                        Extra Drive Charges : 15INR per Km | 100INR per Hour
+                        Extra Drive Charges : {{ $row->km_rate }}INR per Km | {{ $row->hourly_rate }}INR per Hour
                       </p>
                     </div>
-
-                    <!-- Item -->
-                    <div class="box" style="padding:20px;">
-                      <div class="t-center">
-                        <img
-                          src="https://via.placeholder.com/150 "
-                          alt=""
-                          height="150"
-                          class="mx-auto mb-3 circle"
-                        />
-                      </div>
-                      <h3 class="mb-0">
-                        $
-                        <span class="text-lg1 extrabold page-title"
-                          >3000</span
-                        >
-                      </h3>
-                      <span class="merriweather italic light font-17"
-                        >5 Hours</span
-                      >
-                      <h2 class="box-title no-mb">Vittara - Brezza</h2>
-                      <span class="merriweather italic light font-17 no-pt"
-                        >Maruti Suzuki</span
-                      >
-                      <h5 class="extrabold xxs-mt">Hatchback</h5>
-                      <p class="box-description xxs-mt">
-                        Extra Drive Charges : 15INR per Km | 100INR per Hour
-                      </p>
-                    </div>
-
-                    <!-- Item -->
-                    <div class="box" style="padding:20px;">
-                      <div class="t-center">
-                        <img
-                          src="https://via.placeholder.com/150 "
-                          alt=""
-                          height="150"
-                          class="mx-auto mb-3 circle"
-                        />
-                      </div>
-                      <h3 class="mb-0">
-                        $
-                        <span class="text-lg1 extrabold page-title"
-                          >3000</span
-                        >
-                      </h3>
-                      <span class="merriweather italic light font-17"
-                        >5 Hours</span
-                      >
-                      <h2 class="box-title no-mb">Vittara - Brezza</h2>
-                      <span class="merriweather italic light font-17 no-pt"
-                        >Maruti Suzuki</span
-                      >
-                      <h5 class="extrabold xxs-mt">Hatchback</h5>
-                      <p class="box-description xxs-mt">
-                        Extra Drive Charges : 15INR per Km | 100INR per Hour
-                      </p>
-                    </div>
-
-                    <!-- Item -->
-                    <div class="box" style="padding:20px;">
-                      <div class="t-center">
-                        <img
-                          src="https://via.placeholder.com/150 "
-                          alt=""
-                          height="150"
-                          class="mx-auto mb-3 circle"
-                        />
-                      </div>
-                      <h3 class="mb-0">
-                        $
-                        <span class="text-lg1 extrabold page-title"
-                          >3000</span
-                        >
-                      </h3>
-                      <span class="merriweather italic light font-17"
-                        >5 Hours</span
-                      >
-                      <h2 class="box-title no-mb">Vittara - Brezza</h2>
-                      <span class="merriweather italic light font-17 no-pt"
-                        >Maruti Suzuki</span
-                      >
-                      <h5 class="extrabold xxs-mt">Hatchback</h5>
-                      <p class="box-description xxs-mt">
-                        Extra Drive Charges : 15INR per Km | 100INR per Hour
-                      </p>
-                    </div>
+                  @endforeach  
                   </div>
                   <!-- End Slider -->
                 </div>
@@ -830,10 +750,7 @@
         </h1>
         <div class="title-strips-over dark"></div>
         <p class="page-description gray6">
-          “ There are many variations of passages of Lorem Ipsum available,
-          but the maj ority have words which don't look even
-          <br class="hidden-xs hidden-sm" />
-          slightly believable. ”
+          “ {{ Hyvikk::frontend('about_us') }} ”
         </p>
       </div>
     </section>
@@ -1020,81 +937,33 @@
         class="custom-slider unset-slider image-boxes t-center container strip-dots dark-dots light pt-5"
         data-slick='{"dots": true, "arrows": false, "fade": false, "slidesToShow": 3, "slidesToScroll": 1, "infinite" : false }'
       >
-        <!-- Item - Strip button trigger -->
-        <div class="item">
-          <!-- Slider -->
-          <div class="image-slider qdr-controls-2">
-            <div class="qdr-hover-6">
-              <img src="{{ asset('assets/frontend/images/mpcabs-city-3.jpg') }}" alt="about quadra" />
-            </div>
-          </div>
-          <!-- Title -->
-          <h3 class="mt-2">
-            Sagar
-          </h3>
-          <!-- Description -->
-          <p>
-            Starts @ 2500INR per day
-          </p>
-        </div>
-        <!-- End Item -->
 
-        <!-- Item - Strip button trigger -->
-        <div class="item">
-          <!-- Slider -->
-          <div class="image-slider qdr-controls-2">
-            <div class="qdr-hover-6">
-              <img src="{{ asset('assets/frontend/images/mpcabs-city-1.jpg') }}" alt="about quadra" />
-            </div>
-          </div>
-          <!-- Title -->
-          <h3 class="mt-2">
-            Sagar
-          </h3>
-          <!-- Description -->
-          <p>
-            Starts @ 2500INR per day
-          </p>
-        </div>
-        <!-- End Item -->
+      @foreach($cities as $city)
+      @php($src='assets/frontend/images/mpcabs-city-2.jpg')
 
+      @if($city->image)
+      @php($src='uploads/'.$city->image)
+      @endif
         <!-- Item - Strip button trigger -->
         <div class="item">
           <!-- Slider -->
           <div class="image-slider qdr-controls-2">
             <div class="qdr-hover-6">
-              <img src="{{ asset('assets/frontend/images/mpcabs-city-2.jpg') }}" alt="about quadra" />
+              <img src="{{ asset($src) }}" alt="about quadra" width="300px" height="250px"/>
             </div>
           </div>
           <!-- Title -->
           <h3 class="mt-2">
-            Sagar
+            {{ $city->city }}
           </h3>
           <!-- Description -->
           <p>
-            Starts @ 2500INR per day
+            Starts @ {{ $city->cost }}INR per day
           </p>
         </div>
         <!-- End Item -->
+      @endforeach  
 
-        <!-- Item - Strip button trigger -->
-        <div class="item">
-          <!-- Slider -->
-          <div class="image-slider qdr-controls-2">
-            <div class="qdr-hover-6">
-              <img src="{{ asset('assets/frontend/images/mpcabs-city-3.jpg') }}" alt="about quadra" />
-            </div>
-          </div>
-          <!-- Title -->
-          <h3 class="mt-2">
-            Sagar
-          </h3>
-          <!-- Description -->
-          <p>
-            Starts @ 2500INR per day
-          </p>
-        </div>
-        <!-- End Item -->
       </div>
       <!-- End Slider -->
     </section>
@@ -1115,6 +984,11 @@
       <div class="title-strips-over "></div>
 
       <div class="qdr-col-3 container t-center gray8 clearfix mt-5">
+      @foreach($routes as $route)  
+      @php($src='assets/frontend/images/mpcabs-popular-routes-2.jpg')
+      @if($route->image)
+      @php($src='uploads/'.$route->image)
+      @endif
         <!-- Box -->
         <div>
           <!-- Box Border -->
@@ -1123,16 +997,18 @@
           >
             <div class="xs-pb">
               <img
-                src="{{ asset('assets/frontend/images/mpcabs-popular-routes-2.jpg') }}"
+                src="{{ asset($src) }}"
                 alt=""
                 class="w-100"
+                width="256px"
+                height="256px"
               />
-              <h4 class="extrabold no-pm xs-mt">Sagar - Bhopal</h4>
+              <h4 class="extrabold no-pm xs-mt">{{ $route->source." - ".$route->destination }}</h4>
               <!-- <h5></h5> -->
               <!-- Price -->
               <h3>
-                $
-                <span class="text-lg2 extrabold">3500</span
+                {{ Hyvikk::get('currency') }}
+                <span class="text-lg2 extrabold">{{ $route->cost }}</span
                 ><span class="merriweather italic light font-17"
                   >per day</span
                 >
@@ -1151,78 +1027,7 @@
           </div>
         </div>
         <!-- Box end -->
-        <!-- Box -->
-        <div>
-          <!-- Box Border -->
-          <div
-            class="border-1 border-gray8 no-border-bottom price-box radius o-hidden slow white bs-light-hover relative"
-          >
-            <div class="xs-pb">
-              <img
-                src="{{ asset('assets/frontend/images/mpcabs-popular-routes-2.jpg') }}"
-                alt=""
-                class="w-100"
-              />
-              <h4 class="extrabold no-pm xs-mt">Sagar - Bhopal</h4>
-              <!-- <h5></h5> -->
-              <!-- Price -->
-              <h3>
-                $
-                <span class="text-lg2 extrabold">3500</span
-                ><span class="merriweather italic light font-17"
-                  >per day</span
-                >
-              </h3>
-            </div>
-
-            <!-- Button -->
-            <div>
-              <!-- Button -->
-              <a
-                href="#"
-                class="xxs-py block font-11 uppercase white bold bg-dark3 slow bg-colored-hover"
-                >View Details</a
-              >
-            </div>
-          </div>
-        </div>
-        <!-- Box end -->
-        <!-- Box -->
-        <div>
-          <!-- Box Border -->
-          <div
-            class="border-1 border-gray8 no-border-bottom price-box radius o-hidden slow white bs-light-hover relative"
-          >
-            <div class="xs-pb">
-              <img
-                src="{{ asset('assets/frontend/images/mpcabs-popular-routes-2.jpg') }}"
-                alt=""
-                class="w-100"
-              />
-              <h4 class="extrabold no-pm xs-mt">Sagar - Bhopal</h4>
-              <!-- <h5></h5> -->
-              <!-- Price -->
-              <h3>
-                $
-                <span class="text-lg2 extrabold">3500</span
-                ><span class="merriweather italic light font-17"
-                  >per day</span
-                >
-              </h3>
-            </div>
-
-            <!-- Button -->
-            <div>
-              <!-- Button -->
-              <a
-                href="#"
-                class="xxs-py block font-11 uppercase white bold bg-dark3 slow bg-colored-hover"
-                >View Details</a
-              >
-            </div>
-          </div>
-        </div>
-        <!-- Box end -->
+      @endforeach  
       </div>
     </section>
     <!-- /Pricing package section -->
@@ -1245,90 +1050,25 @@
         class="custom-slider image-boxes t-center container strip-dots dark-dots light pt-5"
         data-slick='{"dots": true, "autoplay" : true , "arrows": false, "fade": false, "slidesToShow": 4, "slidesToScroll": 2}'
       >
+      @foreach($brands as $brand)
         <!-- Item - Strip button trigger -->
         <div class="item">
           <!-- Slider -->
           <!-- Title -->
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg"
+            src="{{ asset('uploads/'.$brand->image) }}"
             alt=""
             width="100"
+            height="80"
             class="mx-auto"
           />
           <h4 class="mt-3">
-            Honda
+            {{ $brand->make }}
           </h4>
           <!-- Description -->
         </div>
         <!-- End Item -->
-
-        <!-- Item - Strip button trigger -->
-        <div class="item">
-          <!-- Slider -->
-          <!-- Title -->
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg"
-            alt=""
-            width="100"
-            class="mx-auto"
-          />
-          <h4 class="mt-3">
-            Honda
-          </h4>
-          <!-- Description -->
-        </div>
-        <!-- End Item -->
-
-        <!-- Item - Strip button trigger -->
-        <div class="item">
-          <!-- Slider -->
-          <!-- Title -->
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg"
-            alt=""
-            width="100"
-            class="mx-auto"
-          />
-          <h4 class="mt-3">
-            Honda
-          </h4>
-          <!-- Description -->
-        </div>
-        <!-- End Item -->
-
-        <!-- Item - Strip button trigger -->
-        <div class="item">
-          <!-- Slider -->
-          <!-- Title -->
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg"
-            alt=""
-            width="100"
-            class="mx-auto"
-          />
-          <h4 class="mt-3">
-            Honda
-          </h4>
-          <!-- Description -->
-        </div>
-        <!-- End Item -->
-
-        <!-- Item - Strip button trigger -->
-        <div class="item">
-          <!-- Slider -->
-          <!-- Title -->
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg"
-            alt=""
-            width="100"
-            class="mx-auto"
-          />
-          <h4 class=" mt-3">
-            Honda
-          </h4>
-          <!-- Description -->
-        </div>
-        <!-- End Item -->
+      @endforeach
       </div>
       <!-- End Slider -->
     </section>
@@ -1375,76 +1115,36 @@
             class="custom-slider testimonial-slider mt-0 pt-3 image-boxes t-center container strip-dots dark-dots light"
             data-slick='{"dots": true, "arrows": false, "fade": false, "slidesToShow": 2, "slidesToScroll": 2}'
           >
+          @foreach ($testimonials as $row)   
+          @php($src="assets/images/no-user.jpg")
+          @if($row->image)
+          @php($src="uploads/".$row->image)
+          @endif          
+          
             <!-- Item - Strip button trigger -->
             <div class="item">
               <!-- Slider -->
               <div class="image-slider qdr-controls-2">
                 <div>
                   <img
-                    src="https://via.placeholder.com/120"
+                    src="{{ asset($src) }}"
                     alt="about quadra"
+                    height="120px"
+                    weight="120px"
                   />
                 </div>
               </div>
               <!-- Title -->
               <h3 class="mt-3">
-                Client name
+                {{ $row->name }}
               </h3>
               <!-- Description -->
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Deleniti, nisi.
+                {{ $row->details }}
               </p>
             </div>
             <!-- End Item -->
-
-            <!-- Item - Strip button trigger -->
-            <div class="item">
-              <!-- Slider -->
-              <div class="image-slider qdr-controls-2">
-                <div>
-                  <img
-                    src="https://via.placeholder.com/120"
-                    alt="about quadra"
-                  />
-                </div>
-              </div>
-              <!-- Title -->
-              <h3 class="mt-3">
-                Client name
-              </h3>
-              <!-- Description -->
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Deleniti, nisi.
-              </p>
-            </div>
-            <!-- End Item -->
-
-            <!-- Item - Strip button trigger -->
-            <div class="item">
-              <!-- Slider -->
-              <div class="image-slider qdr-controls-2">
-                <div>
-                  <img
-                    src="https://via.placeholder.com/120"
-                    alt="about quadra"
-                  />
-                </div>
-              </div>
-              <!-- Title -->
-              <h3 class="mt-3">
-                Client name
-              </h3>
-              <!-- Description -->
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Deleniti, nisi.
-              </p>
-            </div>
-            <!-- End Item -->
-
-            <!-- End Item -->
+          @endforeach  
           </div>
         </div>
         <!-- End Inner -->

@@ -53,6 +53,11 @@
             id="gallery"
             class="cbp lightbox_selected cbp-l-grid-masonry-projects boxes-with-image"
         >
+        @foreach($cities as $city)
+        @php($src='assets/frontend/images/mpcabs-city-2.jpg')
+        @if($city->image)
+        @php($src='uploads/'.$city->image)
+        @endif
             <div class="cbp-item">
             <a
                 href="#top"
@@ -61,17 +66,17 @@
                 <!-- Overlay - Parent element should have .relative class -->
                 <div
                 class="overlay zi--4 bg-soft bg-soft-dark8"
-                data-background="{{ asset('assets/frontend/images/mpcabs-city-2.jpg') }}"
+                data-background="{{ asset($src) }}"
                 ></div>
                 <!-- Texts -->
                 <div
                 class=" texts w-100 h-100 d-flex flex-column justify-content-center align-items-center"
                 >
                 <h2 class="white bold-title">
-                    Bhopal
+                    {{ $city->city }}
                     <br />
                     <span class="playfair italic h4"
-                    >Starts @ 2500/ per day</span
+                    >Starts @ {{ $city->cost }}/ per day</span
                     >
                 </h2>
                 <p></p>
@@ -85,103 +90,7 @@
                 </div>
             </a>
             </div>
-
-            <div class="cbp-item">
-            <a
-                href="#top"
-                class="box service-box qdr-hover-1-bottom click-effect m-0 "
-            >
-                <!-- Overlay - Parent element should have .relative class -->
-                <div
-                class="overlay zi--4 bg-soft bg-soft-dark8"
-                data-background="{{ asset('assets/frontend/images/mpcabs-city-2.jpg') }}"
-                ></div>
-                <!-- Texts -->
-                <div
-                class=" texts w-100 h-100 d-flex flex-column justify-content-center align-items-center"
-                >
-                <h2 class="white bold-title">
-                    Bhopal
-                    <br />
-                    <span class="playfair italic h4"
-                    >Starts @ 2500/ per day</span
-                    >
-                </h2>
-                <p></p>
-
-                <div
-                    class="secret-button gray5 underline-hover normal font-16 mt-3"
-                >
-                    See details
-                    <span class="fa fa-long-arrow-right"></span>
-                </div>
-                </div>
-            </a>
-            </div>
-
-            <div class="cbp-item">
-            <a
-                href="#top"
-                class="box service-box qdr-hover-1-bottom click-effect m-0 "
-            >
-                <!-- Overlay - Parent element should have .relative class -->
-                <div
-                class="overlay zi--4 bg-soft bg-soft-dark8"
-                data-background="{{ asset('assets/frontend/images/mpcabs-city-3.jpg') }}"
-                ></div>
-                <!-- Texts -->
-                <div
-                class=" texts w-100 h-100 d-flex flex-column justify-content-center align-items-center"
-                >
-                <h2 class="white bold-title">
-                    Bhopal
-                    <br />
-                    <span class="playfair italic h4"
-                    >Starts @ 2500/ per day</span
-                    >
-                </h2>
-                <p></p>
-
-                <div
-                    class="secret-button gray5 underline-hover normal font-16 mt-3"
-                >
-                    See details
-                    <span class="fa fa-long-arrow-right"></span>
-                </div>
-                </div>
-            </a>
-            </div>
-
-            <div class="cbp-item">
-            <a
-                href="#top"
-                class="box service-box qdr-hover-1-bottom click-effect m-0 "
-            >
-                <!-- Overlay - Parent element should have .relative class -->
-                <div
-                class="overlay zi--4 bg-soft bg-soft-dark8"
-                data-background="{{ asset('assets/frontend/images/mpcabs-city-1.jpg') }}"
-                ></div>
-                <!-- Texts -->
-                <div
-                class=" texts w-100 h-100 d-flex flex-column justify-content-center align-items-center"
-                >
-                <h2 class="white bold-title">
-                    Bhopal
-                    <br />
-                    <span class="playfair italic h4"
-                    >Starts @ 2500/ per day</span
-                    >
-                </h2>
-                <p></p>
-
-                <div class="secret-button gray5 underline-hover normal font-16 mt-3">
-                    See details
-                    <span class="fa fa-long-arrow-right"></span>
-                </div>
-                </div>
-            </a>
-            </div>
+        @endforeach    
         </div>
         <!-- End container for works -->
     </section>

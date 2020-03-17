@@ -9,15 +9,17 @@
                 <h6 class="uppercase dark extrabold">MPCAB</h6>
                 <h6 class="xs-mt bold gray9">ABOUT US</h6>
                 <p class="mini-mt">
-                It is a long established fact that a read page when looking at
-                its layout.
+                    {{ Hyvikk::frontend('about_us') }}
                 </p>
                 <h6 class="xs-mt bold gray9">
                 <i class="fa fa-map-marker mini-mr"></i>OUR ADDRESS
                 </h6>
                 <p class="mini-mt">
-                PO Box 16122 Collins Street West <br class="hidden-xs" />
-                Victoria 8007 Australia
+                {{ Hyvikk::get('badd1') }} <br class="hidden-xs" />
+                {{ Hyvikk::get('badd2') }} <br class="hidden-xs" />
+                {{ Hyvikk::get('city') }},
+                {{ Hyvikk::get('state') }},
+                {{ Hyvikk::get('country') }}.
                 </p>
                 <!-- Google Map -->
                 <a
@@ -32,13 +34,13 @@
                 </h6>
                 <p class="mini-mt">
                 Pbx:
-                <a href="tel:+0123456790" class="underline-hover colored-hover">+0123456789
+                <a href="tel:{{Hyvikk::frontend('contact_phone')}}" class="underline-hover colored-hover">{{ Hyvikk::frontend('contact_phone') }}
                 </a>
                 </p>
                 <a
-                href="mailto:goldeyestheme@gmail.com"
+                href="mailto:{{ Hyvikk::frontend('contact_email') }}"
                 class="underline-hover colored-hover"
-                >example@example.com</a
+                >{{ Hyvikk::frontend('contact_email') }}</a
                 >
             </div>
             <!-- Column -->

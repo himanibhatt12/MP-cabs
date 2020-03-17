@@ -43,38 +43,12 @@
         >
         <!-- Works -->
         <ul class="client-list qdr-col-4 container border-solid border-gray">
+            @foreach($brands as $brand)
             <li>
-            <a href="#"><img src="{{ asset('assets/frontend/images/clients/logo_01.png') }}" alt=""/></a>
-            <h4 class="py-2 gray7 capitalize">honda</h4>
+                <a href="#"><img src="{{ asset('uploads/'.$brand->image) }}" alt=""/></a>
+                <h4 class="py-2 gray7 capitalize">{{ $brand->make }}</h4>
             </li>
-            <li>
-            <a href="#"><img src="{{ asset('assets/frontend/images/clients/logo_02.png') }}" alt=""/></a>
-            <h4 class="py-2 gray7 capitalize">honda</h4>
-            </li>
-            <li>
-            <a href="#"><img src="{{ asset('assets/frontend/images/clients/logo_03.png') }}" alt=""/></a>
-            <h4 class="py-2 gray7 capitalize">honda</h4>
-            </li>
-            <li>
-            <a href="#"><img src="{{ asset('assets/frontend/images/clients/logo_04.png') }}" alt=""/></a>
-            <h4 class="py-2 gray7 capitalize">honda</h4>
-            </li>
-            <li>
-            <a href="#"><img src="{{ asset('assets/frontend/images/clients/logo_05.png') }}" alt=""/></a>
-            <h4 class="py-2 gray7 capitalize">honda</h4>
-            </li>
-            <li>
-            <a href="#"><img src="{{ asset('assets/frontend/images/clients/logo_06.png') }}" alt=""/></a>
-            <h4 class="py-2 gray7 capitalize">honda</h4>
-            </li>
-            <li>
-            <a href="#"><img src="{{ asset('assets/frontend/images/clients/logo_07.png') }}" alt=""/></a>
-            <h4 class="py-2 gray7 capitalize">honda</h4>
-            </li>
-            <li>
-            <a href="#"><img src="{{ asset('assets/frontend/images/clients/logo_08.png') }}" alt=""/></a>
-            <h4 class="py-2 gray7 capitalize">honda</h4>
-            </li>
+            @endforeach
         </ul>
         <!-- End container for works -->
     </section>

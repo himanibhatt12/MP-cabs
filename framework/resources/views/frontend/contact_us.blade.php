@@ -22,7 +22,11 @@
             Our address
             </h1>
             <p class="light">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. De.
+                {{ Hyvikk::get('badd1') }} <br class="hidden-xs" />
+                {{ Hyvikk::get('badd2') }} <br class="hidden-xs" />
+                {{ Hyvikk::get('city') }},
+                {{ Hyvikk::get('state') }},
+                {{ Hyvikk::get('country') }}.
             </p>
             <h4 class=" xs-mt">CALL US</h4>
             <div
@@ -33,10 +37,10 @@
             target="_blank"
             class="bg-white bold dark lg-btn font-14 xs-mt radius-lg qdr-hover-4 bs-light bs-xl-hover slow"
             >
-            +0123 455 444
+            {{ Hyvikk::frontend('contact_phone') }}
             </a>
             <h3 class="xs-my">
-            <a href="mailto:hello@mpcab.com"> hello@mpcab.com </a>
+            <a href="mailto:{{ Hyvikk::frontend('contact_email') }}"> {{ Hyvikk::frontend('contact_email') }} </a>
             </h3>
             <a
             href="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14842.005081409281!2d72.145316!3d21.566348!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2b0026a8da79bfab!2sDIAMOND%20TMT!5e0!3m2!1sen!2sin!4v1581664292917!5m2!1sen!2sin"

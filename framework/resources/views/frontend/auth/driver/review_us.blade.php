@@ -96,7 +96,20 @@
             <h5 class="merriweather italic light xxs-mt gray7 capitalize">
               It will give us a change to improve our services.
             </h5>
-
+            @if (count($errors) > 0)
+              <div class="alert alert-danger xs-mt">
+                <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+                </ul>
+              </div>
+            @endif
+            @if (session('success'))
+              <div class="alert alert-success xs-mt">
+                {{ session('success') }}
+              </div>
+            @endif
             <!-- Container for subscribe form -->
             <div class="container-xs">
               <!-- Divider -->
@@ -105,40 +118,43 @@
               </div>
               <!-- Form -->
               <form
-                id="newsletter_form"
-                name="newsletter_form"
+                {{-- id="newsletter_form"
+                name="newsletter_form" --}}
                 method="post"
-                action="php/newsletter.php"
+                action="{{ url('review-us') }}"
+                enctype="multipart/form-data"
               >
+              {!! csrf_field() !!}
                 <input
                   type="text"
                   name="name"
                   id="name"
                   placeholder="Your name"
                   class="classic_form bg-white radius"
+                  required
                 />
                 <input
-                  type="text"
-                  name="name"
-                  id="name"
+                  type="email"
+                  name="email"
+                  id="email"
                   placeholder="Email Address"
                   class="classic_form bg-white radius"
+                  required
                 />
                 <textarea
-                  name="message"
-                  id="message"
+                  name="review"
+                  id="review"
                   placeholder="Review text"
                   class="classic_form big radius bg-white "
                   spellcheck="false"
+                  required
                 ></textarea>
                 <div class="d-flex flex-column align-items-start">
                   <input
                     type="file"
-                    name="file"
+                    name="photo"
                     id="file"
                     class="inputfile"
-                    data-multiple-caption="{count} files selected"
-                    multiple
                   />
                   <label for="file" class="d-flex">
                     <strong class="bg-colored">Choose a file&hellip;</strong

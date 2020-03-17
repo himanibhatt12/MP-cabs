@@ -41,9 +41,19 @@ data-offset="55">
         <li>
         <a href="{{ url('contact-us') }}">Contact us</a>
         </li>
+        @if(!Auth::guest())
+        <li>
+        <a href="{{ url('user-logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" > Logout
+        </a>
+        </li>
+        <form id="logout-form" action="{{ url('user-logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
+        @else
         <li>
         <a href="{{ url('user-login') }}">Login</a>
         </li>
+        @endif
     </ul>
     </div>
     <!-- End Navigation Menu -->

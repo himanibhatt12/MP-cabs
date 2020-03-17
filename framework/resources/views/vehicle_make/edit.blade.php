@@ -30,6 +30,14 @@
           {!! Form::label('make', __('fleet.make'), ['class' => 'form-label']) !!}
           {!! Form::text('make', $vehicle_make->make,['class' => 'form-control','required']) !!}
         </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            {!! Form::label('image', __('fleet.picture'), ['class' => 'form-label']) !!}
+            @if($vehicle_make->image) <a href="{{url('uploads/'.$vehicle_make->image)}}" target="blank">View</a> @endif
+            <br>
+            {!! Form::file('image',null,['class' => 'form-control']) !!}
+          </div>
+        </div>
      </div>
       <div class="form-group">
         {!! Form::submit(__('fleet.update'), ['class' => 'btn btn-warning']) !!}

@@ -29,6 +29,7 @@
                 @endif
               </th>
               <th>#</th>
+              <th>@lang('fleet.picture')</th>
               <th>@lang('fleet.make')</th>
               <th>@lang('fleet.action')</th>
             </tr>
@@ -40,6 +41,13 @@
                 <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="checkbox" id="chk{{ $row->id }}" onclick='checkcheckbox();'>
               </td>
               <td>{{$row->id}}</td>
+              <td>
+                @if($row->image != null)
+                  <img src="{{asset('uploads/'.$row->image)}}" height="70px" width="70px">
+                @else
+                  <img src="{{ asset("assets/images/no-image.png")}}" height="70px" width="70px">
+                @endif
+              </td>
               <td>
                 {{ $row->make }}
               </td>
@@ -73,6 +81,7 @@
                 @endif
               </th>
               <th>#</th>
+              <th>@lang('fleet.picture')</th>
               <th>@lang('fleet.make')</th>
               <th>@lang('fleet.action')</th>
             </tr>

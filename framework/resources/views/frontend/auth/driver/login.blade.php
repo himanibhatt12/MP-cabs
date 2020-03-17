@@ -54,9 +54,23 @@
           <div class="container-xs mxw-350 v-center">
             <div class="t-center white">
               <h1 class="bold-title">Driver login</h1>
-
+              @if (session('success'))
+                <div class="alert alert-success xs-mt">
+                  {{ session('success') }}
+                </div>
+              @endif
+              @if (count($errors) > 0)
+                <div class="alert alert-danger xs-mt">
+                  <ul>
+                  @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                  </ul>
+                </div>
+              @endif
               <div class="form dark xs-mt normal-title">
-                <form action="" method="post">
+                <form action="{{ url('driver-login') }}" method="post">
+                  {!! csrf_field() !!}
                   <!-- Email -->
                   <input
                     type="email"
@@ -64,6 +78,7 @@
                     id="email"
                     placeholder="Email id"
                     class="classic_form bg-white radius"
+                    value="{{ old('email') }}"
                   />
                   <!-- Email -->
                   <input

@@ -45,41 +45,6 @@
 
     @include('frontend.includes.javascripts')
     @yield('javascript')
-  
-    <script>
-      // $("#n-submit").on("click",function(e){
-      //   $.ajax({
-      //     type: "POST",
-      //     url: $("#newsletter_form").attr("action"),
-      //     data: new FormData(this),
-      //     contentType: false,
-      //     cache: false,
-      //     processData:false,
-      //     success: function(data){
-      //       console.log(data);
-      //     },
-      //     dataType: "json",
-      //   });
-      //   e.preventDefault();
-      // });
-
-      // $("#qsubmit").on("click",function(e){
-      //   alert("Test");
-      //   $.ajax({
-      //     type: "POST",
-      //     url: $(".quick_form").attr("action"),
-      //     data: new FormData(this),
-      //     contentType: false,
-      //     cache: false,
-      //     processData:false,
-      //     success: function(data){
-      //       console.log(data);
-      //     },
-      //     dataType: "json",
-      //   });
-      //   e.preventDefault();
-      // });
-    </script>
 
   </body>
   <!-- Body End -->

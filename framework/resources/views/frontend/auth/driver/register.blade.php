@@ -15,8 +15,9 @@
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/bootstrap.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/frontend/css/theme.css?v=2.3.1') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/theme.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/frontend/content/nyks/css/nyks.css') }}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <!-- End Page Styles -->
   </head>
 
@@ -52,11 +53,22 @@
         >
           <!-- Container -->
           <div class="container">
-            <form action="" method="post" class="white">
+            <form action="{{ url('driver-register') }}" method="post" class="white" accept-charset="UTF-8" enctype="multipart/form-data">
+              {!! csrf_field() !!}
               <div class="row">
                 <div class="col-lg-12 t-center mb-5">
                   <h1 class="bold-title">Driver Registration</h1>
+                  @if (count($errors) > 0)
+                    <div class="alert alert-danger xs-mt">
+                      <ul>
+                      @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                      @endforeach
+                      </ul>
+                    </div>
+                  @endif
                 </div>
+                
                 <div class="col-lg-6 pb-3">
                   <input
                     type="text"
@@ -64,6 +76,8 @@
                     id="name"
                     placeholder="Full name"
                     class="classic_form bg-white radius"
+                    value="{{ old('name') }}"
+                    required
                   />
                 </div>
                 <div class="col-lg-6 pb-3">
@@ -73,104 +87,103 @@
                     id="email"
                     placeholder="Email Address"
                     class="classic_form bg-white radius"
+                    value="{{ old('email') }}"
+                    required
                   />
                 </div>
                 <div class="col-lg-6 pb-3">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="mobile"
+                    id="mobile"
                     placeholder="Mobile number"
                     class="classic_form bg-white radius"
+                    value="{{ old('mobile') }}"
+                    required
                   />
                 </div>
                 <div class="col-lg-6 pb-3">
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="alt_mobile"
+                    id="alt_mobile"
                     placeholder="Whatsapp number"
                     class="classic_form bg-white radius"
+                    value="{{ old('alt_mobile') }}"
+                    required
                   />
                 </div>
                 <div class="col-lg-12 d-flex justfy-content-start pb-3">
                   <div class="classic_checkbox radio">
                     <input
                       type="radio"
-                      name="radio"
+                      name="gender"
                       id="radioOne"
-                      value="radioOne"
                       checked=""
+                      value=1
                     />
                     <label for="radioOne">Male</label>
                   </div>
                   <div class="classic_checkbox radio">
                     <input
                       type="radio"
-                      name="radio"
+                      name="gender"
                       id="radioOne"
-                      value="radioOne"
+                      value=0
                       checked=""
                     />
                     <label for="radioOne">Female</label>
                   </div>
                 </div>
                 <div class="col-lg-6 d-flex flex-column align-items-start pb-3">
-                  <label for="idproof"> Id Proof * </label>
+                  <label for="id_proof"> Id Proof * </label>
                   <input
                     type="file"
-                    name="file"
-                    id="file"
+                    name="id_proof"
+                    id="id_proof"
                     class="inputfile"
-                    data-multiple-caption="{count} files selected"
-                    multiple
+                    
                   />
-                  <label for="file" class="d-flex">
+                  <label for="id_proof" class="d-flex">
                     <strong class="bg-colored">Choose a file&hellip;</strong
                     ><span></span
                   ></label>
                 </div>
                 <div class="col-lg-6 d-flex flex-column align-items-start">
-                  <label for="idproof"> Driving license * </label>
+                  <label for="driving_license"> Driving license * </label>
                   <input
                     type="file"
-                    name="file"
-                    id="file"
+                    name="driving_license"
+                    id="driving_license"
                     class="inputfile"
-                    data-multiple-caption="{count} files selected"
-                    multiple
                   />
-                  <label for="file" class="d-flex">
+                  <label for="driving_license" class="d-flex">
                     <strong class="bg-colored">Choose a file&hellip;</strong
                     ><span></span
                   ></label>
                 </div>
                 <div class="col-lg-6 d-flex flex-column align-items-start">
-                  <label for="idproof"> RC Book * </label>
+                  <label for="rc_book"> RC Book * </label>
                   <input
                     type="file"
-                    name="file"
-                    id="file"
+                    name="rc_book"
+                    id="rc_book"
                     class="inputfile"
-                    data-multiple-caption="{count} files selected"
-                    multiple
                   />
-                  <label for="file" class="d-flex">
+                  <label for="rc_book" class="d-flex">
                     <strong class="bg-colored">Choose a file&hellip;</strong
                     ><span></span
                   ></label>
                 </div>
                 <div class="col-lg-6 d-flex flex-column align-items-start">
-                  <label for="idproof"> Permit * </label>
+                  <label for="permit"> Permit</label>
                   <input
                     type="file"
-                    name="file"
-                    id="file"
+                    name="permit"
+                    id="permit"
                     class="inputfile"
-                    data-multiple-caption="{count} files selected"
-                    multiple
                   />
-                  <label for="file" class="d-flex">
+                  <label for="permit" class="d-flex">
                     <strong class="bg-colored">Choose a file&hellip;</strong
                     ><span></span
                   ></label>
@@ -181,76 +194,99 @@
                   <span> Vehicle information </span>
                 </div>
                 <div class="col-lg-6 t-left pb-3">
-                  <label for="subject">Select vehicle name</label>
+                  <label for="make_id">Select vehicle company</label>
                   <select
-                    name="subject"
-                    form="contact_form"
+                    name="make_id"
+                    required=""
+                    class="classic_form radius  bg-white"
+                    id="make_id"
+                  >
+                    <option value="">Select a vehicle company</option>
+                    @foreach ($makes as $item)
+                    <option value="{{ $item->id }}">{{ $item->make }}</option>  
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col-lg-6 t-left pb-3">
+                  <label for="model_id">Select vehicle name</label>
+                  <select
+                    name="model_id"
+                    required=""
+                    class="classic_form radius bg-white"
+                    id="model_id"
+                  >
+                    <option value="">Select a vehicle name</option>
+                    
+                  </select>
+                </div>
+
+                <div class="col-lg-6 t-left pb-3">
+                  <label for="type_id">Select vehicle type</label>
+                  <select
+                    name="type_id"
                     required=""
                     class="classic_form radius bg-white"
                   >
-                    <option value="">Select a vehicle</option>
-                    <option value="Developer">Option 1</option>
-                    <option value="Designer">Option 2</option>
-                    <option value="Photographer">Option 3</option>
+                    <option value="">Select a vehicle type</option>
+                    @foreach ($types as $row)
+                    <option value="{{ $row->id }}">{{ $row->displayname }}</option>                        
+                    @endforeach
                   </select>
                 </div>
                 <div class="col-lg-6 t-left pb-3">
-                  <label for="subject">Select vehicle company</label>
+                  <label for="color_id">Select vehicle color</label>
                   <select
-                    name="subject"
-                    form="contact_form"
+                    name="color_id"
                     required=""
-                    class="classic_form radius  bg-white"
+                    class="classic_form radius bg-white"
                   >
-                    <option value="">Select a vehicle</option>
-                    <option value="Developer">Option 1</option>
-                    <option value="Designer">Option 2</option>
-                    <option value="Photographer">Option 3</option>
+                    <option value="">Select a vehicle color</option>
+                    @foreach ($colors as $item)
+                    <option value="{{ $item->id }}">{{ $item->color }}</option>  
+                    @endforeach
                   </select>
                 </div>
                 <div class="col-lg-6 pb-3">
-                  <label for="idproof"> &nbsp; </label>
+                  <label for="vehicle_number"> &nbsp; </label>
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="vehicle_number"
+                    id="vehicle_number"
                     placeholder="Vehicle number ( e.g. GJ-04-be-8562 ) "
                     class="classic_form bg-white radius"
+                    required
                   />
                 </div>
                 <div class="col-lg-6 t-left pb-3">
-                  <label for="idproof"> Vehicle Insurance * </label>
+                  <label for="insurance"> Vehicle Insurance * </label>
                   <input
                     type="file"
-                    name="file"
-                    id="file"
+                    name="insurance"
+                    id="insurance"
                     class="inputfile"
-                    data-multiple-caption="{count} files selected"
-                    multiple
                   />
-                  <label for="file" class="d-flex">
+                  <label for="insurance" class="d-flex">
                     <strong class="bg-colored">Choose a file&hellip;</strong
                     ><span></span
                   ></label>
                 </div>
                 <div class="col-lg-6 d-flex flex-column align-items-start pb-3">
-                  <label for="idproof"> Vehicle Fitness Certificate * </label>
+                  <label for="vehicle_fitness"> Vehicle Fitness Certificate </label>
                   <input
                     type="file"
-                    name="file"
-                    id="file"
+                    name="vehicle_fitness"
+                    id="vehicle_fitness"
                     class="inputfile"
-                    data-multiple-caption="{count} files selected"
-                    multiple
+                   
                   />
-                  <label for="file" class="d-flex">
+                  <label for="vehicle_fitness" class="d-flex">
                     <strong class="bg-colored">Choose a file&hellip;</strong
                     ><span></span
                   ></label>
                 </div>
                 <div class="col-lg-12 t-left pb-3">
                   <div class="checkbox_switch xs-mt">
-                    <input type="checkbox" id="switch" class="switch" /><label
+                    <input type="checkbox" id="switch" class="switch" name="terms" value=1 /><label
                       for="switch"
                     ></label>
                     <span
@@ -294,7 +330,7 @@
     <!-- END WRAPPER -->
 
     <!-- Back To Top -->
-    <a id="back-to-top" href="#top"><i class="fa fa-angle-up"></i></a>
+    <a id="back-to-top" href="#top"><span class="fa fa-angle-up"></span></a>
 
     <!-- jQuery -->
     <script src="{{ asset('assets/frontend/js/jquery.min.js?v=2.3') }}"></script>
@@ -302,6 +338,24 @@
     <!-- <script src="content/antares/js/plugins.js"></script> -->
     <!-- MAIN SCRIPTS - Classic scripts for all theme -->
     <script src="{{ asset('assets/frontend/js/scripts.js?v=2.3.1') }}"></script>
+    <script>
+      $('#make_id').on('change',function(){
+        // alert($(this).val());
+        $.ajax({
+          type: "GET",
+          url: "{{url('admin/get-models')}}/"+$(this).val(),
+          success: function(data){
+            var models =  $.parseJSON(data);
+              $('#model_id').empty();
+              $('#model_id').append('<option value=""></option>');
+              $.each( models, function( key, value ) {
+                $('#model_id').append('<option value='+value.id+'>'+value.text+'</option>');                
+              });    
+          },
+          dataType: "html"
+        });
+      });
+    </script>
   </body>
   <!-- Body End -->
 </html>

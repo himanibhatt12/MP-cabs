@@ -49,7 +49,7 @@
         <div class="col-md-6">
           <div class="form-group">
             {!! Form::label('other',__('fleet.other_info'), ['class' => 'form-label']) !!}
-            {!! Form::textarea('other',$city->other,['class'=>'form-control','size'=>'30x2','required']) !!}
+            {!! Form::textarea('other',$city->other,['class'=>'form-control','size'=>'30x2']) !!}
           </div>
         </div>
      </div>

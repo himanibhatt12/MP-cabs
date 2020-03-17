@@ -2,27 +2,47 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReviewUsRequest;
 use App\Mail\SubscriptionMail;
+use App\Model\CitiesModel;
+use App\Model\CompanyReviews;
 use App\Model\FaqsModel;
 use App\Model\MessageModel;
-// use ColorInterpreter as NameThatColor;
+use App\Model\PackagesModel;
+use App\Model\RouteModel;
+use App\Model\Testimonial;
+use App\Model\VehicleMake;
+use App\Model\VehicleTypeModel;
 use Hyvikk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Validator;
 
 class FrontendController extends Controller
 {
 
-    // public function test()
-    // {
-    //     $instance = new NameThatColor();
+    public function post_review_us(ReviewUsRequest $request)
+    {
+        $review = CompanyReviews::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'review' => $request->review,
+        ]);
 
-    //     $result = $instance->name("#008559");
+        $file = $request->file('photo');
 
-    //     var_dump($result);
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+            $destinationPath = './uploads'; // upload path
+            $extension = $file->getClientOriginalExtension();
+            $fileName1 = Str::uuid() . '.' . $extension;
+            $file->move($destinationPath, $fileName1);
+            $review->photo = $fileName1;
+            $review->save();
+        }
 
-    // }
+        return back()->with('success', 'Your Review has been Submitted Successfully.');
+    }
 
     public function message_us(Request $request)
     {
@@ -66,6 +86,7 @@ class FrontendController extends Controller
     public function brands()
     {
         $data['title'] = "Brands";
+        $data['brands'] = VehicleMake::get();
         return view('frontend.brands', $data);
     }
 
@@ -83,18 +104,26 @@ class FrontendController extends Controller
     public function fixed_routes()
     {
         $data['title'] = "Fixed routes";
+        $data['routes'] = RouteModel::get();
         return view('frontend.fixed_routes', $data);
     }
 
     public function availabilities()
     {
         $data['title'] = "Service Availabilities";
+        $data['cities'] = CitiesModel::get();
         return view('frontend.availabilities', $data);
     }
 
     public function home()
     {
         $data['title'] = "Home";
+        $data['packages'] = PackagesModel::get();
+        $data['cities'] = CitiesModel::get();
+        $data['routes'] = RouteModel::get();
+        $data['brands'] = VehicleMake::get();
+        $data['testimonials'] = Testimonial::get();
+        $data['types'] = VehicleTypeModel::where('isenable', 1)->get();
         return view('frontend.home', $data);
     }
 
@@ -104,8 +133,4 @@ class FrontendController extends Controller
         return view('frontend.about', $data);
     }
 
-    public function index()
-    {
-        return view('frontend.test');
-    }
 }

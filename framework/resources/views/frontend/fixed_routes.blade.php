@@ -53,6 +53,11 @@
             id="gallery"
             class="cbp lightbox_selected cbp-l-grid-masonry-projects"
         >
+        @foreach($routes as $row)
+        @php($src="assets/frontend/images/gallery/gallery_02.jpg")
+        @if($row->image)
+        @php($src="uploads/".$row->image)
+        @endif
             <!-- Item -->
             <div class="cbp-item">
             <!-- Box Border -->
@@ -61,16 +66,16 @@
                 style="border-width: 1px;"
             >
                 <div class="xxs-py">
-                <h4 class="extrabold no-pm">Sagar - Bhopal</h4>
+                <h4 class="extrabold no-pm">{{ $row->source." - ".$row->destination }}</h4>
                 </div>
                 <!-- Box Top -->
                 <div
                 class="xs-py bg-gray1 white bg-soft-dark3 bg-soft cover loaded"
-                data-background="{{ asset('assets/frontend/images/gallery/gallery_02.jpg') }}"
-                style='background-image: url("assets/frontend/images/gallery/gallery_02.jpg");'
+                data-background="{{ asset($src) }}"
+                style='background-image: url("{{ $src }}");'
                 >
                 <!-- Price -->
-                <h3>$<span class="text-lg2 extrabold">2500</span></h3>
+                <h3>{{ Hyvikk::get('currency') }}<span class="text-lg2 extrabold">{{ $row->cost }}</span></h3>
                 <p class="uppercase">Per day</p>
                 </div>
                 <!-- Button -->
@@ -84,130 +89,7 @@
                 </div>
             </div>
             </div>
-
-            <div class="cbp-item">
-            <!-- Box Border -->
-            <div
-                class="gray8 border-1 border-gray no-border-bottom radius o-hidden slow bs-light relative"
-                style="border-width: 1px;"
-            >
-                <div class="xxs-py">
-                <h4 class="extrabold no-pm">Sagar - Bhopal</h4>
-                </div>
-                <!-- Box Top -->
-                <div
-                class="xs-py bg-gray1 white bg-soft-dark3 bg-soft cover loaded"
-                data-background="{{ asset('assets/frontend/images/gallery/gallery_02.jpg') }}"
-                style='background-image: url("assets/frontend/images/gallery/gallery_02.jpg");'
-                >
-                <!-- Price -->
-                <h3>$<span class="text-lg2 extrabold">2500</span></h3>
-                <p class="uppercase">Per day</p>
-                </div>
-                <!-- Button -->
-                <div>
-                <!-- Button -->
-                <a
-                    href="#"
-                    class="xxs-py block font-11 uppercase white bold bg-dark1 bg-colored-hover slow"
-                    >View details</a
-                >
-                </div>
-            </div>
-            </div>
-
-            <div class="cbp-item">
-            <!-- Box Border -->
-            <div
-                class="gray8 border-1 border-gray no-border-bottom radius o-hidden slow bs-light relative"
-                style="border-width: 1px;"
-            >
-                <div class="xxs-py">
-                <h4 class="extrabold no-pm">Sagar - Bhopal</h4>
-                </div>
-                <!-- Box Top -->
-                <div
-                class="xs-py bg-gray1 white bg-soft-dark3 bg-soft cover loaded"
-                data-background="{{ asset('assets/frontend/images/gallery/gallery_02.jpg') }}"
-                style='background-image: url("assets/frontend/images/gallery/gallery_02.jpg");'
-                >
-                <!-- Price -->
-                <h3>$<span class="text-lg2 extrabold">2500</span></h3>
-                <p class="uppercase">Per day</p>
-                </div>
-                <!-- Button -->
-                <div>
-                <!-- Button -->
-                <a
-                    href="#"
-                    class="xxs-py block font-11 uppercase white bold bg-dark1 bg-colored-hover slow"
-                    >View details</a
-                >
-                </div>
-            </div>
-            </div>
-
-            <div class="cbp-item">
-            <!-- Box Border -->
-            <div
-                class="gray8 border-1 border-gray no-border-bottom radius o-hidden slow bs-light relative"
-                style="border-width: 1px;"
-            >
-                <div class="xxs-py">
-                <h4 class="extrabold no-pm">Sagar - Bhopal</h4>
-                </div>
-                <!-- Box Top -->
-                <div
-                class="xs-py bg-gray1 white bg-soft-dark3 bg-soft cover loaded"
-                data-background="{{ asset('assets/frontend/images/gallery/gallery_02.jpg') }}"
-                style='background-image: url("assets/frontend/images/gallery/gallery_02.jpg");'
-                >
-                <!-- Price -->
-                <h3>$<span class="text-lg2 extrabold">2500</span></h3>
-                <p class="uppercase">Per day</p>
-                </div>
-                <!-- Button -->
-                <div>
-                <!-- Button -->
-                <a
-                    href="#"
-                    class="xxs-py block font-11 uppercase white bold bg-dark1 bg-colored-hover slow"
-                    >View details</a
-                >
-                </div>
-            </div>
-            </div>
-
-            <div class="cbp-item">
-            <!-- Box Border -->
-            <div
-                class="gray8 border-1 border-gray no-border-bottom radius o-hidden slow bs-light relative"
-                style="border-width: 1px;"
-            >
-                <div class="xxs-py">
-                <h4 class="extrabold no-pm">Sagar - Bhopal</h4>
-                </div>
-                <!-- Box Top -->
-                <div
-                class="xs-py bg-gray1 white bg-soft-dark3 bg-soft cover loaded"
-                data-background="{{ asset('assets/frontend/images/gallery/gallery_02.jpg') }}"
-                style='background-image: url("assets/frontend/images/gallery/gallery_02.jpg");'
-                >
-                <!-- Price -->
-                <h3>$<span class="text-lg2 extrabold">2500</span></h3>
-                <p class="uppercase">Per day</p>
-                </div>
-                <!-- Button -->
-                <div>
-                <!-- Button -->
-                <a
-                    href="#"
-                    class="xxs-py block font-11 uppercase white bold bg-dark1 bg-colored-hover slow"
-                    >View details</a
-                >
-                </div>
-            </div>
-            </div>
+        @endforeach    
         </div>
         <!-- End container for works -->
     </section>

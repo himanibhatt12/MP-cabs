@@ -47,17 +47,7 @@
             </h1>
             <div class="title-strips-over dark"></div>
             <p class="page-description gray6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Molestias aliquam maxime tempora facere voluptatibus, sed
-                deserunt incidunt ut. Voluptatem neque odio veritatis maxime,
-                illum autem delectus deserunt eveniet ex voluptatibus laborum
-                dignissimos adipisci a quo, aspernatur amet alias repellat
-                tenetur.
-                <br />
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-                distinctio fugiat, doloribus ad fuga tempore accusantium
-                incidunt corrupti rerum, autem ratione unde sunt repellendus!
-                Beatae cumque rerum at dicta autem?
+                {!! Hyvikk::frontend('about_description') !!}
             </p>
             </div>
         </div>

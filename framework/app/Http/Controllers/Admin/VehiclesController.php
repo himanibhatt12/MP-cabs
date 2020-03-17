@@ -103,7 +103,7 @@ class VehiclesController extends Controller
             $index['groups'] = VehicleGroupModel::where('id', Auth::user()->group_id)->get();
         }
         $index['makes'] = VehicleMake::get();
-        $index['types'] = VehicleTypeModel::all();
+        $index['types'] = VehicleTypeModel::where('isenable', 1)->get();
         $index['colors'] = VehicleColor::get();
         return view("vehicles.create", $index);
     }

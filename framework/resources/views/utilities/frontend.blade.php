@@ -155,7 +155,7 @@ input:checked + .slider:before {
           </div>
           <div class="col-md-12">
             <div class="form-group">
-              {!! Form::label('about_description', __('fleet.aboutFleetManagerDescription'), ['class' => 'form-label']) !!}
+              {!! Form::label('about_description', "About The MPCab Company", ['class' => 'form-label']) !!}
               <textarea name="about_description" class="form-control" rows="3" required>{{ Hyvikk::frontend('about_description') }}</textarea>
             </div>
             <div class="form-group">

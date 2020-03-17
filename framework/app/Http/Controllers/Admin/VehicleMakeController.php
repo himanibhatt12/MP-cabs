@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VehicleMakeRequest;
 use App\Model\VehicleMake;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class VehicleMakeController extends Controller
 {
@@ -26,7 +27,16 @@ class VehicleMakeController extends Controller
         $new = VehicleMake::create([
             'make' => $request->make,
         ]);
+        $file = $request->file('image');
 
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $destinationPath = './uploads'; // upload path
+            $extension = $file->getClientOriginalExtension();
+            $fileName1 = Str::uuid() . '.' . $extension;
+            $file->move($destinationPath, $fileName1);
+            $new->image = $fileName1;
+            $new->save();
+        }
         return redirect()->route('vehicle-make.index');
     }
 
@@ -43,7 +53,16 @@ class VehicleMakeController extends Controller
         $data->update([
             'make' => $request->make,
         ]);
+        $file = $request->file('image');
 
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $destinationPath = './uploads'; // upload path
+            $extension = $file->getClientOriginalExtension();
+            $fileName1 = Str::uuid() . '.' . $extension;
+            $file->move($destinationPath, $fileName1);
+            $data->image = $fileName1;
+            $data->save();
+        }
         return redirect()->route('vehicle-make.index');
     }
 

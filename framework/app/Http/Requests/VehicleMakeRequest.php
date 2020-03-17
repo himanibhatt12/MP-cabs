@@ -30,6 +30,14 @@ class VehicleMakeRequest extends FormRequest
     {
         return [
             'make' => 'required',
+            'image' => 'required|image|dimensions:width=400,height=300',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'image.dimensions' => 'Icon Image dimensions must be 400x300.',
         ];
     }
 }
