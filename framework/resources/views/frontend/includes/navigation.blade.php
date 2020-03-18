@@ -41,7 +41,7 @@ data-offset="55">
         <li>
         <a href="{{ url('contact-us') }}">Contact us</a>
         </li>
-        @if(!Auth::guest())
+        @if(!Auth::guest() && (Auth::user()->user_type == "C" || Auth::user()->user_type == "D"))
         <li>
         <a href="{{ url('user-logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" > Logout
         </a>

@@ -20,6 +20,55 @@ use Validator;
 class MPCabsDriversApi extends Controller
 {
 
+    public function vehicle_info()
+    {
+        $makes = VehicleMake::get();
+        $make_details = array();
+        foreach ($makes as $make) {
+            $make_details[] = array('id' => $make->id, 'make' => $make->make);
+        }
+
+        $models = Vehicle_Model::get();
+        $model_details = array();
+        foreach ($models as $model) {
+            $model_details[] = array("id" => $model->id, "model" => $model->model, 'make_id' => $model->make_id);
+        }
+
+        $vehicle_types = VehicleTypeModel::select('id', 'vehicletype', 'displayname', 'icon', 'seats')->where('isenable', 1)->get();
+
+        $vehicle_type_data = array();
+        foreach ($vehicle_types as $vehicle_type) {
+            if ($vehicle_type->icon != null) {
+                $url = asset("assets/images/" . $vehicle_type->icon);
+            } else {
+                $url = asset("assets/images/vehicle.jpeg");
+            }
+            $vehicle_type_data[] = array(
+                'id' => $vehicle_type->id,
+                'vehicletype' => $vehicle_type->vehicletype,
+                'displayname' => $vehicle_type->displayname,
+                'icon' => $url,
+                'no_seats' => $vehicle_type->seats,
+            );
+        }
+
+        $colors = VehicleColor::get();
+        $color_details = array();
+        foreach ($colors as $color) {
+            $color_details[] = array('id' => $color->id, 'color' => $color->color, 'code' => $color->code);
+        }
+
+        $data['success'] = "1";
+        $data['message'] = "Data fetched!";
+        $data['data'] = array(
+            'make' => $make_details,
+            'models' => $model_details,
+            'colors' => $color_details,
+            'types' => $vehicle_type_data,
+        );
+        return $data;
+    }
+
     public function single_offer(Request $request)
     {
         $validation = Validator::make($request->all(), [

@@ -16,9 +16,9 @@ class CustomerLogin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->user_type != "C") {
-            return redirect("user-login");
+        if (Auth::user() && Auth::user()->user_type == "C") {
+            return $next($request);
         }
-        return $next($request);
+        return redirect("user-login")->withErrors(["error" => "You must have to login to book a cab"]);
     }
 }

@@ -28,10 +28,17 @@ class VehicleMakeRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'make' => 'required',
-            'image' => 'required|image|dimensions:width=400,height=300',
-        ];
+        if ($this->request->has("edit")) {
+            return [
+                'make' => 'required|unique:vehicle_make,make,' . \Request::get("id") . ',id,deleted_at,NULL',
+                'image' => 'nullable|image|dimensions:width=400,height=300',
+            ];
+        } else {
+            return [
+                'make' => 'required|unique:vehicle_make,make,' . \Request::get("id") . ',id,deleted_at,NULL',
+                'image' => 'required|image|dimensions:width=400,height=300',
+            ];
+        }
     }
 
     public function messages()

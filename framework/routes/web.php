@@ -1,5 +1,11 @@
 <?php
 // Route::get('test', 'Frontend\FrontendController@test');
+
+// bookings
+Route::post('local-booking', 'Frontend\BookingController@local_booking')->middleware('CustomerLogin');
+Route::post('one-way-booking', 'Frontend\BookingController@oneway_booking')->middleware('CustomerLogin');
+Route::post('round-trip', 'Frontend\BookingController@round_trip')->middleware('CustomerLogin');
+
 Route::get('/', 'Frontend\FrontendController@home');
 Route::get('about', 'Frontend\FrontendController@about');
 Route::get('availabilities', 'Frontend\FrontendController@availabilities');

@@ -24,6 +24,7 @@
 
       {!! Form::open(['route' => ['vehicle-make.update',$vehicle_make->id],'method'=>'PATCH','files'=>true]) !!}
       {!! Form::hidden('id',$vehicle_make->id) !!}
+      {!! Form::hidden('edit',1) !!}
 
       <div class="row">
         <div class="form-group col-md-6">

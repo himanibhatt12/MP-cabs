@@ -450,6 +450,7 @@
             <div class="tab-content slide-effect t-left xxs-mt">
               <!-- Tab -->
               <div id="tab1m" role="tabpanel" class="tab-pane active show">
+                {!! Form::open(['url' => 'local-booking','method'=>'post']) !!}
                 <div class="tab-container pt-3">
                   <div class="container no-px">
                     <div class="row">
@@ -494,20 +495,22 @@
                         />
                       </div>
                       <div class="col-sm-4">
-                        <a
-                          href="#"
-                          class="stay lg-btn bg-colored white qdr-hover bold"
+                        <button
+                          type="submit"
+                          class="lg-btn bg-colored white qdr-hover bold"
                           ><span class="qdr-details"
                             >Book cab Now !</span
-                          ></a
+                          ></button
                         >
                       </div>
                     </div>
                   </div>
                 </div>
+                {!! Form::close() !!}
               </div>
               <!-- Tab -->
               <div id="tab2m" role="tabpanel" class="tab-pane">
+                {!! Form::open(['url' => 'one-way-booking','method'=>'post']) !!}
                 <div class="tab-container pt-3">
                   <div class="container no-px">
                     <div class="row">
@@ -572,20 +575,22 @@
                         />
                       </div>
                       <div class="col-sm-4">
-                        <a
-                          href="#"
-                          class="stay lg-btn bg-colored white qdr-hover bold"
+                        <button
+                          type="submit"
+                          class="lg-btn bg-colored white qdr-hover bold"
                           ><span class="qdr-details"
                             >Book cab Now !</span
-                          ></a
+                          ></button
                         >
                       </div>
                     </div>
                   </div>
                 </div>
+                {!! Form::close() !!}
               </div>
               <!-- Tab -->
               <div id="tab3m" role="tabpanel" class="tab-pane">
+                {!! Form::open(['url' => 'round-trip','method'=>'post']) !!}
                 <div class="tab-container pt-3">
                   <div class="container no-px">
                     <div class="row">
@@ -670,17 +675,18 @@
                         />
                       </div>
                       <div class="col-sm-4">
-                        <a
-                          href="#"
-                          class="stay lg-btn bg-colored white qdr-hover bold"
+                        <button
+                          type="submit"
+                          class="lg-btn bg-colored white qdr-hover bold"
                           ><span class="qdr-details"
                             >Book cab Now !</span
-                          ></a
+                          ></button
                         >
                       </div>
                     </div>
                   </div>
                 </div>
+                {!! Form::close() !!}
               </div>
               <!-- Tab -->
               <div id="tab4m" role="tabpanel" class="tab-pane">
@@ -690,7 +696,7 @@
                     data-slick='{"dots": false, "arrows": false, "fade": false, "draggable":true, "slidesToShow": 3, "slidesToScroll": 1, "responsive":[{"breakpoint": 1200,"settings":{"slidesToShow": 2}}, {"breakpoint": 800,"settings":{"slidesToShow": 1}}] }'
                   >
                   @foreach($packages as $row)
-                  @php($src='assets/images/vehicle.jpeg');
+                  @php($src='assets/images/vehicle.jpeg')
                   @if($row->vehicle->vehicle_image)
                   @php($src='uploads/'.$row->vehicle->vehicle_image)
                   @endif

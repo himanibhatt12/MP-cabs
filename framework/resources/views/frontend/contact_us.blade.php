@@ -43,7 +43,7 @@
             <a href="mailto:{{ Hyvikk::frontend('contact_email') }}"> {{ Hyvikk::frontend('contact_email') }} </a>
             </h3>
             <a
-            href="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14842.005081409281!2d72.145316!3d21.566348!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2b0026a8da79bfab!2sDIAMOND%20TMT!5e0!3m2!1sen!2sin!4v1581664292917!5m2!1sen!2sin"
+            href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58388.31401831771!2d78.73087742738423!3d23.844557573432237!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3978d158b840996f%3A0xc478c2b6fa41c8d0!2sMpcab.in%20(Online%20Taxi%20Cab%20Booking%20Services%20in%20Sagar)!5e0!3m2!1sen!2sin!4v1584519229197!5m2!1sen!2sin"
             data-iframe="true"
             class="lightbox inline-block"
             >
