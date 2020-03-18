@@ -37,7 +37,7 @@
   border-right-width: 1px;
   border-style: solid;
   border-color: #898989;
-  background: url(../../../images/plus_white_big.png) center center no-repeat;
+  background: url(../../../assets/frontend/images/plus_white_big.png) center center no-repeat;
   opacity: 0.3;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;

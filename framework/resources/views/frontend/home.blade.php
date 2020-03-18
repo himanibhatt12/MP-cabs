@@ -38,7 +38,7 @@
               data-easein="default"
               data-easeout="default"
               data-masterspeed="default"
-              data-thumb="images/rs/img/exp_bg1-100x50.jpg"
+              {{-- data-thumb="images/rs/img/exp_bg1-100x50.jpg" --}}
               data-rotate="0"
               data-saveperformance="off"
               data-title="Slide"
@@ -1394,10 +1394,10 @@
             });
         }
 
-        RsParticlesAddOn(revapi348);
-        try {
-            initSocialSharing("348");
-        } catch (e) {}
+        // RsParticlesAddOn(revapi348);
+        // try {
+        //     initSocialSharing("348");
+        // } catch (e) {}
         }); /*ready*/
         $(".datepicker").pickadate();
         $(".timepicker").pickatime();

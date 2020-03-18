@@ -54,7 +54,7 @@
             class="cbp lightbox_selected cbp-l-grid-masonry-projects"
         >
         @foreach($routes as $row)
-        @php($src="assets/frontend/images/gallery/gallery_02.jpg")
+        @php($src="assets/frontend/images/route.jpg")
         @if($row->image)
         @php($src="uploads/".$row->image)
         @endif
