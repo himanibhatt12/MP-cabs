@@ -136,15 +136,15 @@ class MPCabsDriversApi extends Controller
     public function register_driver(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            // 'make_id' => 'required_if:vehicle_id,|integer|nullable',
-            // 'model_id' => 'required_if:vehicle_id,|integer|nullable',
-            // 'type_id' => 'required_if:vehicle_id,|integer|nullable',
-            // 'vehicle_number' => 'required_if:vehicle_id,|unique:vehicles,license_plate|nullable',
-            // 'vehicle_id' => 'required_if:make_id,|integer|nullable',
-            // 'insurance' => 'required',
-            // 'rc_book' => 'required',
-            // 'driving_license' => 'required',
-            // 'terms' => 'required|in:1',
+            'make_id' => 'required|integer',
+            'model_id' => 'required|integer',
+            'type_id' => 'required|integer',
+            'vehicle_number' => 'required|unique:vehicles,license_plate',
+            'insurance' => 'required',
+            'rc_book' => 'required',
+            'driving_license' => 'required',
+            'terms' => 'required|in:1',
+            ///
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'mobile' => 'required|numeric',
@@ -161,177 +161,15 @@ class MPCabsDriversApi extends Controller
             $data['message'] = implode(", ", $errors->all());
             $data['data'] = "";
         } else {
-            // if ($request->vehicle_id == null) {
-            // $vehicle = VehicleModel::create([
-            //     'make_id' => $request->make_id,
-            //     'model_id' => $request->model_id,
-            //     'type_id' => $request->type_id,
-            //     'license_plate' => $request->vehicle_number,
-            //     'in_service' => 1,
-            //     // 'color_id' => $request->color_id,
-            //     // 'user_id' => $user->id,
-            // ]);
-            //     if ($request->file('insurance') && $request->file('insurance')->isValid()) {
-            //         $this->upload_vehicle_doc($request->file('insurance'), 'insurance', $vehicle->id);
-            //     }
-            //     if ($request->file('rc_book') && $request->file('rc_book')->isValid()) {
-            //         $this->upload_vehicle_doc($request->file('rc_book'), 'rc_book', $vehicle->id);
-            //     }
-            //     if ($request->file('permit') && $request->file('permit')->isValid()) {
-            //         $this->upload_vehicle_doc($request->file('permit'), 'permit', $vehicle->id);
-            //     }
-            //     if ($request->file('vehicle_fitness') && $request->file('vehicle_fitness')->isValid()) {
-            //         $this->upload_vehicle_doc($request->file('vehicle_fitness'), 'vehicle_fitness', $vehicle->id);
-            //     }
-            //     $vehicle_id = $vehicle->id;
-            // } else {
-            //     $vehicle_id = $request->vehicle_id;
-            // }
-            $user = User::create([
-                "name" => $request->name,
-                "email" => $request->email,
-                "password" => bcrypt($request->password),
-                "user_type" => "D",
-                'api_token' => str_random(60),
+            $vehicle = VehicleModel::create([
+                'make_id' => $request->make_id,
+                'model_id' => $request->model_id,
+                'type_id' => $request->type_id,
+                'license_plate' => $request->vehicle_number,
+                'in_service' => 1,
+                'color_id' => $request->color_id,
+                // 'user_id' => $user->id,
             ]);
-            $name = explode(" ", $user->name);
-            $user->first_name = $name[0];
-            if (sizeof($name) > 1) {
-                $user->last_name = $name[1];
-            }
-            $user->gender = $request->gender;
-            $user->phone = $request->mobile;
-            $user->fcm_id = $request->fcm_id;
-            $user->device_token = $request->device_token;
-            $user->alt_mobile = $request->alt_mobile;
-            if ($request->mode == '1') {
-                $mode = 'android';
-            } else {
-                $mode = 'ios';
-            }
-            $user->mode = $mode;
-            // $user->vehicle_id = $vehicle_id;
-            $user->save();
-
-            // if ($request->file('driving_license') && $request->file('driving_license')->isValid()) {
-            //     $this->upload_user_file($request->file('driving_license'), "license_image", $user->id);
-            // }
-            if ($request->file('id_proof')) {
-                $this->upload_user_file($request->file('id_proof'), "id_proof", $user->id);
-            }
-
-            // $vehicle = VehicleModel::find($vehicle_id);
-            // $vehicle->driver_id = $user->id;
-            // $vehicle->save();
-            // DriverLogsModel::create(['driver_id' => $user->id, 'vehicle_id' => $vehicle_id, 'date' => date('Y-m-d H:i:s')]);
-            // DriverVehicleModel::updateOrCreate(['vehicle_id' => $vehicle_id], ['vehicle_id' => $vehicle_id, 'driver_id' => $user->id]);
-            $data['success'] = "1";
-            $data['message'] = "Driver registered successfully!";
-            $data['data'] = array(
-                'driver_id' => $user->id,
-                'api_token' => $user->api_token,
-            );
-        }
-        return $data;
-    }
-
-    public function register_vehicle(Request $request)
-    {
-        $validation = Validator::make($request->all(), [
-            // 'make_id' => 'required_if:vehicle_id,|integer|nullable',
-            // 'model_id' => 'required_if:vehicle_id,|integer|nullable',
-            // 'type_id' => 'required_if:vehicle_id,|integer|nullable',
-            // 'color_id' => 'required_if:vehicle_id,|integer|nullable',
-            // 'vehicle_number' => 'required_if:vehicle_id,|unique:vehicles,license_plate|nullable',
-
-            // 'vehicle_id' => 'required_if:make_id,|integer|nullable',
-            // 'insurance' => 'required',
-            // 'rc_book' => 'required',
-            // 'driving_license' => 'required',
-            // 'terms' => 'required|in:1',
-            ////////////////////
-            'make_id' => 'required|integer',
-            'driver_id' => 'required|integer',
-            'model_id' => 'required|integer',
-            'type_id' => 'required|integer',
-            'color_id' => 'required|integer',
-            'vehicle_number' => 'required|unique:vehicles,license_plate',
-        ]);
-        $errors = $validation->errors();
-
-        if (count($errors) > 0) {
-            $data['success'] = "0";
-            $data['message'] = implode(", ", $errors->all());
-            $data['data'] = "";
-        } else {
-            if ($request->vehicle_id == null) {
-                $vehicle = VehicleModel::create([
-                    'make_id' => $request->make_id,
-                    'model_id' => $request->model_id,
-                    'type_id' => $request->type_id,
-                    'license_plate' => $request->vehicle_number,
-                    'in_service' => 1,
-                    'color_id' => $request->color_id,
-                    // 'user_id' => $user->id,
-                ]);
-                // if ($request->file('insurance') && $request->file('insurance')->isValid()) {
-                //     $this->upload_vehicle_doc($request->file('insurance'), 'insurance', $vehicle->id);
-                // }
-                // if ($request->file('rc_book') && $request->file('rc_book')->isValid()) {
-                //     $this->upload_vehicle_doc($request->file('rc_book'), 'rc_book', $vehicle->id);
-                // }
-                // if ($request->file('permit') && $request->file('permit')->isValid()) {
-                //     $this->upload_vehicle_doc($request->file('permit'), 'permit', $vehicle->id);
-                // }
-                // if ($request->file('vehicle_fitness') && $request->file('vehicle_fitness')->isValid()) {
-                //     $this->upload_vehicle_doc($request->file('vehicle_fitness'), 'vehicle_fitness', $vehicle->id);
-                // }
-                $vehicle_id = $vehicle->id;
-            } else {
-                $vehicle_id = $request->vehicle_id;
-            }
-            $user = User::find($request->driver_id);
-            $user->vehicle_id = $vehicle_id;
-            $user->save();
-
-            // if ($request->file('driving_license') && $request->file('driving_license')->isValid()) {
-            //     $this->upload_user_file($request->file('driving_license'), "license_image", $user->id);
-            // }
-
-            $vehicle = VehicleModel::find($vehicle_id);
-            $vehicle->driver_id = $user->id;
-            $vehicle->save();
-            DriverLogsModel::create(['driver_id' => $user->id, 'vehicle_id' => $vehicle_id, 'date' => date('Y-m-d H:i:s')]);
-            DriverVehicleModel::updateOrCreate(['vehicle_id' => $vehicle_id], ['vehicle_id' => $vehicle_id, 'driver_id' => $user->id]);
-            $data['success'] = "1";
-            $data['message'] = "Vehicle registered successfully!";
-            $data['data'] = array(
-                'vehicle_id' => $vehicle_id,
-                'driver_id' => $user->id,
-                'api_token' => $user->api_token,
-            );
-        }
-        return $data;
-    }
-
-    public function vehicle_document(Request $request)
-    {
-        $validation = Validator::make($request->all(), [
-            'vehicle_id' => 'required|integer',
-            'driver_id' => 'required|integer',
-            'insurance' => 'required',
-            'rc_book' => 'required',
-            'driving_license' => 'required',
-            'terms' => 'required|in:1',
-        ]);
-        $errors = $validation->errors();
-
-        if (count($errors) > 0) {
-            $data['success'] = "0";
-            $data['message'] = implode(", ", $errors->all());
-            $data['data'] = "";
-        } else {
-            $vehicle = VehicleModel::find($request->vehicle_id);
             if ($request->file('insurance') && $request->file('insurance')->isValid()) {
                 $this->upload_vehicle_doc($request->file('insurance'), 'insurance', $vehicle->id);
             }
@@ -346,15 +184,47 @@ class MPCabsDriversApi extends Controller
             }
             $vehicle_id = $vehicle->id;
 
-            $user = User::find($request->driver_id);
+            $user = User::create([
+                "name" => $request->name,
+                "email" => $request->email,
+                "password" => bcrypt($request->password),
+                "user_type" => "D",
+                'api_token' => str_random(60),
+            ]);
+
+            $user->gender = $request->gender;
+            $user->phone = $request->mobile;
+            $user->fcm_id = $request->fcm_id;
+            $user->device_token = $request->device_token;
+            $user->alt_mobile = $request->alt_mobile;
+            if ($request->mode == '1') {
+                $mode = 'android';
+            } else {
+                $mode = 'ios';
+            }
+            $user->mode = $mode;
+            $user->vehicle_id = $vehicle_id;
+            $user->save();
 
             if ($request->file('driving_license') && $request->file('driving_license')->isValid()) {
                 $this->upload_user_file($request->file('driving_license'), "license_image", $user->id);
             }
+            if ($request->file('id_proof')) {
+                $this->upload_user_file($request->file('id_proof'), "id_proof", $user->id);
+            }
 
+            $vehicle = VehicleModel::find($vehicle_id);
+            $vehicle->driver_id = $user->id;
+            $vehicle->save();
+            DriverLogsModel::create(['driver_id' => $user->id, 'vehicle_id' => $vehicle_id, 'date' => date('Y-m-d H:i:s')]);
+            DriverVehicleModel::updateOrCreate(['vehicle_id' => $vehicle_id], ['vehicle_id' => $vehicle_id, 'driver_id' => $user->id]);
             $data['success'] = "1";
-            $data['message'] = "Vehicle documents uploaded successfully!";
-            $data['data'] = array('vehicle_id' => $vehicle_id);
+            $data['message'] = "Driver registered successfully!";
+            $data['data'] = array(
+                'driver_id' => $user->id,
+                'vehicle_id' => $vehicle_id,
+                'api_token' => $user->api_token,
+            );
         }
         return $data;
     }
@@ -379,70 +249,6 @@ class MPCabsDriversApi extends Controller
         $user = User::find($id);
         $user->setMeta([$field => $fileName1]);
         $user->save();
-    }
-
-    public function types()
-    {
-        $vehicle_types = VehicleTypeModel::select('id', 'vehicletype', 'displayname', 'icon', 'seats')->where('isenable', 1)->get();
-
-        $vehicle_type_data = array();
-        foreach ($vehicle_types as $vehicle_type) {
-            if ($vehicle_type->icon != null) {
-                $url = asset("assets/images/" . $vehicle_type->icon);
-            } else {
-                $url = asset("assets/images/vehicle.jpeg");
-            }
-            $vehicle_type_data[] = array(
-                'id' => $vehicle_type->id,
-                'vehicletype' => $vehicle_type->vehicletype,
-                'displayname' => $vehicle_type->displayname,
-                'icon' => $url,
-                'no_seats' => $vehicle_type->seats,
-            );
-        }
-        $data['success'] = "1";
-        $data['message'] = "Data fetched!";
-        $data['data'] = $vehicle_type_data;
-        return $data;
-    }
-
-    public function colors()
-    {
-        $colors = VehicleColor::get();
-        $details = array();
-        foreach ($colors as $color) {
-            $details[] = array('id' => $color->id, 'color' => $color->color, 'code' => $color->code);
-        }
-        $data['success'] = "1";
-        $data['message'] = "Data fetched!";
-        $data['data'] = $details;
-        return $data;
-    }
-
-    public function make()
-    {
-        $makes = VehicleMake::get();
-        $details = array();
-        foreach ($makes as $make) {
-            $details[] = array('id' => $make->id, 'make' => $make->make);
-        }
-        $data['success'] = "1";
-        $data['message'] = "Data fetched!";
-        $data['data'] = $details;
-        return $data;
-    }
-
-    public function models(Request $request)
-    {
-        $id = $request->make_id;
-        $models = Vehicle_Model::where('make_id', $id)->get();
-        foreach ($models as $model) {
-            $details[] = array("id" => $model->id, "model" => $model->model, 'make_id' => $id);
-        }
-        $data['success'] = "1";
-        $data['message'] = "Data fetched!";
-        $data['data'] = $details;
-        return $data;
     }
 
     public function edit_offer(Request $request)
@@ -581,6 +387,8 @@ class MPCabsDriversApi extends Controller
         return $data;
     }
 
+    // unused
+
     public function vehicles()
     {
         $vehicles = VehicleModel::get();
@@ -597,6 +405,194 @@ class MPCabsDriversApi extends Controller
                     'color_id' => $vehicle->color_id,
                 );
             }
+        }
+        $data['success'] = "1";
+        $data['message'] = "Data fetched!";
+        $data['data'] = $details;
+        return $data;
+    }
+
+    public function register_vehicle(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            // 'make_id' => 'required_if:vehicle_id,|integer|nullable',
+            // 'model_id' => 'required_if:vehicle_id,|integer|nullable',
+            // 'type_id' => 'required_if:vehicle_id,|integer|nullable',
+            // 'color_id' => 'required_if:vehicle_id,|integer|nullable',
+            // 'vehicle_number' => 'required_if:vehicle_id,|unique:vehicles,license_plate|nullable',
+
+            // 'vehicle_id' => 'required_if:make_id,|integer|nullable',
+            // 'insurance' => 'required',
+            // 'rc_book' => 'required',
+            // 'driving_license' => 'required',
+            // 'terms' => 'required|in:1',
+            ////////////////////
+            'make_id' => 'required|integer',
+            'driver_id' => 'required|integer',
+            'model_id' => 'required|integer',
+            'type_id' => 'required|integer',
+            'color_id' => 'required|integer',
+            'vehicle_number' => 'required|unique:vehicles,license_plate',
+        ]);
+        $errors = $validation->errors();
+
+        if (count($errors) > 0) {
+            $data['success'] = "0";
+            $data['message'] = implode(", ", $errors->all());
+            $data['data'] = "";
+        } else {
+            if ($request->vehicle_id == null) {
+                $vehicle = VehicleModel::create([
+                    'make_id' => $request->make_id,
+                    'model_id' => $request->model_id,
+                    'type_id' => $request->type_id,
+                    'license_plate' => $request->vehicle_number,
+                    'in_service' => 1,
+                    'color_id' => $request->color_id,
+                    // 'user_id' => $user->id,
+                ]);
+                // if ($request->file('insurance') && $request->file('insurance')->isValid()) {
+                //     $this->upload_vehicle_doc($request->file('insurance'), 'insurance', $vehicle->id);
+                // }
+                // if ($request->file('rc_book') && $request->file('rc_book')->isValid()) {
+                //     $this->upload_vehicle_doc($request->file('rc_book'), 'rc_book', $vehicle->id);
+                // }
+                // if ($request->file('permit') && $request->file('permit')->isValid()) {
+                //     $this->upload_vehicle_doc($request->file('permit'), 'permit', $vehicle->id);
+                // }
+                // if ($request->file('vehicle_fitness') && $request->file('vehicle_fitness')->isValid()) {
+                //     $this->upload_vehicle_doc($request->file('vehicle_fitness'), 'vehicle_fitness', $vehicle->id);
+                // }
+                $vehicle_id = $vehicle->id;
+            } else {
+                $vehicle_id = $request->vehicle_id;
+            }
+            $user = User::find($request->driver_id);
+            $user->vehicle_id = $vehicle_id;
+            $user->save();
+
+            // if ($request->file('driving_license') && $request->file('driving_license')->isValid()) {
+            //     $this->upload_user_file($request->file('driving_license'), "license_image", $user->id);
+            // }
+
+            $vehicle = VehicleModel::find($vehicle_id);
+            $vehicle->driver_id = $user->id;
+            $vehicle->save();
+            DriverLogsModel::create(['driver_id' => $user->id, 'vehicle_id' => $vehicle_id, 'date' => date('Y-m-d H:i:s')]);
+            DriverVehicleModel::updateOrCreate(['vehicle_id' => $vehicle_id], ['vehicle_id' => $vehicle_id, 'driver_id' => $user->id]);
+            $data['success'] = "1";
+            $data['message'] = "Vehicle registered successfully!";
+            $data['data'] = array(
+                'vehicle_id' => $vehicle_id,
+                'driver_id' => $user->id,
+                'api_token' => $user->api_token,
+            );
+        }
+        return $data;
+    }
+
+    public function vehicle_document(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'vehicle_id' => 'required|integer',
+            'driver_id' => 'required|integer',
+            'insurance' => 'required',
+            'rc_book' => 'required',
+            'driving_license' => 'required',
+            'terms' => 'required|in:1',
+        ]);
+        $errors = $validation->errors();
+
+        if (count($errors) > 0) {
+            $data['success'] = "0";
+            $data['message'] = implode(", ", $errors->all());
+            $data['data'] = "";
+        } else {
+            $vehicle = VehicleModel::find($request->vehicle_id);
+            if ($request->file('insurance') && $request->file('insurance')->isValid()) {
+                $this->upload_vehicle_doc($request->file('insurance'), 'insurance', $vehicle->id);
+            }
+            if ($request->file('rc_book') && $request->file('rc_book')->isValid()) {
+                $this->upload_vehicle_doc($request->file('rc_book'), 'rc_book', $vehicle->id);
+            }
+            if ($request->file('permit') && $request->file('permit')->isValid()) {
+                $this->upload_vehicle_doc($request->file('permit'), 'permit', $vehicle->id);
+            }
+            if ($request->file('vehicle_fitness') && $request->file('vehicle_fitness')->isValid()) {
+                $this->upload_vehicle_doc($request->file('vehicle_fitness'), 'vehicle_fitness', $vehicle->id);
+            }
+            $vehicle_id = $vehicle->id;
+
+            $user = User::find($request->driver_id);
+
+            if ($request->file('driving_license') && $request->file('driving_license')->isValid()) {
+                $this->upload_user_file($request->file('driving_license'), "license_image", $user->id);
+            }
+
+            $data['success'] = "1";
+            $data['message'] = "Vehicle documents uploaded successfully!";
+            $data['data'] = array('vehicle_id' => $vehicle_id);
+        }
+        return $data;
+    }
+
+    public function types()
+    {
+        $vehicle_types = VehicleTypeModel::select('id', 'vehicletype', 'displayname', 'icon', 'seats')->where('isenable', 1)->get();
+
+        $vehicle_type_data = array();
+        foreach ($vehicle_types as $vehicle_type) {
+            if ($vehicle_type->icon != null) {
+                $url = asset("assets/images/" . $vehicle_type->icon);
+            } else {
+                $url = asset("assets/images/vehicle.jpeg");
+            }
+            $vehicle_type_data[] = array(
+                'id' => $vehicle_type->id,
+                'vehicletype' => $vehicle_type->vehicletype,
+                'displayname' => $vehicle_type->displayname,
+                'icon' => $url,
+                'no_seats' => $vehicle_type->seats,
+            );
+        }
+        $data['success'] = "1";
+        $data['message'] = "Data fetched!";
+        $data['data'] = $vehicle_type_data;
+        return $data;
+    }
+
+    public function colors()
+    {
+        $colors = VehicleColor::get();
+        $details = array();
+        foreach ($colors as $color) {
+            $details[] = array('id' => $color->id, 'color' => $color->color, 'code' => $color->code);
+        }
+        $data['success'] = "1";
+        $data['message'] = "Data fetched!";
+        $data['data'] = $details;
+        return $data;
+    }
+
+    public function make()
+    {
+        $makes = VehicleMake::get();
+        $details = array();
+        foreach ($makes as $make) {
+            $details[] = array('id' => $make->id, 'make' => $make->make);
+        }
+        $data['success'] = "1";
+        $data['message'] = "Data fetched!";
+        $data['data'] = $details;
+        return $data;
+    }
+
+    public function models(Request $request)
+    {
+        $id = $request->make_id;
+        $models = Vehicle_Model::where('make_id', $id)->get();
+        foreach ($models as $model) {
+            $details[] = array("id" => $model->id, "model" => $model->model, 'make_id' => $id);
         }
         $data['success'] = "1";
         $data['message'] = "Data fetched!";

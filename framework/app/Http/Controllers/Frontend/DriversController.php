@@ -96,11 +96,7 @@ class DriversController extends Controller
             "user_type" => "D",
             'api_token' => str_random(60),
         ]);
-        $name = explode(" ", $user->name);
-        $user->first_name = $name[0];
-        if (sizeof($name) > 1) {
-            $user->last_name = $name[1];
-        }
+
         $user->gender = $request->gender;
         $user->phone = $request->mobile;
         $user->alt_mobile = $request->alt_mobile;

@@ -6,7 +6,7 @@ return [
     'env' => "local",
     'debug' => true,
     'url' => env('APP_URL'),
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Kolkata',
     'locale' => 'English-en',
     'fallback_locale' => 'English-en',
     'key' => 'base64:maxQFpmbI6x32vwUXFjpYdELc+wBpMb9y8PaXugSaf8=',
