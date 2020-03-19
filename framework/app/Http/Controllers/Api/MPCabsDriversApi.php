@@ -250,6 +250,12 @@ class MPCabsDriversApi extends Controller
             'type_id' => 'required|integer',
             'color_id' => 'required|integer',
             'vehicle_number' => 'required|unique:vehicles,license_plate',
+
+            // merge with vehicle document
+            'insurance' => 'required',
+            'rc_book' => 'required',
+            'driving_license' => 'required',
+            'terms' => 'required|in:1',
         ]);
         $errors = $validation->errors();
 
@@ -297,35 +303,8 @@ class MPCabsDriversApi extends Controller
             $vehicle->save();
             DriverLogsModel::create(['driver_id' => $user->id, 'vehicle_id' => $vehicle_id, 'date' => date('Y-m-d H:i:s')]);
             DriverVehicleModel::updateOrCreate(['vehicle_id' => $vehicle_id], ['vehicle_id' => $vehicle_id, 'driver_id' => $user->id]);
-            $data['success'] = "1";
-            $data['message'] = "Vehicle registered successfully!";
-            $data['data'] = array(
-                'vehicle_id' => $vehicle_id,
-                'driver_id' => $user->id,
-                'api_token' => $user->api_token,
-            );
-        }
-        return $data;
-    }
 
-    public function vehicle_document(Request $request)
-    {
-        $validation = Validator::make($request->all(), [
-            'vehicle_id' => 'required|integer',
-            'driver_id' => 'required|integer',
-            'insurance' => 'required',
-            'rc_book' => 'required',
-            'driving_license' => 'required',
-            'terms' => 'required|in:1',
-        ]);
-        $errors = $validation->errors();
-
-        if (count($errors) > 0) {
-            $data['success'] = "0";
-            $data['message'] = implode(", ", $errors->all());
-            $data['data'] = "";
-        } else {
-            $vehicle = VehicleModel::find($request->vehicle_id);
+            // merge with vehicle documents
             if ($request->file('insurance') && $request->file('insurance')->isValid()) {
                 $this->upload_vehicle_doc($request->file('insurance'), 'insurance', $vehicle->id);
             }
@@ -347,8 +326,12 @@ class MPCabsDriversApi extends Controller
             }
 
             $data['success'] = "1";
-            $data['message'] = "Vehicle documents uploaded successfully!";
-            $data['data'] = array('vehicle_id' => $vehicle_id);
+            $data['message'] = "Vehicle registered successfully!";
+            $data['data'] = array(
+                'vehicle_id' => $vehicle_id,
+                'driver_id' => $user->id,
+                'api_token' => $user->api_token,
+            );
         }
         return $data;
     }
@@ -597,6 +580,51 @@ class MPCabsDriversApi extends Controller
         $data['success'] = "1";
         $data['message'] = "Data fetched!";
         $data['data'] = $details;
+        return $data;
+    }
+
+    public function vehicle_document(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'vehicle_id' => 'required|integer',
+            'driver_id' => 'required|integer',
+            'insurance' => 'required',
+            'rc_book' => 'required',
+            'driving_license' => 'required',
+            'terms' => 'required|in:1',
+        ]);
+        $errors = $validation->errors();
+
+        if (count($errors) > 0) {
+            $data['success'] = "0";
+            $data['message'] = implode(", ", $errors->all());
+            $data['data'] = "";
+        } else {
+            $vehicle = VehicleModel::find($request->vehicle_id);
+            if ($request->file('insurance') && $request->file('insurance')->isValid()) {
+                $this->upload_vehicle_doc($request->file('insurance'), 'insurance', $vehicle->id);
+            }
+            if ($request->file('rc_book') && $request->file('rc_book')->isValid()) {
+                $this->upload_vehicle_doc($request->file('rc_book'), 'rc_book', $vehicle->id);
+            }
+            if ($request->file('permit') && $request->file('permit')->isValid()) {
+                $this->upload_vehicle_doc($request->file('permit'), 'permit', $vehicle->id);
+            }
+            if ($request->file('vehicle_fitness') && $request->file('vehicle_fitness')->isValid()) {
+                $this->upload_vehicle_doc($request->file('vehicle_fitness'), 'vehicle_fitness', $vehicle->id);
+            }
+            $vehicle_id = $vehicle->id;
+
+            $user = User::find($request->driver_id);
+
+            if ($request->file('driving_license') && $request->file('driving_license')->isValid()) {
+                $this->upload_user_file($request->file('driving_license'), "license_image", $user->id);
+            }
+
+            $data['success'] = "1";
+            $data['message'] = "Vehicle documents uploaded successfully!";
+            $data['data'] = array('vehicle_id' => $vehicle_id);
+        }
         return $data;
     }
 }
