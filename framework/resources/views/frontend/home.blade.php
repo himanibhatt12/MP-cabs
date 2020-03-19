@@ -38,7 +38,7 @@
               data-easein="default"
               data-easeout="default"
               data-masterspeed="default"
-              {{-- data-thumb="images/rs/img/exp_bg1-100x50.jpg" --}}
+              
               data-rotate="0"
               data-saveperformance="off"
               data-title="Slide"
@@ -58,7 +58,7 @@
               <img
                 src="{{ asset('assets/frontend/images/mpcabs-home.jpg') }}"
                 alt=""
-                data-lazyload="{{ asset('assets/frontend/images/rs/img/exp_bg1.jpg') }}"
+                
                 data-bgposition="center center"
                 data-bgfit="cover"
                 data-bgrepeat="no-repeat"
@@ -385,6 +385,20 @@
           <h1 class="page-title w-100">
             Book a Cab
           </h1>
+          @if (session('success'))
+            <div class="alert alert-success xs-mt">
+              {{ session('success') }}
+            </div>
+          @endif
+          @if (count($errors) > 0)
+            <div class="alert alert-danger xs-mt">
+              <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+              </ul>
+            </div>
+          @endif
           <div class="col-sm-12 xxs-mt"></div>
           <!-- Divider -->
 
@@ -459,6 +473,8 @@
                           type="text"
                           placeholder="Enter pickup address"
                           class="classic_form big border-gray7-hover"
+                          name="pickup_address"
+                          required
                         />
                       </div>
                       <div class="col-sm-4">
@@ -466,6 +482,8 @@
                           type="text"
                           placeholder="Enter drop address"
                           class="classic_form big border-gray7-hover"
+                          name="drop_address"
+                          required
                         />
                       </div>
                       <div class="col-sm-4">
@@ -473,13 +491,14 @@
                           type="number"
                           placeholder="Enter no of persons"
                           class="classic_form big border-gray7-hover"
+                          name="no_of_person"
+                          required
                         />
                       </div>
                       <div class="col-sm-4">
                         <select
-                          name="subject"
-                          form="contact_form"
-                          required=""
+                          name="type_id"
+                          required
                           class="classic_form big border-gray7-hover no-radius"
                         >
                           <option value="">Select a vehicle</option>
@@ -492,6 +511,7 @@
                         <input
                           placeholder="Other things we should know about. "
                           class="classic_form big border-gray7-hover"
+                          name="note"
                         />
                       </div>
                       <div class="col-sm-4">
@@ -519,6 +539,8 @@
                           type="text"
                           placeholder="Enter pickup address"
                           class="classic_form big border-gray7-hover"
+                          name="pickup_address"
+                          required
                         />
                       </div>
                       <div class="col-sm-4">
@@ -526,6 +548,8 @@
                           type="text"
                           placeholder="Enter drop address"
                           class="classic_form big border-gray7-hover"
+                          name="drop_address"
+                          required
                         />
                       </div>
                       <div class="col-sm-4">
@@ -533,13 +557,14 @@
                           type="number"
                           placeholder="Enter no of persons"
                           class="classic_form big border-gray7-hover"
+                          name="no_of_person"
+                          required
                         />
                       </div>
                       <div class="col-sm-4">
                         <select
-                          name="subject"
-                          form="contact_form"
-                          required=""
+                          name="type_id"
+                          required
                           class="classic_form big border-gray7-hover no-radius"
                         >
                           <option value="">Select a vehicle</option>
@@ -551,7 +576,7 @@
                       <div class="col-sm-4">
                         <input
                           type="date"
-                          name="example"
+                          name="journey_date"
                           id="example"
                           required
                           placeholder="Journey date"
@@ -561,7 +586,7 @@
                       <div class="col-sm-4">
                         <input
                           type="date"
-                          name="example"
+                          name="journey_time"
                           id="example"
                           required
                           placeholder="Journey time"
@@ -572,6 +597,7 @@
                         <input
                           placeholder="Other things we should know about. "
                           class="classic_form big border-gray7-hover"
+                          name="note"
                         />
                       </div>
                       <div class="col-sm-4">
@@ -599,6 +625,8 @@
                           type="text"
                           placeholder="Enter pickup address"
                           class="classic_form big border-gray7-hover"
+                          name="pickup_address"
+                          required
                         />
                       </div>
                       <div class="col-sm-4">
@@ -606,6 +634,8 @@
                           type="text"
                           placeholder="Enter drop address"
                           class="classic_form big border-gray7-hover"
+                          name="drop_address"
+                          required
                         />
                       </div>
                       <div class="col-sm-4">
@@ -613,12 +643,12 @@
                           type="number"
                           placeholder="Enter no of persons"
                           class="classic_form big border-gray7-hover"
+                          name="no_of_person"
                         />
                       </div>
                       <div class="col-sm-4">
                         <select
-                          name="subject"
-                          form="contact_form"
+                          name="type_id"
                           required=""
                           class="classic_form big border-gray7-hover no-radius"
                         >
@@ -631,7 +661,7 @@
                       <div class="col-sm-4">
                         <input
                           type="date"
-                          name="example"
+                          name="journey_date"
                           id="example"
                           required
                           placeholder="Journey date"
@@ -641,7 +671,7 @@
                       <div class="col-sm-4">
                         <input
                           type="date"
-                          name="example"
+                          name="journey_time"
                           id="example"
                           required
                           placeholder="Journey time"
@@ -651,7 +681,7 @@
                       <div class="col-sm-4">
                         <input
                           type="date"
-                          name="example"
+                          name="return_date"
                           id="example"
                           required
                           placeholder="Return date"
@@ -661,7 +691,7 @@
                       <div class="col-sm-4">
                         <input
                           type="date"
-                          name="example"
+                          name="return_time"
                           id="example"
                           required
                           placeholder="Return time"
@@ -672,6 +702,7 @@
                         <input
                           placeholder="Other things we should know about. "
                           class="classic_form big border-gray7-hover"
+                          name="note"
                         />
                       </div>
                       <div class="col-sm-4">
@@ -1224,7 +1255,89 @@
 
     <!-- /Analytics -->
 @endsection    
+@section('scripts')
+<script>
+  (function($, window, document, undefined) {
 
+'use strict';
+
+//*********************************************
+//  REVOLUTION SLIDER FOR HOME
+//*********************************************
+
+    var tpj=jQuery;
+    var revapi2;
+    if(tpj("#home_slider").revolution == undefined){
+        revslider_showDoubleJqueryError("#home_slider");
+    }else{
+        revapi2 = tpj("#home_slider").show().revolution({
+            sliderType:"standard",
+            jsFileLocation:"js/revolutionslider/",
+            sliderLayout:"fullscreen",
+            delay:7000,
+            navigation: {
+                arrows: {
+                    style: "uranus",
+                    enable: true,
+                    hide_onmobile: true,
+                    hide_onleave: true,
+                    tmp: '',
+                    left: {
+                        h_align: "left",
+                        v_align: "center",
+                        h_offset: 0,
+                        v_offset: 0
+                    },
+                    right: {
+                        h_align: "right",
+                        v_align: "center",
+                        h_offset: 0,
+                        v_offset: 0
+                    }
+                },
+                bullets: {
+                    enable: true,
+                    hide_onmobile: true,
+                    style: "hades",
+                    hide_onleave: false,
+                    direction: "horizontal",
+                    h_align: "right",
+                    v_align: "bottom",
+                    h_offset: 90,
+                    v_offset: 27,
+                    space: 8,
+                    tmp: '<span class="tp-bullet-image"></span>'
+                },
+                touch: {
+                    touchenabled: "on",
+                    swipe_threshold: 75,
+                    swipe_min_touches: 1,
+                    swipe_direction: "horizontal",
+                    drag_block_vertical: false
+                }
+            },
+            responsiveLevels:[1170,860,640,480],
+            visibilityLevels:[1170,860,640,480],
+            gridwidth:[1170,860,640,480],
+            gridheight:1000,
+            parallax: {
+                type:"scroll",
+                origo:"slidercenter",
+                speed:2000,
+                levels:[2,3,4,5,8,10,12,16,30],
+            },
+            shadow:0,
+            spinner:"off",
+            stopLoop:"off",
+            stopAfterLoops:-1,
+            stopAtSlide:-1,
+            disableProgressBar:"on",
+            shuffle:"off",
+        });
+    }
+  });
+</script>
+@endsection
 @section('between_scripts')
     <!-- DatePickers -->
     <script src="{{ asset('assets/frontend/js/components/picker.js') }}"></script>

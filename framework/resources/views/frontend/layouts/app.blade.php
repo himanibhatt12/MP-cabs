@@ -42,7 +42,7 @@
     </section>
     <!-- END WRAPPER -->
     @include('frontend.includes.contact')
-
+    @yield('scripts')
     @include('frontend.includes.javascripts')
     @yield('javascript')
 
