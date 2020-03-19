@@ -28,8 +28,8 @@ class BookingController extends Controller
         $booking->accept_status = 0; //0=yet to accept, 1= accept
         $booking->booking_type = 0; // 1 = book later, 0 = book now
         $booking->ride_status = null;
-        // $booking->journey_date = date('d-m-Y', strtotime($request->journey_date));
-        // $booking->journey_time = date('H:i:s', strtotime($request->journey_time));
+        $booking->journey_date = date('d-m-Y');
+        $booking->journey_time = date('H:i:s');
         $booking->save();
         return redirect('/')->with('success', 'Booking successful');
     }

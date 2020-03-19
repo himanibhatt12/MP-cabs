@@ -446,9 +446,15 @@ class BookingsController extends Controller
             $booking->udf = serialize($request->udf);
             $booking->accept_status = 1; //0=yet to accept, 1= accept
             $booking->ride_status = "Upcoming";
-            $booking->booking_type = 1; // 1 = book later, 0 = book now
-            $booking->journey_date = date('d-m-Y', strtotime($booking->pickup));
-            $booking->journey_time = date('H:i:s', strtotime($booking->pickup));
+            if ($booking->booking_option == "Local") {
+                $booking->booking_type = 0; // 1 = book later, 0 = book now
+                $booking->journey_date = date('d-m-Y');
+                $booking->journey_time = date('H:i:s');
+            } else {
+                $booking->booking_type = 1; // 1 = book later, 0 = book now
+                $booking->journey_date = date('d-m-Y', strtotime($booking->pickup));
+                $booking->journey_time = date('H:i:s', strtotime($booking->pickup));
+            }
             $booking->save();
             $this->booking_notification($booking->id);
             // browser notification
