@@ -57,6 +57,8 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('customer-offer-requests', 'MPCabsDriversApi@customer_offer_requests');
     Route::post('my-offers', 'MPCabsDriversApi@my_offers');
     Route::post('vehicle-info', 'MPCabsDriversApi@vehicle_info');
+    Route::post('register-vehicle', 'MPCabsDriversApi@register_vehicle');
+    Route::post('vehicle-documents', 'MPCabsDriversApi@vehicle_document');
 
     // unused routes
     Route::post('vehicle-make', 'MPCabsDriversApi@make');
@@ -64,6 +66,4 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('vehicle-model', 'MPCabsDriversApi@models');
     Route::post('vehicle-types', 'MPCabsDriversApi@types');
     Route::post('vehicles', 'MPCabsDriversApi@vehicles');
-    Route::post('register-vehicle', 'MPCabsDriversApi@register_vehicle');
-    Route::post('vehicle-documents', 'MPCabsDriversApi@vehicle_document');
 });
