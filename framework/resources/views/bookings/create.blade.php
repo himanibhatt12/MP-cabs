@@ -73,7 +73,7 @@
         </div>
         
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="form-group">
               {!! Form::label('booking_option',__('fleet.bookingOption'), ['class' => 'form-label']) !!}
               <select id="booking_option" name="booking_option" class="form-control" required>
@@ -86,7 +86,25 @@
               </select>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
+            <div class="form-group">
+              {!! Form::label('travellers',__('fleet.no_travellers'), ['class' => 'form-label']) !!}
+              {!! Form::number('travellers',1,['class'=>'form-control','min'=>1]) !!}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 package">
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 route">
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
             <div class="form-group">
               {!! Form::label('vehicle_id',__('fleet.selectVehicle'), ['class' => 'form-label']) !!}
               <select id="vehicle_id" name="vehicle_id" class="form-control" required>
@@ -97,7 +115,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="form-group">
               {!! Form::label('driver_id',__('fleet.selectDriver'), ['class' => 'form-label']) !!}
 
@@ -112,16 +130,7 @@
           </div>
           
         </div>
-        <div class="row">
-          <div class="col-md-12 package">
 
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 route">
-
-          </div>
-        </div>
         @if(Auth::user()->user_type == "C")
         <div class="row">
           <div class="col-md-6">

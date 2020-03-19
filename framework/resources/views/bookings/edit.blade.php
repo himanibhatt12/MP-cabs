@@ -74,7 +74,7 @@
         </div>
         
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="form-group">
               {!! Form::label('booking_option',__('fleet.bookingOption'), ['class' => 'form-label']) !!}
               <select id="booking_option" name="booking_option" class="form-control" required>
@@ -87,30 +87,12 @@
               </select>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="form-group">
-              {!! Form::label('vehicle_id',__('fleet.selectVehicle'), ['class' => 'form-label']) !!}
-              <select id="vehicle_id" name="vehicle_id" class="form-control" required @if($data->booking_option == "Rental") disabled @endif>
-              <option value="">-</option>
-              @foreach($vehicles as $vehicle)
-              <option value="{{$vehicle->id}}" @if($vehicle->id==$data->vehicle_id) selected @endif> {{$vehicle->maker->make}} - {{$vehicle->vehiclemodel->model}} - {{$vehicle->license_plate}}</option>
-              @endforeach
-              </select>
+              {!! Form::label('travellers',__('fleet.no_travellers'), ['class' => 'form-label']) !!}
+              {!! Form::number('travellers',$data->travellers,['class'=>'form-control','min'=>1]) !!}
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              {!! Form::label('vehicle_id',__('fleet.selectDriver'), ['class' => 'form-label']) !!}
-              <select id="driver_id" name="driver_id" class="form-control" required>
-                <option value="">-</option>
-                @foreach($drivers as $driver)
-                <option value="{{$driver->id}}" @if($driver->id == $data->driver_id) selected @endif>{{$driver->name}}@if($driver->getMeta('is_active') != 1)
-                ( @lang('fleet.in_active') ) @endif</option>
-                </option>
-                @endforeach
-              </select>
-            </div>
-          </div>          
         </div>
         <div class="row">
           <div class="col-md-12 package">
@@ -138,6 +120,33 @@
             @endif
           </div>
         </div>
+        <div class="row">  
+          <div class="col-md-6">
+            <div class="form-group">
+              {!! Form::label('vehicle_id',__('fleet.selectVehicle'), ['class' => 'form-label']) !!}
+              <select id="vehicle_id" name="vehicle_id" class="form-control" required @if($data->booking_option == "Rental") disabled @endif>
+              <option value="">-</option>
+              @foreach($vehicles as $vehicle)
+              <option value="{{$vehicle->id}}" @if($vehicle->id==$data->vehicle_id) selected @endif> {{$vehicle->maker->make}} - {{$vehicle->vehiclemodel->model}} - {{$vehicle->license_plate}}</option>
+              @endforeach
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              {!! Form::label('vehicle_id',__('fleet.selectDriver'), ['class' => 'form-label']) !!}
+              <select id="driver_id" name="driver_id" class="form-control" required>
+                <option value="">-</option>
+                @foreach($drivers as $driver)
+                <option value="{{$driver->id}}" @if($driver->id == $data->driver_id) selected @endif>{{$driver->name}}@if($driver->getMeta('is_active') != 1)
+                ( @lang('fleet.in_active') ) @endif</option>
+                </option>
+                @endforeach
+              </select>
+            </div>
+          </div>          
+        </div>
+
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">

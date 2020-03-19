@@ -523,7 +523,7 @@ class BookingsController extends Controller
         }
         $booking->user_id = $request->user_id;
         $booking->driver_id = $request->driver_id;
-        // $booking->travellers = $request->travellers;
+        $booking->travellers = $request->travellers;
         $booking->pickup = $request->pickup;
         $booking->dropoff = $request->dropoff;
         $booking->pickup_addr = $request->pickup_addr;
