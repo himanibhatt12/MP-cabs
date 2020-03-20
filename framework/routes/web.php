@@ -5,6 +5,8 @@
 Route::post('local-booking', 'Frontend\BookingController@local_booking')->middleware('CustomerLogin');
 Route::post('one-way-booking', 'Frontend\BookingController@oneway_booking')->middleware('CustomerLogin');
 Route::post('round-trip', 'Frontend\BookingController@round_trip')->middleware('CustomerLogin');
+Route::get('package-details/{id}', 'Frontend\BookingController@package_details');
+Route::post('book-package', 'Frontend\BookingController@book_package')->middleware('CustomerLogin');
 
 Route::get('/', 'Frontend\FrontendController@home');
 Route::get('about', 'Frontend\FrontendController@about');
@@ -67,12 +69,12 @@ Route::get('sample-payment', function () {
 //     }
 // });
 
-Route::get('installation', 'LaravelWebInstaller@index');
-Route::post('installed', 'LaravelWebInstaller@install');
-Route::get('installed', 'LaravelWebInstaller@index');
-Route::get('migrate', 'LaravelWebInstaller@db_migration');
-Route::get('migration', 'LaravelWebInstaller@migration');
-Route::get('upgrade', 'UpdateVersion@upgrade')->middleware('canInstall');
-Route::get('upgrade3', 'UpdateVersion@upgrade3')->middleware('canInstall');
-Route::get('upgrade4', 'UpdateVersion@upgrade4')->middleware('canInstall');
-Route::get('upgrade4.0.2', 'UpdateVersion@upgrade402')->middleware('canInstall');
+// Route::get('installation', 'LaravelWebInstaller@index');
+// Route::post('installed', 'LaravelWebInstaller@install');
+// Route::get('installed', 'LaravelWebInstaller@index');
+// Route::get('migrate', 'LaravelWebInstaller@db_migration');
+// Route::get('migration', 'LaravelWebInstaller@migration');
+// Route::get('upgrade', 'UpdateVersion@upgrade')->middleware('canInstall');
+// Route::get('upgrade3', 'UpdateVersion@upgrade3')->middleware('canInstall');
+// Route::get('upgrade4', 'UpdateVersion@upgrade4')->middleware('canInstall');
+// Route::get('upgrade4.0.2', 'UpdateVersion@upgrade402')->middleware('canInstall');

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Model\Address;
 use App\Model\Bookings;
 use App\Model\CouponModel;
 use App\Model\PackagesModel;
@@ -20,6 +19,13 @@ class MPCabsCustomersApi extends Controller
 
         $packages = PackagesModel::get();
         $details = array();
+        $tax = 0;
+        if (Hyvikk::get('tax_charge') != "null") {
+            $taxes = json_decode(Hyvikk::get('tax_charge'), true);
+            foreach ($taxes as $key => $val) {
+                $tax = $tax + $val;
+            }
+        }
         foreach ($packages as $package) {
             if ($package->vehicle->vehicle_image != null) {
                 $image = asset('uploads/' . $package->vehicle->vehicle_image);
@@ -32,11 +38,22 @@ class MPCabsCustomersApi extends Controller
                 $color = $package->vehicle->vehiclecolor->color;
                 $code = $package->vehicle->vehiclecolor->code;
             }
+
+            $tax_total = ($package->package_rate * $tax) / 100 + $package->package_rate;
+            $udfs = json_decode(Hyvikk::get('tax_charge'));
+            $tax_charges = array();
+            if ($udfs != null) {
+                foreach ($udfs as $key => $value) {
+                    $tax_charges[$key] = ($package->package_rate * $value) / 100;
+
+                }
+            }
+
             $details[] = array(
                 'package_id' => $package->id,
                 'vehicle_make' => $package->vehicle->maker->make,
                 'vehicle_model' => $package->vehicle->vehiclemodel->model,
-                'vehicle_plate' => $package->vehicle->license_plate,
+                'vehicle_number' => $package->vehicle->license_plate,
                 'hourly_rate' => $package->hourly_rate,
                 'km_rate' => $package->km_rate,
                 'image' => $image,
@@ -45,6 +62,10 @@ class MPCabsCustomersApi extends Controller
                 'package_hours' => $package->package_hours,
                 'package_rate' => $package->package_rate,
                 'color_code' => $code,
+                'tax' => $tax . "%",
+                'total_amount' => $tax_total,
+                'taxes' => $taxes,
+                'tax_charges' => $tax_charges,
             );
         }
         $data['success'] = "1";
@@ -193,10 +214,19 @@ class MPCabsCustomersApi extends Controller
 
     public function routes()
     {
+        $tax = 0;
+        if (Hyvikk::get('tax_charge') != "null") {
+            $taxes = json_decode(Hyvikk::get('tax_charge'), true);
+            foreach ($taxes as $key => $val) {
+                $tax = $tax + $val;
+            }
+        }
 
         $routes = RouteModel::get();
         $details = array();
         foreach ($routes as $route) {
+            $tax_total = ($route->cost * $tax) / 100 + $route->cost;
+            $tax_amount = ($route->cost * $tax) / 100;
             $details[] = array(
                 'id' => $route->id,
                 'name' => $route->name,
@@ -206,6 +236,8 @@ class MPCabsCustomersApi extends Controller
                 'ratings' => $route->ratings,
                 'timing' => $route->timing,
                 'distance' => $route->distance . " kms",
+                'tax_amount' => $tax_amount,
+                'tax_total' => $tax_total,
             );
         }
         $data['success'] = "1";
@@ -225,7 +257,6 @@ class MPCabsCustomersApi extends Controller
             'journey_date' => 'required',
             'journey_time' => 'required',
             'total_kms' => 'required|numeric',
-
         ]);
         $errors = $validation->errors();
 
@@ -254,9 +285,7 @@ class MPCabsCustomersApi extends Controller
             $book->total_kms = $request->total_kms;
             $book->approx_timetoreach = $request->approx_timetoreach;
             $book->save();
-            Address::updateOrCreate(['customer_id' => $request->user_id, 'address' => $request->source]);
 
-            Address::updateOrCreate(['customer_id' => $request->customer_id, 'address' => $request->destination]);
             // send notification to drivers
             $data['success'] = "1";
             $data['message'] = "Booking added successfully!";

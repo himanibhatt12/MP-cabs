@@ -577,7 +577,7 @@
                         <input
                           type="date"
                           name="journey_date"
-                          id="example"
+                          id="jdate"
                           required
                           placeholder="Journey date"
                           class="classic_form big border-gray7-hover no-radius datepicker"
@@ -587,7 +587,7 @@
                         <input
                           type="date"
                           name="journey_time"
-                          id="example"
+                          id="jtime"
                           required
                           placeholder="Journey time"
                           class="classic_form big border-gray7-hover no-radius timepicker"
@@ -603,7 +603,7 @@
                       <div class="col-sm-4">
                         <button
                           type="submit"
-                          class="lg-btn bg-colored white qdr-hover bold"
+                          class="lg-btn bg-colored white qdr-hover bold submit_btn"
                           ><span class="qdr-details"
                             >Book cab Now !</span
                           ></button
@@ -644,6 +644,7 @@
                           placeholder="Enter no of persons"
                           class="classic_form big border-gray7-hover"
                           name="no_of_person"
+                          required
                         />
                       </div>
                       <div class="col-sm-4">
@@ -662,7 +663,7 @@
                         <input
                           type="date"
                           name="journey_date"
-                          id="example"
+                          id="jdate1"
                           required
                           placeholder="Journey date"
                           class="classic_form big border-gray7-hover no-radius datepicker"
@@ -672,7 +673,7 @@
                         <input
                           type="date"
                           name="journey_time"
-                          id="example"
+                          id="jtime1"
                           required
                           placeholder="Journey time"
                           class="classic_form big border-gray7-hover no-radius timepicker"
@@ -682,7 +683,7 @@
                         <input
                           type="date"
                           name="return_date"
-                          id="example"
+                          id="rdate"
                           required
                           placeholder="Return date"
                           class="classic_form big border-gray7-hover no-radius datepicker"
@@ -692,7 +693,7 @@
                         <input
                           type="date"
                           name="return_time"
-                          id="example"
+                          id="rtime"
                           required
                           placeholder="Return time"
                           class="classic_form big border-gray7-hover no-radius timepicker"
@@ -708,7 +709,7 @@
                       <div class="col-sm-4">
                         <button
                           type="submit"
-                          class="lg-btn bg-colored white qdr-hover bold"
+                          class="lg-btn bg-colored white qdr-hover bold roundtrip_btn"
                           ><span class="qdr-details"
                             >Book cab Now !</span
                           ></button
@@ -758,6 +759,14 @@
                       <h5 class="extrabold xxs-mt">{{ $row->vehicle->types->displayname }}</h5>
                       <p class="box-description xxs-mt">
                         Extra Drive Charges : {{ $row->km_rate }}INR per Km | {{ $row->hourly_rate }}INR per Hour
+                      </p>
+                      <p class=" xxs-mt">
+                        <a
+                          href="{{ url('package-details/'.$row->id) }}"
+                          class="lg-btn bg-colored white qdr-hover bold"
+                          ><span class="qdr-details"
+                            >View Details</span
+                          ></a
                       </p>
                     </div>
                   @endforeach  
@@ -1514,5 +1523,27 @@
         }); /*ready*/
         $(".datepicker").pickadate();
         $(".timepicker").pickatime();
+
+
+      $(".submit_btn").click(function () {    
+        var jdate = $('#jdate').val();
+        var jtime = $('#jtime').val();
+        if(jdate == "" || jdate == null || jtime == "" || jtime == null){
+          alert('Journey date and time must be required');
+          return false;
+        }
+      });
+
+      $(".roundtrip_btn").click(function () {    
+        var jdate1 = $('#jdate1').val();
+        var jtime1 = $('#jtime1').val();
+        var rdate = $('#rdate').val();
+        var rtime = $('#rtime').val();
+        // alert(jdate,jtime,rdate,rtime);
+        if(jdate1 == "" || jdate1 == null || jtime1 == "" || jtime1 == null || rdate == "" || rdate == null || rtime == "" || rtime == null){
+          alert('Journey date and time, return date and time must be required');
+          return false;
+        }
+       });
     </script>
 @endsection

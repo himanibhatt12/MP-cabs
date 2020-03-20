@@ -51,7 +51,7 @@
         {{$booking->pickup_addr}}
         <br>
         @lang('fleet.pickup'):
-        <b> {{date('d/m/Y g:i A',strtotime($booking->pickup))}}</b>
+        <b>@if($booking->pickup) {{date('d/m/Y g:i A',strtotime($booking->pickup))}} @endif</b>
       </address>
     </div>
     <div class="col-sm-6 invoice-col">

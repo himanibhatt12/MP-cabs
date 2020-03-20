@@ -19,6 +19,38 @@ use Validator;
 
 class MPCabsDriversApi extends Controller
 {
+    public function tax_calculation(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'amount' => 'required|numeric',
+        ]);
+        $errors = $validation->errors();
+
+        if (count($errors) > 0) {
+            $data['success'] = "0";
+            $data['message'] = implode(", ", $errors->all());
+            $data['data'] = "";
+        } else {
+            $tax = 0;
+            if (Hyvikk::get('tax_charge') != "null") {
+                $taxes = json_decode(Hyvikk::get('tax_charge'), true);
+                foreach ($taxes as $key => $val) {
+                    $tax = $tax + $val;
+                }
+            }
+            $total_amount = (($request->amount * $tax) / 100) + $request->amount;
+            $total_tax_charge = (($request->amount * $tax) / 100);
+            $data['success'] = "1";
+            $data['message'] = "Data fetched!";
+            $data['data'] = array(
+                'ride_amount' => $request->amount,
+                'total_amount' => $total_amount,
+                'tax_charges' => $total_tax_charge,
+                'tax' => $tax . "%",
+            );
+        }
+        return $data;
+    }
 
     public function vehicle_info()
     {
@@ -361,6 +393,14 @@ class MPCabsDriversApi extends Controller
     public function edit_offer(Request $request)
     {
         $validation = Validator::make($request->all(), [
+
+            // new vehicle
+            'make_id' => 'nullable|integer',
+            'model_id' => 'nullable|integer',
+            'type_id' => 'nullable|integer',
+            'color_id' => 'nullable|integer',
+            'vehicle_number' => 'nullable|unique:vehicles,license_plate',
+            ///
             'user_id' => 'required',
             'source' => 'required',
             'destination' => 'required',
@@ -369,6 +409,11 @@ class MPCabsDriversApi extends Controller
             'id' => 'required',
             'distance' => 'required|numeric',
             'timing' => 'required',
+            // charges
+            'ride_amount' => 'required|numeric',
+            'total' => 'required|numeric',
+            'tax_percent' => 'required|numeric',
+            'tax_charges' => 'required|numeric',
         ]);
         $errors = $validation->errors();
 
@@ -378,15 +423,34 @@ class MPCabsDriversApi extends Controller
             $data['data'] = "";
         } else {
             $user = User::find($request->user_id);
+
+            if ($request->make_id) {
+                $vehicle = VehicleModel::create([
+                    'make_id' => $request->make_id,
+                    'model_id' => $request->model_id,
+                    'type_id' => $request->type_id,
+                    'color_id' => $request->color_id,
+                    'license_plate' => $request->vehicle_number,
+                    'in_service' => 1,
+                    'user_id' => $request->user_id,
+                ]);
+                $v_id = $vehicle->id;
+            } else {
+                $v_id = $user->vehicle_id;
+            }
             $offer = RideOffers::find($request->id);
 
             $offer->destination = $request->destination;
             $offer->source = $request->source;
-            $offer->vehicle_id = $user->vehicle_id;
+            $offer->vehicle_id = $v_id;
             $offer->valid_from = $request->valid_from;
             $offer->valid_till = $request->valid_till;
             $offer->distance = $request->distance;
             $offer->timing = $request->timing;
+            $offer->total = $request->ride_amount;
+            $offer->tax_total = $request->total;
+            $offer->total_tax_percent = $request->tax_percent;
+            $offer->total_tax_charge_rs = $request->tax_charges;
             $offer->save();
 
             $data['success'] = "1";
@@ -399,14 +463,14 @@ class MPCabsDriversApi extends Controller
     public function add_offer(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            // select or add new vehicle
-            'make_id' => 'required_if:vehicle_id,|integer|nullable',
-            'model_id' => 'required_if:vehicle_id,|integer|nullable',
-            'type_id' => 'required_if:vehicle_id,|integer|nullable',
-            'color_id' => 'required_if:vehicle_id,|integer|nullable',
-            'vehicle_number' => 'required_if:vehicle_id,|unique:vehicles,license_plate|nullable',
+            // add new vehicle
+            'make_id' => 'required_if:vehicle_id,|nullable|integer',
+            'model_id' => 'required_if:vehicle_id,|nullable|integer',
+            'type_id' => 'required_if:vehicle_id,|nullable|integer',
+            'color_id' => 'required_if:vehicle_id,|nullable|integer',
+            'vehicle_number' => 'required_if:vehicle_id,|nullable|unique:vehicles,license_plate',
             'vehicle_id' => 'required_if:make_id,|integer|nullable',
-            //
+
             'user_id' => 'required|integer',
             'source' => 'required',
             'destination' => 'required',
@@ -414,6 +478,11 @@ class MPCabsDriversApi extends Controller
             'valid_till' => 'required',
             'distance' => 'required|numeric',
             'timing' => 'required',
+            // charges
+            'ride_amount' => 'required|numeric',
+            'total' => 'required|numeric',
+            'tax_percent' => 'required|numeric',
+            'tax_charges' => 'required|numeric',
         ]);
         $errors = $validation->errors();
 
@@ -422,20 +491,21 @@ class MPCabsDriversApi extends Controller
             $data['message'] = implode(", ", $errors->all());
             $data['data'] = "";
         } else {
-            // incomplete
+            // incomplete charges (tax calculation api)
             $user = User::find($request->user_id);
             if ($request->make_id) {
                 $vehicle = VehicleModel::create([
                     'make_id' => $request->make_id,
                     'model_id' => $request->model_id,
-                    'license_plate' => $request->vehicle_number,
-                    'in_service' => 1,
                     'type_id' => $request->type_id,
                     'color_id' => $request->color_id,
+                    'user_id' => $request->user_id,
+                    'license_plate' => $request->vehicle_number,
+                    'in_service' => 1,
                 ]);
                 $v_id = $vehicle->id;
             } else {
-                $v_id = $user->vehicle_id;
+                $v_id = $request->vehicle_id;
             }
             $offer = RideOffers::create([
                 'source' => $request->source,
@@ -446,6 +516,10 @@ class MPCabsDriversApi extends Controller
                 'user_id' => $request->user_id,
                 'distance' => $request->distance,
                 'timing' => $request->timing,
+                'total' => $request->ride_amount,
+                'tax_total' => $request->total,
+                'total_tax_percent' => $request->tax_percent,
+                'total_tax_charge_rs' => $request->tax_charges,
             ]);
             $data['success'] = "1";
             $data['message'] = "Ride Offer added successfully!";

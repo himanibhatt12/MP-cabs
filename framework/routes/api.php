@@ -43,21 +43,22 @@ Route::namespace ('Api')->middleware(['throttle', 'auth:api'])->group(function (
     Route::post('fare-calculation', 'MPCabsCustomersApi@fare_calculation');
     Route::post('booking-history', 'MPCabsCustomersApi@booking_history');
     Route::post('routes', 'MPCabsCustomersApi@routes');
+    Route::post('booking-details', 'MPCabsCustomersApi@booking_details');
     Route::post('new-booking', 'MPCabsCustomersApi@new_booking'); // incomplete
     Route::post('send-ride-request', 'MPCabsCustomersApi@request_offer'); // incomplete
     Route::post('book-package', 'MPCabsCustomersApi@book_package'); // incomplete
     Route::post('book-route', 'MPCabsCustomersApi@book_route'); // incomplete
-    Route::post('booking-details', 'MPCabsCustomersApi@booking_details');
 
     // drivers APIs
+    Route::post('add-offer', 'MPCabsDriversApi@add_offer'); // charges
+    Route::post('edit-offer', 'MPCabsDriversApi@edit_offer'); // charges
     Route::post('single-ride-offer', 'MPCabsDriversApi@single_offer');
-    Route::post('add-offer', 'MPCabsDriversApi@add_offer'); // with new vehicle incomplete
-    Route::post('edit-offer', 'MPCabsDriversApi@edit_offer'); //
     Route::post('delete-ride-offer', 'MPCabsDriversApi@delete_offer');
     Route::post('customer-offer-requests', 'MPCabsDriversApi@customer_offer_requests');
     Route::post('my-offers', 'MPCabsDriversApi@my_offers');
     Route::post('vehicle-info', 'MPCabsDriversApi@vehicle_info');
     Route::post('register-vehicle', 'MPCabsDriversApi@register_vehicle');
+    Route::post('tax-calculation', 'MPCabsDriversApi@tax_calculation');
 
     // unused routes
     Route::post('vehicle-make', 'MPCabsDriversApi@make');
