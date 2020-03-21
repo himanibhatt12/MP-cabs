@@ -118,7 +118,7 @@ class MPCabsCustomersApi extends Controller
             if ($coupon->type == 1) {
                 // percentage
                 $total_amount = $request->amount - ($request->amount * $coupon->value) / 100;
-                $discount_amount = (($request->amount * $coupon->value) / 100) . " %";
+                $discount_amount = Hyvikk::get('currency') . " " . (($request->amount * $coupon->value) / 100);
             } else {
                 // amount
                 $total_amount = $request->amount - $coupon->value;
@@ -304,7 +304,7 @@ class MPCabsCustomersApi extends Controller
             'journey_time' => 'required',
             'amount' => 'required',
             'total_kms' => 'required|numeric',
-            'approx_timetoreach' => 'required',
+            // 'approx_timetoreach' => 'required',
         ]);
         $errors = $validation->errors();
 
